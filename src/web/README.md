@@ -8,10 +8,9 @@ fluorite9(fl9) - Symbolic Programming Language for One-liner
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [fluorite9 Portal](#fluorite9-portal)
-  - [Installation](#installation)
-  - [Documents](#documents)
-  - [Online Editor](#online-editor)
+- [Installation](#installation)
+- [Documents](#documents)
+- [Online Editor](#online-editor)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
