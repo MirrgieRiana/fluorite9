@@ -40,11 +40,6 @@ tasks {
         into(file("${buildDir.path}/web"))
     }
 
-    register<Copy>("copyReadme") {
-        from("README.md")
-        into(file("${buildDir.path}/web"))
-    }
-
     register<Copy>("copyMinifiedFiles") {
         from("${buildDir.path}/kotlin-js-min/main")
         into(file("${buildDir.path}/web/release"))
@@ -59,7 +54,6 @@ tasks {
 afterEvaluate {
     tasks["build"].dependsOn("runDceKotlinJs")
     tasks["build"].dependsOn("copyWeb")
-    tasks["build"].dependsOn("copyReadme")
     tasks["copyMinifiedFiles"].dependsOn("runDceKotlinJs")
     tasks["build"].dependsOn("copyMinifiedFiles")
 }
