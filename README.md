@@ -5,45 +5,35 @@
 
 [fl9 Web Site](https://mirrgieriana.github.io/fluorite9/)
 
-# Table of Contents
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [Documents](#documents)
-- [Online Editor](#online-editor)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Installation
 
 ## 1. Environment
 
 fl9 requires the latest versions of git, nodejs and npm.
 
-Install command on Debian:
+Install commands on Debian:
 
 ```
-# apt update
-# apt install -y git
-# apt install -y nodejs
-# apt install -y npm
-# npm install -g n
-# n latest
+sudo apt update
+sudo apt install -y git
+sudo apt install -y nodejs
+sudo apt install -y npm
+sudo npm install -g n
+sudo n latest
 ```
 
 ## 2. Download fl9
 
-Install into current directory
+Install in the current directory
 
 ```bash
-$ curl https://raw.githubusercontent.com/MirrgieRiana/fluorite9/doc/release/download.sh | bash
+curl https://raw.githubusercontent.com/MirrgieRiana/fluorite9/doc/release/download.sh | bash
 ```
 
-Or, install into `/usr/local/bin`
+Or, install in the `/usr/local/bin`
 
 ```bash
-# (cd /usr/local/bin; curl https://raw.githubusercontent.com/MirrgieRiana/fluorite9/doc/release/download.sh | bash)
+sudo bash -c '(cd /usr/local/bin; curl https://raw.githubusercontent.com/MirrgieRiana/fluorite9/doc/release/download.sh | bash)'
 ```
 
 # Documents
