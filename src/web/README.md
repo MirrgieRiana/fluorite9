@@ -3,7 +3,7 @@
 
 - [fl9 Portal](#fl9-portal)
   - [Documents](#documents)
-  - [Online Editor](#online-release)
+  - [Online Editor](#online-editor)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
