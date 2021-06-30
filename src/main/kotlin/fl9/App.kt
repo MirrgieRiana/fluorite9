@@ -21,7 +21,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                     codes.forEach {
                         !it.head
                     }
-                    !"const v$id = `${codes.joinToString("") { "\${${it.body}}" }}`;\n"
+                    !"const v$id = `${codes.joinToString("") { "\${runtime.toString(${it.body})}" }}`;\n"
                 }, "v$id")
             }
         }
