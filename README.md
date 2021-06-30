@@ -8,12 +8,12 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Reference Documents](#reference-documents)
+- [Documents](#documents)
 - [Online Editor](#online-editor)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Reference Documents
+# Documents
 
 - [English](document.en.md)
 - [日本語](document.ja.md)
