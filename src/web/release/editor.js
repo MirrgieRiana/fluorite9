@@ -41,7 +41,7 @@ function compile() {
 
   let result;
   try {
-    result = fl9StandardRuntime.toString(eval(code)(fl9StandardRuntime));
+    result = fl9_runtime.toString(eval(code)(fl9_runtime));
   } catch (e) {
     console.log(e);
     document.getElementById("result").value = "" + e;
