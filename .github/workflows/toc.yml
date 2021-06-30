@@ -2,9 +2,9 @@ name: Toc
 
 on:
   push:
-    branches: [ doc ]
+    branches: [ main ]
   pull_request:
-    branches: [ doc ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
