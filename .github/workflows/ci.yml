@@ -16,9 +16,6 @@ jobs:
       - name: Build
         run: bash gradlew build
 
-      - name: Generate Toc
-        uses: technote-space/toc-generator@v4
-        
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
