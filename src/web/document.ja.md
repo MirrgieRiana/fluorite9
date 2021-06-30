@@ -17,7 +17,11 @@
 - [識別子 `idenfitier`](#%E8%AD%98%E5%88%A5%E5%AD%90-idenfitier)
 - [丸括弧 `(formula)`](#%E4%B8%B8%E6%8B%AC%E5%BC%A7-formula)
 - [配列初期化子 `[item; ...]`](#%E9%85%8D%E5%88%97%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-item-)
-- [オブジェクト初期化子 `{key : value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
+- [オブジェクト初期化子 `{key = value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
+- [関数呼び出し `function[argument; ...]`](#%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionargument-)
+  - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
+  - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
+- [ブロック呼び出し `function(closure)`](#%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionclosure)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
