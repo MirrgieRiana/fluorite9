@@ -266,6 +266,31 @@ fun getStandardCompiler(): Any = { node: Node ->
             }
         }
 
+        period_period {
+            get {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = value.right.mustGet(context)
+                val id = context.nextId()
+                CodeGet(code {
+                    !codeLeft.head
+                    !codeRight.head
+                    !"const v$id = runtime.rangeClosed(${codeLeft.body}, ${codeRight.body});\n"
+                }, "v$id")
+            }
+        }
+        tilde {
+            get {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = value.right.mustGet(context)
+                val id = context.nextId()
+                CodeGet(code {
+                    !codeLeft.head
+                    !codeRight.head
+                    !"const v$id = runtime.rangeOpened(${codeLeft.body}, ${codeRight.body});\n"
+                }, "v$id")
+            }
+        }
+
         minus_greater {
             get {
                 if (value.left.type == "identifier") {
@@ -351,6 +376,37 @@ fun getStandardCompiler(): Any = { node: Node ->
                 } else {
                     throw Exception("Illegal Operator Argument: ${value.left.type} = ${value.right.type}")
                 }
+            }
+        }
+
+        pipe {
+            get {
+                val codeLeft = value.left.mustGet(context)
+                val idArgument = context.nextId()
+                val codeRight = context.aliases.stack {
+                    context.aliases["_"] = Alias {
+                        get { CodeGet("", "v$idArgument") }
+                        set {
+                            CodeSet { code ->
+                                CodeRun(code {
+                                    !code.head
+                                    !"v$idArgument = ${code.body};\n"
+                                })
+                            }
+                        }
+                    }
+                    value.right.mustGet(context)
+                }
+                val id = context.nextId()
+                CodeGet(code {
+                    !codeLeft.head
+                    !"const v$id = runtime.map(${codeLeft.body}, function(v$idArgument) {\n"
+                    indent {
+                        !codeRight.head
+                        !"return ${codeRight.body};\n"
+                    }
+                    !"});\n"
+                }, "v$id")
             }
         }
 

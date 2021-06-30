@@ -53,11 +53,16 @@ val slash = Token<BinaryOperatorArgument>("slash")
 val plus = Token<BinaryOperatorArgument>("plus")
 val minus = Token<BinaryOperatorArgument>("minus")
 
+val period_period = Token<BinaryOperatorArgument>("period_period")
+val tilde = Token<BinaryOperatorArgument>("tilde")
+
 val comma = Token<Array<Node>>("comma")
 
 val minus_greater = Token<BinaryOperatorArgument>("minus_greater")
 val equal_greater = Token<BinaryOperatorArgument>("equal_greater")
 val colon = Token<BinaryOperatorArgument>("colon")
 val equal = Token<BinaryOperatorArgument>("equal")
+
+val pipe = Token<BinaryOperatorArgument>("pipe")
 
 val semicolon = Token<Array<Node>>("semicolon")

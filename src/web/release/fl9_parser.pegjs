@@ -115,11 +115,17 @@ Add
   / "-" { return (left, right) => node("minus", {left, right}); }
   ) _ Mul)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
+Range
+  = head:Add tail:(_ (
+    ".." { return (left, right) => node("period_period", {left, right}); }
+  / "~"  { return (left, right) => node("tilde"        , {left, right}); }
+  ) _ Add)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+
 Comma
-  = head:(Add / Void) tail:(_ "," _ (Add / Void))+ {
+  = head:(Range / Void) tail:(_ "," _ (Range / Void))+ {
     return node("comma", [head, ...tail.map(item => item[3])]);
   }
-  / Add
+  / Range
 
 Assignment
   = head:(Comma _ (
@@ -129,11 +135,16 @@ Assignment
   / "="  { return (left, right) => node("equal"        , {left, right}); }
   ) _)* tail:Comma { return [tail, ...head.reverse()].reduce((right, left) => left[2](left[0], right)); }
 
+Pipe
+  = head:(Assignment _ (
+    "|" { return (left, right) => node("pipe", {left, right}); }
+  ) _)* tail:Assignment { return [tail, ...head.reverse()].reduce((right, left) => left[2](left[0], right)); }
+
 Semicolon
-  = head:(Assignment / Void) tail:(_ ";" _ (Assignment / Void))+ {
+  = head:(Pipe / Void) tail:(_ ";" _ (Pipe / Void))+ {
     return node("semicolon", [head, ...tail.map(item => item[3])]);
   }
-  / Assignment
+  / Pipe
 
 Expression
   = Semicolon
