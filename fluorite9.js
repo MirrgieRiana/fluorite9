@@ -65,7 +65,7 @@
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda(it) {
-    return '$' + '{' + it.body + '}';
+    return '$' + '{runtime.toString(' + it.body + ')}';
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_1(closure$codes, closure$id) {
     return function ($receiver) {
