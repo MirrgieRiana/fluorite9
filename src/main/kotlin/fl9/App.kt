@@ -400,6 +400,8 @@ fun getStandardCompiler(): Any = { node: Node ->
         "F" { get { CodeGet("", "(a => a * 20)") } }
         "O" { get { CodeGet("", "({m: a => a * 20})") } }
         "PI" { get { CodeGet("", "(Math.PI)") } }
+        "SIN" { get { CodeGet("", "(Math.sin)") } }
+        "LOG" { get { CodeGet("", "((a, b) => Math.log(a) / Math.log(b))") } }
         "MAP" { get { CodeGet("", "(array => code => array.map(item => code(item)))") } }
         "TRUE" { get { CodeGet("", "true") } }
         "FALSE" { get { CodeGet("", "false") } }
