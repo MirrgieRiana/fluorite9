@@ -1,7 +1,7 @@
 
 # fl9 日本語版ドキュメント
 
-[ポータル](/README.md)
+[Webサイト](README.md)
 
 # 目次
 
