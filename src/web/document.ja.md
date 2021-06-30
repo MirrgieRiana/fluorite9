@@ -16,6 +16,8 @@
   - [埋め込み](#%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF)
 - [識別子 `idenfitier`](#%E8%AD%98%E5%88%A5%E5%AD%90-idenfitier)
 - [丸括弧 `(formula)`](#%E4%B8%B8%E6%8B%AC%E5%BC%A7-formula)
+- [配列初期化子 `[item; ...]`](#%E9%85%8D%E5%88%97%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-item-)
+- [オブジェクト初期化子 `{key : value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
