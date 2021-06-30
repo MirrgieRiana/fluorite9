@@ -31,6 +31,7 @@ tasks {
             moduleKind = "umd" //"plain", "amd", "commonjs", "umd"
             sourceMap = true
             sourceMapEmbedSources = "always"
+            outputFile = "${buildDir.path}/compileKotlin2Js/fl9_compiler.js"
         }
     }
 
@@ -41,13 +42,13 @@ tasks {
 
     register<Copy>("copyMinifiedFiles") {
         from("${buildDir.path}/kotlin-js-min/main")
-        into(file("${buildDir.path}/web"))
+        into(file("${buildDir.path}/web/release"))
     }
 
 }
 
 (tasks["runDceKotlinJs"] as KotlinJsDce).apply {
-    keep("fluorite9.fl9")
+    keep("fl9_compiler.fl9")
 }
 
 afterEvaluate {
