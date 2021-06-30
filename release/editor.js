@@ -41,13 +41,23 @@ function compile() {
 
   let result;
   try {
-    result = fl9_runtime.toString(eval(code)(fl9_runtime));
+    result = eval(code)(fl9_runtime);
   } catch (e) {
     console.log(e);
     document.getElementById("result").value = "" + e;
     return;
   }
-  document.getElementById("result").value = result;
   console.log(result);
+
+  let string;
+  try {
+    string = fl9_runtime.toString(result);
+  } catch (e) {
+    console.log(e);
+    document.getElementById("result").value = "" + e;
+    return;
+  }
+  document.getElementById("result").value = string;
+  console.log(string);
 
 }
