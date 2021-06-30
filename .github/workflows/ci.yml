@@ -24,3 +24,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: doc
           publish_dir: ./build/web
+          enable_jekyll: true
