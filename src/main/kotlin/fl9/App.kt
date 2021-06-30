@@ -7,6 +7,7 @@ fun getStandardCompiler(): Any = { node: Node ->
     context.operators.apply {
 
         void {
+            get { CodeGet("", "(runtime.void)") }
             arrayInit { CodeArrayInit { } }
             objectInit { CodeObjectInit { } }
         }

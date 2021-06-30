@@ -30,6 +30,14 @@
   };
 
   runtime.empty = new runtime.Fl9Stream(function*() { });
+  runtime.void = {
+    [runtime.symbolToString]() {
+      throw new Error("Void access");
+    },
+    [runtime.symbolStream]() {
+      throw new Error("Void access");
+    }
+  };
   runtime.toNumber = function(value) {
     if (typeof value === "number") return value;
     if (typeof value === "string") return parseFloat(value);
