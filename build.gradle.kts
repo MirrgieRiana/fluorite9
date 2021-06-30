@@ -33,7 +33,7 @@ tasks {
             sourceMapEmbedSources = "always"
         }
     }
-    
+
     register<Copy>("copyWeb") {
         from(sourceSets["web"].resources.srcDirs)
         into(file("${buildDir.path}/web"))
