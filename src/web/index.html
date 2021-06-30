@@ -1,0 +1,17 @@
+<html>
+<head>
+    <script src="kotlin.js"></script>
+    <script src="fluorite9.js"></script>
+    <script src="fl9-runtime.js"></script>
+    <script src="https://pegjs.org/vendor/pegjs/peg.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+<div><textarea id="src" style="width: 100%;" rows="4">1 + 2 + 3 + 4 + 5</textarea></div>
+<div><textarea id="node" style="width: 100%;" rows="8"></textarea></div>
+<div><textarea id="code" style="width: 100%;" rows="4"></textarea></div>
+<div><textarea id="result" style="width: 100%;" rows="4"></textarea></div>
+<input type="button" value="Compile" onclick="compile()">
+</body>
+</html>
