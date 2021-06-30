@@ -7,7 +7,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
 
 - [整数リテラル](#%E6%95%B4%E6%95%B0%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
 - [文字列リテラル](#%E6%96%87%E5%AD%97%E5%88%97%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
