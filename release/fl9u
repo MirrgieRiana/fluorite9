@@ -8,10 +8,7 @@ else
   dir=$(cd "$(dirname "$0")"; pwd)
 fi
 
-# nexeのバイナリがある場合はそちらを優先する
-if [ -f "$dir"/fl9.bin ]
-then
-  NODE_PATH="$dir" exec "$dir"/fl9.bin "$@"
-else
-  NODE_PATH="$dir" exec node "$dir"/fl9.js "$@"
-fi
+# 実体の外側に出て、その場所から実体をアップデート
+cd "$dir"
+cd ../../..
+bash "$dir"/download.sh

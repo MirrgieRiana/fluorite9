@@ -29,7 +29,13 @@
 
 ) || exit
 
+make_command() {
+  rm -f "$1" || exit
+  ln -s fl9-git/fluorite9/release/"$1" "$1" || exit
+  chmod +x fl9-git/fluorite9/release/"$1" || exit
+  chmod +x "$1" || exit
+}
+
 # 実行ファイルの生成
-rm -f fl9 || exit
-ln -s fl9-git/fluorite9/release/fl9 fl9 || exit
-chmod +x fl9 || exit
+make_command fl9
+make_command fl9u
