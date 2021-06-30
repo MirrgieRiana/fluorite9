@@ -3,11 +3,9 @@
 
 # fluorite9(fl9) - Symbolic Programming Language for One-liner
 
-[fl9 Web Site](https://mirrgieriana.github.io/fluorite9/)
+## Installation
 
-# Installation
-
-## 1. Environment
+### 1. Environment
 
 fl9 requires the latest versions of git, nodejs and npm.
 
@@ -22,7 +20,7 @@ sudo npm install -g n
 sudo n latest
 ```
 
-## 2. Download fl9
+### 2. Download fl9
 
 Install in the current directory
 
@@ -38,9 +36,4 @@ sudo bash -c '(cd /usr/local/bin; curl https://raw.githubusercontent.com/Mirrgie
 
 # Documents
 
-- [English](document.en.md)
-- [日本語](document.ja.md)
-
-# Online Editor
-
-[Online fl9 Editor](release/editor.html)
+See [fluorite9 Portal](https://mirrgieriana.github.io/fluorite9/).
