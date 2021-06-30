@@ -17,4 +17,4 @@
 
 ## Online Editor
 
-[Online fl9 Editor](editor.html)
+[Online fl9 Editor](release/editor.html)

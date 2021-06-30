@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec NODE_PATH="." node fl9.js "$@"

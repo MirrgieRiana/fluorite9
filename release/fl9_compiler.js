@@ -5,8 +5,8 @@
     factory(module.exports, require('kotlin'));
   else {
     if (typeof kotlin === 'undefined') {
-      throw new Error("Error loading module 'fluorite9'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'fluorite9'.");
-    }root.fluorite9 = factory(typeof fluorite9 === 'undefined' ? {} : fluorite9, kotlin);
+      throw new Error("Error loading module 'fl9_compiler'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'fl9_compiler'.");
+    }root.fl9_compiler = factory(typeof fl9_compiler === 'undefined' ? {} : fl9_compiler, kotlin);
   }
 }(this, function (_, Kotlin) {
   'use strict';
@@ -1352,7 +1352,7 @@
       throw Error_init('Null parent access');
     }this.frame_haar5g$_0 = tmp$;
   };
-  FramedRegistry.prototype.stack_klfg04$ = defineInlineFunction('fluorite9.fl9.FramedRegistry.stack_klfg04$', function (block) {
+  FramedRegistry.prototype.stack_klfg04$ = defineInlineFunction('fl9_compiler.fl9.FramedRegistry.stack_klfg04$', function (block) {
     this.push();
     var result = block();
     this.pop();
@@ -1669,4 +1669,4 @@
   return _;
 }));
 
-//# sourceMappingURL=fluorite9.js.map
+//# sourceMappingURL=fl9_compiler.js.map

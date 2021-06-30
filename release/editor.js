@@ -1,6 +1,6 @@
 
 let parser;
-$.ajax("fl9.pegjs", {
+$.ajax("fl9_parser.pegjs", {
   dataType: "text",
 }).done(data => {
   parser = peg.generate(data, {
@@ -29,7 +29,7 @@ function compile() {
 
   let code;
   try {
-    code = fluorite9.fl9.getStandardCompiler()(node);
+    code = fl9_compiler.fl9.getStandardCompiler()(node);
   } catch (e) {
     console.log(e);
     document.getElementById("code").value = "" + e;
