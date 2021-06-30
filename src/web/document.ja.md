@@ -8,14 +8,14 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [整数リテラル](#%E6%95%B4%E6%95%B0%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
-- [文字列リテラル](#%E6%96%87%E5%AD%97%E5%88%97%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
+- [整数リテラル `123`](#%E6%95%B4%E6%95%B0%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB-123)
+- [文字列リテラル `'abc'`](#%E6%96%87%E5%AD%97%E5%88%97%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB-abc)
   - [絶対文字](#%E7%B5%B6%E5%AF%BE%E6%96%87%E5%AD%97)
-- [埋め込み文字列リテラル](#%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF%E6%96%87%E5%AD%97%E5%88%97%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
+- [埋め込み文字列リテラル `"abc"`](#%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF%E6%96%87%E5%AD%97%E5%88%97%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB-abc)
   - [文字参照](#%E6%96%87%E5%AD%97%E5%8F%82%E7%85%A7)
   - [埋め込み](#%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF)
-- [識別子](#%E8%AD%98%E5%88%A5%E5%AD%90)
-- [丸括弧](#%E4%B8%B8%E6%8B%AC%E5%BC%A7)
+- [識別子 `idenfitier`](#%E8%AD%98%E5%88%A5%E5%AD%90-idenfitier)
+- [丸括弧 `(formula)`](#%E4%B8%B8%E6%8B%AC%E5%BC%A7-formula)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
