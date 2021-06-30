@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
-NODE_PATH="." exec node fl9.js "$@"
+
+dir=$(dirname "$0")
+if [ -f "$dir"/fl9.bin ]
+then
+  NODE_PATH="." exec "$dir"/fl9.bin "$@"
+else
+  NODE_PATH="." exec node "$dir"/fl9.js "$@"
+fi
