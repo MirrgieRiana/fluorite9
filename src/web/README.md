@@ -13,7 +13,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Reference Documents
+# Documents
 
 - [English](document.en.md)
 - [日本語](document.ja.md)
