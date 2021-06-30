@@ -17,6 +17,9 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_PATHS: "src/web/*.md"
+          TOC_TITLE: ""
+          COMMIT_NAME: "toc-generator"
+          COMMIT_EMAIL: ""
 
       - name: Build
         run: bash gradlew build
