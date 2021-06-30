@@ -1,8 +1,11 @@
 
-# Languages
+# fl9 Portal
 
-- [日本語](/README.ja.md)
+## Documents
 
-# Online Editor
+- [English](/document.en.md)
+- [日本語](/document.ja.md)
+
+## Online Editor
 
 [Online fl9 Editor](editor.html)
