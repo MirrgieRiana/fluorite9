@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ch "$(dirname "$0")"
+cd "$(dirname "$0")"
 
 type npm || exit
 type node || exit
