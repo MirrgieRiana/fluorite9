@@ -1,5 +1,5 @@
 
-this.fl9StandardRuntime = {
+const runtime = {
   empty: {
     [Symbol.iterator]() {
       return this;
@@ -20,6 +20,8 @@ this.fl9StandardRuntime = {
     if (typeof value === "string") return value;
     if (typeof value === "number") return "" + value;
     if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
+    if (value instanceof Array) return value.map(item => runtime.toString(item)).join(",");
+    if (typeof value === "object") return Object.getOwnPropertyNames(value).map(name => `${name}:${runtime.toString(value[name])};`).join("");
     throw new Error("Illegal Action: toNumber(" + value + ")");
   },
   toBoolean(value) {
@@ -51,3 +53,4 @@ this.fl9StandardRuntime = {
     }[name];
   }
 };
+this.fl9StandardRuntime = runtime;
