@@ -22,13 +22,13 @@ const runtime = {
     if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
     if (value instanceof Array) return value.map(item => runtime.toString(item)).join(",");
     if (typeof value === "object") return Object.getOwnPropertyNames(value).map(name => `${name}:${runtime.toString(value[name])};`).join("");
-    throw new Error("Illegal Action: toNumber(" + value + ")");
+    throw new Error("Illegal Action: toString(" + value + ")");
   },
   toBoolean(value) {
     if (typeof value === "boolean") return value;
     if (typeof value === "number") return value !== 0;
     if (typeof value === "string") return value !== "";
-    throw new Error("Illegal Action: toNumber(" + value + ")");
+    throw new Error("Illegal Action: toBoolean(" + value + ")");
   },
   getLength(value) {
     if (typeof value === "string") return value.length;
