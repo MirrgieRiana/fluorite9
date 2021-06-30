@@ -16,10 +16,13 @@
 - [丸括弧 `(formula)`](#%E4%B8%B8%E6%8B%AC%E5%BC%A7-formula)
 - [配列初期化子 `[item; ...]`](#%E9%85%8D%E5%88%97%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-item-)
 - [オブジェクト初期化子 `{key = value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
+- [ブロック呼び出し `function(closure)`](#%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionclosure)
 - [関数呼び出し `function[argument; ...]`](#%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionargument-)
   - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
   - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
-- [ブロック呼び出し `function(closure)`](#%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionclosure)
+- [閉じた範囲 `start .. end`](#%E9%96%89%E3%81%98%E3%81%9F%E7%AF%84%E5%9B%B2-start--end)
+- [開いた範囲 `start .. endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
+- [パイプ `stream | mapper`](#%E3%83%91%E3%82%A4%E3%83%97-stream--mapper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -202,6 +205,11 @@ PI
 a:123;b:456,789;
 ```
 
+# ブロック呼び出し `function(closure)`
+
+`closure`はコードブロックとして`function`に渡されます。
+`function`は常に一つの引数が与えられた状態で呼び出されます。
+
 # 関数呼び出し `function[argument; ...]`
 
 fl9では関数の呼び出しに角括弧`[ ]`を使います。
@@ -234,7 +242,58 @@ LOG[256; 2]
 
 名前付き引数が現れた場合、それ以降は省略してもUNDEFINEDが自動挿入されません。
 
-# ブロック呼び出し `function(closure)`
+# 閉じた範囲 `start .. end`
 
-`closure`はコードブロックとして`function`に渡されます。
-`function`は常に一つの引数が与えられた状態で呼び出されます。
+閉じた範囲は左辺から右辺までの整数を1個ずつ返すストリームを生成する演算子です。
+
+```
+1 .. 3
+```
+↓
+```
+1
+2
+3
+```
+
+# 開いた範囲 `start .. endExcluded`
+
+開いた範囲は左辺から右辺の手前までの整数を1個ずつ返すストリームを生成する演算子です。
+
+```
+1 ~ 3
+```
+↓
+```
+1
+2
+```
+
+この演算子は配列のインデックスの範囲を表すのに便利です。
+
+```
+array : [1; 2; 3];
+0 ~ $#array
+```
+↓
+```
+0
+1
+2
+```
+
+# パイプ `stream | mapper`
+
+`stream`の各要素を`mapper`で変換します。
+`mapper`は要素を`_`として受け取るクロージャとして働きます。
+fl9では、多くの言語においてmap関数として提供される機能を1文字で行うことができます。
+
+```
+1 .. 3 | _ * 100
+```
+↓
+```
+100
+200
+300
+```

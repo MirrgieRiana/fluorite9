@@ -101,7 +101,7 @@ Left
   / "*"  { return right => node("left_asterisk"     , {right}); }
   / "\\" { return right => node("left_backslash"    , {right}); }
   / "$#" { return right => node("left_dollar_number", {right}); }
-  ) _)* tail:Right { return [tail, ...head.reverse()].reduce((right, left) => left(right)); }
+  ) _)* tail:Right { return [tail, ...head.reverse()].reduce((right, left) => left[0](right)); }
 
 Mul
   = head:Left tail:(_ (
