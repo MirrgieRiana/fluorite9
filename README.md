@@ -34,6 +34,15 @@ Or, install in the `/usr/local/bin`
 sudo bash -c '(cd /usr/local/bin; curl https://raw.githubusercontent.com/MirrgieRiana/fluorite9/doc/release/download.sh | bash)'
 ```
 
+### 3. Usage
+
+The fl9 command will be generated in the installed location.
+
+```bash
+$ fl9 '1 + 2 + 3'
+6
+```
+
 # Documents
 
 See [fluorite9 Portal](https://mirrgieriana.github.io/fluorite9/).
