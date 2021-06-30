@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-dir=$(dirname "$0")
+# シンボリックリンクで呼び出した場合、実体を辿る
+if [ -L "$0" ]
+then
+  dir=$(dirname "$(dirname "$0")/$(readlink "$0")")
+else
+  dir=$(dirname "$0")
+fi
+
+# nexeのバイナリがある場合はそちらを優先する
 if [ -f "$dir"/fl9.bin ]
 then
   NODE_PATH="." exec "$dir"/fl9.bin "$@"
