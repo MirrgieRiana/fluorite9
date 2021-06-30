@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ch "$(dirname "$0")"
+cd "$(dirname "$0")"
 
 type npm || exit
 npm install pegjs@0.10.0
