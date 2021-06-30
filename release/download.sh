@@ -30,6 +30,6 @@
 ) || exit
 
 # 実行ファイルの生成
+rm -f fl9 || exit
 ln -s fl9-git/fluorite9/release/fl9 fl9 || exit
 chmod +x fl9 || exit
-
