@@ -8,6 +8,10 @@
   }
 }(this, function(runtime) {
   runtime.symbolToString = Symbol("fl9ToString");
+  runtime.symbolAdd = Symbol("fl9Add");
+  runtime.symbolSubtract = Symbol("fl9Subtract");
+  runtime.symbolMultiply = Symbol("fl9Multiply");
+  runtime.symbolDivide = Symbol("fl9Divide");
   runtime.symbolStream = Symbol("fl9Stream");
 
   runtime.Fl9Stream = class Fl9Stream {
@@ -69,6 +73,33 @@
     if (typeof value === "string") return value.length;
     if (value instanceof Array) return value.length;
     throw new Error("Illegal Action: getLength(" + value + ")");
+  };
+  runtime.add = function(left, right) {
+    if (typeof left === "number") return left + runtime.toNumber(right);
+    if (typeof left === "string") return left + runtime.toString(right);
+    if (left instanceof Array) {
+      if (!(right instanceof Array)) throw new Error(`Illegal Argument: ${left.constructor.name} + ${right.constructor.name}`);
+      return [...left, ...right];
+    }
+    if (typeof left === "object" && left[runtime.symbolAdd] !== undefined) return left[runtime.symbolAdd](left, right);
+    throw new Error(`Illegal Argument: ${left.constructor.name}.add(${right.constructor.name})`);
+  };
+  runtime.subtract = function(left, right) {
+    if (typeof left === "number") return left - runtime.toNumber(right);
+    if (typeof left === "object" && left[runtime.symbolSubtract] !== undefined) return left[runtime.symbolSubtract](left, right);
+    throw new Error(`Illegal Argument: ${left.constructor.name}.subtract(${right.constructor.name})`);
+  };
+  runtime.multiply = function(left, right) {
+    if (typeof left === "number") return left * runtime.toNumber(right);
+    if (typeof left === "string") return left.repeat(runtime.toNumber(right));
+    if (left instanceof Array) return Array.from({length: runtime.toNumber(right)}).flatMap(item => left);
+    if (typeof left === "object" && left[runtime.symbolMultiply] !== undefined) return left[runtime.symbolMultiply](left, right);
+    throw new Error(`Illegal Argument: ${left.constructor.name}.multiply(${right.constructor.name})`);
+  };
+  runtime.divide = function(left, right) {
+    if (typeof left === "number") return left / runtime.toNumber(right);
+    if (typeof left === "object" && left[runtime.symbolDivide] !== undefined) return left[runtime.symbolDivide](left, right);
+    throw new Error(`Illegal Argument: ${left.constructor.name}.divide(${right.constructor.name})`);
   };
   runtime.apply = function(value, args) {
     if (value instanceof Function) {
