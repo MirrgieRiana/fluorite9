@@ -7,7 +7,7 @@ class CodeGet(val head: String, val body: String)
 class CodeRun(val head: String)
 class CodeSet(val consumer: (CodeGet) -> CodeRun)
 class CodeArrayInit(val generator: ((CodeGet) -> Unit) -> Unit)
-class CodeObjectInit(val generator: ((String, CodeGet) -> Unit) -> Unit)
+class CodeObjectInit(val generator: ((CodeGet, CodeGet) -> Unit) -> Unit)
 
 
 class DomainSlot<A, C> {

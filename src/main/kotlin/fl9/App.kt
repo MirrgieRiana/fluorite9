@@ -69,8 +69,9 @@ fun getStandardCompiler(): Any = { node: Node ->
                 CodeGet(code {
                     !"const v$id = {};\n"
                     codeMain.generator { key, code ->
+                        !key.head
                         !code.head
-                        !"v$id[${JSON.stringify(key)}] = ${code.body};\n"
+                        !"v$id[${key.body}] = ${code.body};\n"
                     }
                 }, "v$id")
             }
@@ -218,79 +219,22 @@ fun getStandardCompiler(): Any = { node: Node ->
         left_exclamation { get(leftUnaryOperatorGetter { "!runtime.toBoolean($it)" }) }
         left_dollar_number { get(leftUnaryOperatorGetter { "runtime.getLength($it)" }) }
 
-        plus {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = ${codeLeft.body} + ${codeRight.body};\n"
-                }, "v$id")
-            }
+        fun binaryOperatorGetter(function: (String, String) -> String): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeGet = {
+            val codeLeft = value.left.mustGet(context)
+            val codeRight = value.right.mustGet(context)
+            val id = context.nextId()
+            CodeGet(code {
+                !codeLeft.head
+                !codeRight.head
+                !"const v$id = ${function(codeLeft.body, codeRight.body)};\n"
+            }, "v$id")
         }
-        minus {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = ${codeLeft.body} - ${codeRight.body};\n"
-                }, "v$id")
-            }
-        }
-        asterisk {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = ${codeLeft.body} * ${codeRight.body};\n"
-                }, "v$id")
-            }
-        }
-        slash {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = ${codeLeft.body} / ${codeRight.body};\n"
-                }, "v$id")
-            }
-        }
-
-        period_period {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = runtime.rangeClosed(${codeLeft.body}, ${codeRight.body});\n"
-                }, "v$id")
-            }
-        }
-        tilde {
-            get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = value.right.mustGet(context)
-                val id = context.nextId()
-                CodeGet(code {
-                    !codeLeft.head
-                    !codeRight.head
-                    !"const v$id = runtime.rangeOpened(${codeLeft.body}, ${codeRight.body});\n"
-                }, "v$id")
-            }
-        }
+        asterisk { get(binaryOperatorGetter { left, right -> "runtime.multiply($left, $right)" }) }
+        slash { get(binaryOperatorGetter { left, right -> "runtime.divide($left, $right)" }) }
+        plus { get(binaryOperatorGetter { left, right -> "runtime.add($left, $right)" }) }
+        minus { get(binaryOperatorGetter { left, right -> "runtime.subtract($left, $right)" }) }
+        period_period { get(binaryOperatorGetter { left, right -> "runtime.rangeClosed($left, $right)" }) }
+        tilde { get(binaryOperatorGetter { left, right -> "runtime.rangeOpened($left, $right)" }) }
 
         minus_greater {
             get {
@@ -384,14 +328,20 @@ fun getStandardCompiler(): Any = { node: Node ->
             }
             run { value.left.mustSet(context).consumer(value.right.mustGet(context)) }
             objectInit {
-                if (value.left.type == "identifier") {
+                value.left.maybe(identifier) { key ->
                     val codeRight = value.right.mustGet(context)
-                    CodeObjectInit { consumer ->
-                        consumer(value.left.value.unsafeCast<String>(), codeRight)
+                    return@objectInit CodeObjectInit { consumer ->
+                        consumer(CodeGet("", JSON.stringify(key)), codeRight)
                     }
-                } else {
-                    throw Exception("Illegal Operator Argument: ${value.left.type} = ${value.right.type}")
                 }
+                if (value.left.isType(round)) {
+                    val codeLeft = value.left.mustGet(context)
+                    val codeRight = value.right.mustGet(context)
+                    return@objectInit CodeObjectInit { consumer ->
+                        consumer(codeLeft, codeRight)
+                    }
+                }
+                throw Exception("Illegal Operator Argument: ${value.left.type} = ${value.right.type}")
             }
         }
 
@@ -481,6 +431,12 @@ fun getStandardCompiler(): Any = { node: Node ->
         "NAN" { get { CodeGet("", "NaN") } }
         "INFINITY" { get { CodeGet("", "Infinity") } }
         "UNDEFINED" { get { CodeGet("", "undefined") } }
+        "OPERATOR_TO_STRING" { get { CodeGet("", "(runtime.symbolToString)") } }
+        "OPERATOR_ADD" { get { CodeGet("", "(runtime.symbolAdd)") } }
+        "OPERATOR_SUBTRACT" { get { CodeGet("", "(runtime.symbolSubtract)") } }
+        "OPERATOR_MULTIPLY" { get { CodeGet("", "(runtime.symbolMultiply)") } }
+        "OPERATOR_DIVIDE" { get { CodeGet("", "(runtime.symbolDivide)") } }
+        "OPERATOR_STREAM" { get { CodeGet("", "(runtime.symbolStream)") } }
     }
 
     val code = node.mustGet(context)
