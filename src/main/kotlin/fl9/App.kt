@@ -399,9 +399,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                 val codes = value.map { it.mustArrayInit(context) }
                 CodeArrayInit { consumer ->
                     codes.forEach { code ->
-                        code.generator { code2 ->
-                            consumer(code2)
-                        }
+                        code.generator(consumer)
                     }
                 }
             }
@@ -409,9 +407,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                 val codes = value.map { it.mustObjectInit(context) }
                 CodeObjectInit { consumer ->
                     codes.forEach { code ->
-                        code.generator { key2, code2 ->
-                            consumer(key2, code2)
-                        }
+                        code.generator(consumer)
                     }
                 }
             }
