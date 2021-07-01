@@ -880,7 +880,11 @@
         var codeRight = mustGet($receiver.value.right, closure$context_0);
         return new CodeObjectInit(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_7(key, codeRight));
       }if (isType($receiver.value.left, round)) {
-        var codeLeft = mustGet($receiver.value.left, closure$context);
+        var $this = closure$context.aliases;
+        $this.push();
+        var result = mustGet($receiver.value.left, closure$context);
+        $this.pop();
+        var codeLeft = result;
         var codeRight_0 = mustGet($receiver.value.right, closure$context);
         return new CodeObjectInit(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_15(codeLeft, codeRight_0));
       }throw Exception_init('Illegal Operator Argument: ' + $receiver.value.left.type + ' = ' + $receiver.value.right.type);
