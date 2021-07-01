@@ -38,6 +38,8 @@
     - [オーバーライド](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
   - [閉じた範囲 `start .. end`](#%E9%96%89%E3%81%98%E3%81%9F%E7%AF%84%E5%9B%B2-start--end)
   - [開いた範囲 `start ~ endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
+  - [論理演算子 `left && right` `left || right`](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90-left--right-left--right)
+    - [条件文としての論理演算子](#%E6%9D%A1%E4%BB%B6%E6%96%87%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AE%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
   - [ラムダ式 `arguments -> body`](#%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F-arguments---body)
     - [引数](#%E5%BC%95%E6%95%B0)
     - [高階関数](#%E9%AB%98%E9%9A%8E%E9%96%A2%E6%95%B0)
