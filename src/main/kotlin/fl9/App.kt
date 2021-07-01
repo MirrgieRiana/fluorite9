@@ -239,6 +239,74 @@ fun getStandardCompiler(): Any = { node: Node ->
         period_period { get(binaryOperatorGetter { left, right -> "runtime.rangeClosed($left, $right)" }) }
         tilde { get(binaryOperatorGetter { left, right -> "runtime.rangeOpened($left, $right)" }) }
 
+        ampersand_ampersand {
+            get {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                val id = context.nextId()
+                CodeGet(code {
+                    !codeLeft.head
+                    !"let v$id;\n"
+                    !"if (runtime.toBoolean(${codeLeft.body})) {\n"
+                    indent {
+                        !codeRight.head
+                        !"v$id = ${codeRight.body};\n"
+                    }
+                    !"} else {\n"
+                    indent {
+                        !"v$id = ${codeLeft.body};\n"
+                    }
+                    !"}\n"
+                }, "v$id")
+            }
+            run {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                CodeRun(code {
+                    !codeLeft.head
+                    !"if (runtime.toBoolean(${codeLeft.body})) {\n"
+                    indent {
+                        !codeRight.head
+                    }
+                    !"}\n"
+                })
+            }
+        }
+
+        pipe_pipe {
+            get {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                val id = context.nextId()
+                CodeGet(code {
+                    !codeLeft.head
+                    !"let v$id;\n"
+                    !"if (!runtime.toBoolean(${codeLeft.body})) {\n"
+                    indent {
+                        !codeRight.head
+                        !"v$id = ${codeRight.body};\n"
+                    }
+                    !"} else {\n"
+                    indent {
+                        !"v$id = ${codeLeft.body};\n"
+                    }
+                    !"}\n"
+                }, "v$id")
+            }
+            run {
+                val codeLeft = value.left.mustGet(context)
+                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                CodeRun(code {
+                    !codeLeft.head
+                    !"if (!runtime.toBoolean(${codeLeft.body})) {\n"
+                    indent {
+                        !codeRight.head
+                    }
+                    !"}\n"
+                })
+            }
+        }
+
         minus_greater {
             get {
 

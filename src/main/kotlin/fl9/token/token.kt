@@ -56,6 +56,10 @@ val minus = Token<BinaryOperatorArgument>("minus")
 val period_period = Token<BinaryOperatorArgument>("period_period")
 val tilde = Token<BinaryOperatorArgument>("tilde")
 
+val ampersand_ampersand = Token<BinaryOperatorArgument>("ampersand_ampersand")
+
+val pipe_pipe = Token<BinaryOperatorArgument>("pipe_pipe")
+
 val comma = Token<Array<Node>>("comma")
 
 val minus_greater = Token<BinaryOperatorArgument>("minus_greater")

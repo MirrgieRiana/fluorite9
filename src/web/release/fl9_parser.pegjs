@@ -121,11 +121,21 @@ Range
   / "~"  { return (left, right) => node("tilde"        , {left, right}); }
   ) _ Add)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
+And
+  = head:Range tail:(_ (
+    "&&" { return (left, right) => node("ampersand_ampersand" , {left, right}); }
+  ) _ Range)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+
+Or
+  = head:And tail:(_ (
+    "||" { return (left, right) => node("pipe_pipe" , {left, right}); }
+  ) _ And)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+
 Comma
-  = head:(Range / Void) tail:(_ "," _ (Range / Void))+ {
+  = head:(Or / Void) tail:(_ "," _ (Or / Void))+ {
     return node("comma", [head, ...tail.map(item => item[3])]);
   }
-  / Range
+  / Or
 
 Assignment
   = head:(Comma _ (
