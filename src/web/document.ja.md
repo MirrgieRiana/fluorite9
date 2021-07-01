@@ -240,6 +240,33 @@ PI
 a:123;b:456,789;
 ```
 
+### 式によるキーの指定
+
+キーの部分に`( )`で囲われた式を指定すると、その値を評価してキー名にします。
+
+```
+{
+  ("label_" + 1) = "One";
+}
+```
+↓
+```
+label_1:One;
+```
+
+これは演算子オーバーライドを行うのに必須です。
+
+```
+obj : {
+  (OPERATOR_ADD) = left, right -> 4 + right;
+};
+obj + 6
+```
+↓
+```
+10
+```
+
 ## ブロック呼び出し `function(closure)`
 
 `closure`はコードブロックとして`function`に渡されます。
@@ -367,12 +394,12 @@ LOG[256; 2]
 
 ### オーバーライド
 
-オブジェクトは四則演算の挙動を次のメソッドで受けます。
+オブジェクトは四則演算の挙動を次のシンボル名のメソッドで受けます。
 
-- `OPERATOR_ADD`
-- `OPERATOR_SUBTRACT`
-- `OPERATOR_MULTIPLY`
-- `OPERATOR_DIVIDE`
+- `(OPERATOR_ADD)`
+- `(OPERATOR_SUBTRACT)`
+- `(OPERATOR_MULTIPLY)`
+- `(OPERATOR_DIVIDE)`
 
 ```
 obj : {
