@@ -22,6 +22,7 @@
   - [括弧 `(formula)`](#%E6%8B%AC%E5%BC%A7-formula)
   - [配列初期化子 `[item; ...]`](#%E9%85%8D%E5%88%97%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-item-)
   - [オブジェクト初期化子 `{key = value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
+    - [式によるキーの指定](#%E5%BC%8F%E3%81%AB%E3%82%88%E3%82%8B%E3%82%AD%E3%83%BC%E3%81%AE%E6%8C%87%E5%AE%9A)
   - [ブロック呼び出し `function(closure)`](#%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionclosure)
   - [関数呼び出し `function[argument; ...]`](#%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionargument-)
     - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
