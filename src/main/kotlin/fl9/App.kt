@@ -335,7 +335,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                     }
                 }
                 if (value.left.isType(round)) {
-                    val codeLeft = value.left.mustGet(context)
+                    val codeLeft = context.aliases.stack { value.left.mustGet(context) }
                     val codeRight = value.right.mustGet(context)
                     return@objectInit CodeObjectInit { consumer ->
                         consumer(codeLeft, codeRight)
