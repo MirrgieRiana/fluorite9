@@ -36,6 +36,7 @@
   - [パイプ `stream | mapper`](#%E3%83%91%E3%82%A4%E3%83%97-stream--mapper)
   - [文 `line; ...`](#%E6%96%87-line-)
     - [式と文](#%E5%BC%8F%E3%81%A8%E6%96%87)
+    - [丸括弧と文](#%E4%B8%B8%E6%8B%AC%E5%BC%A7%E3%81%A8%E6%96%87)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
