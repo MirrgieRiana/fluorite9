@@ -1,7 +1,14 @@
 package fl9
 
+import fl9.token.Token
+
 // NodeクラスはJSが与えるのでメンバメソッドを持てない
 data class Node(val type: String, val value: Any)
+
+fun <T> Node.isType(token: Token<T>) = type == token.type
+inline fun <T> Node.maybe(token: Token<T>, block: (T) -> Unit) {
+    if (isType(token)) block(value.unsafeCast<T>()) // TODO 型安全
+}
 
 fun Node.mustGet(context: Context) = mayGet(context) ?: throw Exception("Unknown Operator: ${type}/get")
 fun Node.mustRun(context: Context) = mayRun(context) ?: throw Exception("Unknown Operator: ${type}/run")

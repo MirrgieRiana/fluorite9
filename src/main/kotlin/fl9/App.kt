@@ -294,36 +294,51 @@ fun getStandardCompiler(): Any = { node: Node ->
 
         minus_greater {
             get {
-                if (value.left.type == "identifier") {
-                    val name = value.left.value.unsafeCast<String>()
-                    val internalName = name.replace("""[^a-zA-Z0-9_]""".toRegex(), "")
-                    val idArgument = context.nextId()
-                    val codeRight = context.aliases.stack {
-                        context.aliases[name] = Alias {
-                            get { CodeGet("", "v$idArgument\$$internalName") }
+
+                class Argument(val name: String, val code: String)
+
+                val arguments = value.left.let { node ->
+                    node.maybe(empty_round) { return@let null }
+                    node.maybe(round) { value -> return@let value.main }
+                    node.maybe(empty_square) { return@let null }
+                    node.maybe(square) { value -> return@let value.main }
+                    return@let node
+                }.let { node ->
+                    if (node == null) return@let arrayOf()
+                    node.maybe(comma) { value -> return@let value }
+                    node.maybe(semicolon) { value -> return@let value }
+                    return@let arrayOf(node)
+                }.mapNotNull { node ->
+                    if (node.isType(void)) return@mapNotNull null
+                    node.maybe(identifier) { value -> return@mapNotNull value }
+                    throw Exception("Illegal Operator Argument: ${node.type}")
+                }.map { Argument(it, "v${context.nextId()}\$${it.replace("""[^a-zA-Z0-9_]""".toRegex(), "")}") }
+
+                val codeRight = context.aliases.stack {
+                    arguments.forEach { argument ->
+                        context.aliases[argument.name] = Alias {
+                            get { CodeGet("", argument.code) }
                             set {
                                 CodeSet { code ->
                                     CodeRun(code {
                                         !code.head
-                                        !"v$idArgument\$$internalName = ${code.body};\n"
+                                        !"${argument.code} = ${code.body};\n"
                                     })
                                 }
                             }
                         }
-                        value.right.mustGet(context)
                     }
-                    val id = context.nextId()
-                    CodeGet(code {
-                        !"const v$id = function(v$idArgument\$$internalName) {\n"
-                        indent {
-                            !codeRight.head
-                            !"return ${codeRight.body};\n"
-                        }
-                        !"};\n"
-                    }, "v$id")
-                } else {
-                    throw Exception("Illegal Operator Argument: ${value.left.type} -> ${value.right.type}")
+                    value.right.mustGet(context)
                 }
+                val id = context.nextId()
+                CodeGet(code {
+                    !"const v$id = function(${arguments.map { argument -> argument.code }.joinToString(", ")}) {\n"
+                    indent {
+                        !codeRight.head
+                        !"return ${codeRight.body};\n"
+                    }
+                    !"};\n"
+                }, "v$id")
             }
         }
 
