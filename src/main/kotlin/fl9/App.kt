@@ -32,7 +32,10 @@ fun getStandardCompiler(): Any = { node: Node ->
         }
 
         empty_round { get { CodeGet("", "(runtime.empty)") } }
-        round { get { context.aliases.stack { value.main.mustGet(context) } } }
+        round {
+            get { context.aliases.stack { value.main.mustGet(context) } }
+            run { context.aliases.stack { value.main.mustRun(context) } }
+        }
         empty_square {
             get {
                 val id = context.nextId()
