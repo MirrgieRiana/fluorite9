@@ -26,6 +26,15 @@
   - [関数呼び出し `function[argument; ...]`](#%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionargument-)
     - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
     - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
+  - [四則演算 `left + right` `left - right` `left * right` `left / right`](#%E5%9B%9B%E5%89%87%E6%BC%94%E7%AE%97-left--right-left---right-left--right-left--right)
+    - [基本](#%E5%9F%BA%E6%9C%AC)
+    - [余りの出る除算 `left / right`](#%E4%BD%99%E3%82%8A%E3%81%AE%E5%87%BA%E3%82%8B%E9%99%A4%E7%AE%97-left--right)
+    - [文字列結合 `"left" + "right"`](#%E6%96%87%E5%AD%97%E5%88%97%E7%B5%90%E5%90%88-left--right)
+    - [文字列の繰り返し `"string" * number`](#%E6%96%87%E5%AD%97%E5%88%97%E3%81%AE%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97-string--number)
+    - [配列の結合 `[left] + [right]`](#%E9%85%8D%E5%88%97%E3%81%AE%E7%B5%90%E5%90%88-left--right)
+    - [配列の繰り返し `[array] * number`](#%E9%85%8D%E5%88%97%E3%81%AE%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97-array--number)
+    - [型の自動変換](#%E5%9E%8B%E3%81%AE%E8%87%AA%E5%8B%95%E5%A4%89%E6%8F%9B)
+    - [オーバーライド](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
   - [閉じた範囲 `start .. end`](#%E9%96%89%E3%81%98%E3%81%9F%E7%AF%84%E5%9B%B2-start--end)
   - [開いた範囲 `start ~ endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
   - [ラムダ式 `arguments -> body`](#%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F-arguments---body)
@@ -37,6 +46,8 @@
   - [文 `line; ...`](#%E6%96%87-line-)
     - [式と文](#%E5%BC%8F%E3%81%A8%E6%96%87)
     - [丸括弧と文](#%E4%B8%B8%E6%8B%AC%E5%BC%A7%E3%81%A8%E6%96%87)
+- [高度なチュートリアル](#%E9%AB%98%E5%BA%A6%E3%81%AA%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB)
+  - [演算子オーバーライド](#%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
