@@ -29,6 +29,7 @@
   - [閉じた範囲 `start .. end`](#%E9%96%89%E3%81%98%E3%81%9F%E7%AF%84%E5%9B%B2-start--end)
   - [開いた範囲 `start ~ endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
   - [ラムダ式 `arguments -> body`](#%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F-arguments---body)
+    - [引数](#%E5%BC%95%E6%95%B0)
     - [高階関数](#%E9%AB%98%E9%9A%8E%E9%96%A2%E6%95%B0)
   - [変数宣言 `var : val;`](#%E5%A4%89%E6%95%B0%E5%AE%A3%E8%A8%80-var--val)
   - [代入 `var = val;`](#%E4%BB%A3%E5%85%A5-var--val)
