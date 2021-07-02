@@ -23,12 +23,6 @@ type git > /dev/null || exit
     git pull || exit
   fi
 
-  # releaseディレクトリに移動
-  cd release || exit
-
-  # コンパイル
-  bash make.sh || exit
-
 ) || exit
 
 make_command() {
