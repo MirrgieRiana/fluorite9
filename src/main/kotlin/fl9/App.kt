@@ -239,9 +239,59 @@ fun getStandardCompiler(): Any = { node: Node ->
         period_period { get(binaryOperatorGetter { left, right -> "runtime.rangeClosed($left, $right)" }) }
         tilde { get(binaryOperatorGetter { left, right -> "runtime.rangeOpened($left, $right)" }) }
 
+        fun binaryConditionOperatorGetter(function: (String) -> String): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeGet = {
+            val codeLeft = value.left.mustGet(context)
+            val codeRight = context.aliases.stack { value.right.mustGet(context) }
+            val id = context.nextId()
+            CodeGet(code {
+                !codeLeft.head
+                !"let v$id;\n"
+                !"if (${function(codeLeft.body)}) {\n"
+                indent {
+                    !codeRight.head
+                    !"v$id = ${codeRight.body};\n"
+                }
+                !"} else {\n"
+                indent {
+                    !"v$id = ${codeLeft.body};\n"
+                }
+                !"}\n"
+            }, "v$id")
+        }
+
+        fun binaryConditionOperatorRunner(function: (String) -> String): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeRun = {
+            val codeLeft = value.left.mustGet(context)
+            val codeRight = context.aliases.stack { value.right.mustRun(context) }
+            CodeRun(code {
+                !codeLeft.head
+                !"if (${function(codeLeft.body)}) {\n"
+                indent {
+                    !codeRight.head
+                }
+                !"}\n"
+            })
+        }
         ampersand_ampersand {
+            get(binaryConditionOperatorGetter { "runtime.toBoolean($it)" })
+            run(binaryConditionOperatorRunner { "runtime.toBoolean($it)" })
+        }
+        pipe_pipe {
+            get(binaryConditionOperatorGetter { "!runtime.toBoolean($it)" })
+            run(binaryConditionOperatorRunner { "!runtime.toBoolean($it)" })
+        }
+        question_colon {
+            get(binaryConditionOperatorGetter { "$it === undefined" })
+            run(binaryConditionOperatorRunner { "$it === undefined" })
+        }
+        exclamation_colon {
+            get(binaryConditionOperatorGetter { "$it !== undefined" })
+            run(binaryConditionOperatorRunner { "$it !== undefined" })
+        }
+
+        ternary_question_colon {
             get {
                 val codeLeft = value.left.mustGet(context)
+                val codeCenter = context.aliases.stack { value.center.mustGet(context) }
                 val codeRight = context.aliases.stack { value.right.mustGet(context) }
                 val id = context.nextId()
                 CodeGet(code {
@@ -249,22 +299,28 @@ fun getStandardCompiler(): Any = { node: Node ->
                     !"let v$id;\n"
                     !"if (runtime.toBoolean(${codeLeft.body})) {\n"
                     indent {
-                        !codeRight.head
-                        !"v$id = ${codeRight.body};\n"
+                        !codeCenter.head
+                        !"v$id = ${codeCenter.body};\n"
                     }
                     !"} else {\n"
                     indent {
-                        !"v$id = ${codeLeft.body};\n"
+                        !codeRight.head
+                        !"v$id = ${codeRight.body};\n"
                     }
                     !"}\n"
                 }, "v$id")
             }
             run {
                 val codeLeft = value.left.mustGet(context)
-                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                val codeCenter = context.aliases.stack { value.center.mustRun(context) }
+                val codeRight = context.aliases.stack { value.right.mustRun(context) }
                 CodeRun(code {
                     !codeLeft.head
                     !"if (runtime.toBoolean(${codeLeft.body})) {\n"
+                    indent {
+                        !codeCenter.head
+                    }
+                    !"} else {\n"
                     indent {
                         !codeRight.head
                     }
@@ -272,33 +328,35 @@ fun getStandardCompiler(): Any = { node: Node ->
                 })
             }
         }
-
-        pipe_pipe {
+        exclamation_question {
             get {
                 val codeLeft = value.left.mustGet(context)
                 val codeRight = context.aliases.stack { value.right.mustGet(context) }
                 val id = context.nextId()
                 CodeGet(code {
-                    !codeLeft.head
                     !"let v$id;\n"
-                    !"if (!runtime.toBoolean(${codeLeft.body})) {\n"
+                    !"try {\n"
+                    indent {
+                        !codeLeft.head
+                        !"v$id = ${codeLeft.body};\n"
+                    }
+                    !"} catch (e) {\n"
                     indent {
                         !codeRight.head
                         !"v$id = ${codeRight.body};\n"
-                    }
-                    !"} else {\n"
-                    indent {
-                        !"v$id = ${codeLeft.body};\n"
                     }
                     !"}\n"
                 }, "v$id")
             }
             run {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = context.aliases.stack { value.right.mustGet(context) }
+                val codeLeft = value.left.mustRun(context)
+                val codeRight = context.aliases.stack { value.right.mustRun(context) }
                 CodeRun(code {
-                    !codeLeft.head
-                    !"if (!runtime.toBoolean(${codeLeft.body})) {\n"
+                    !"try {\n"
+                    indent {
+                        !codeLeft.head
+                    }
+                    !"} catch (e) {\n"
                     indent {
                         !codeRight.head
                     }
@@ -498,6 +556,7 @@ fun getStandardCompiler(): Any = { node: Node ->
         "NAN" { get { CodeGet("", "NaN") } }
         "INFINITY" { get { CodeGet("", "Infinity") } }
         "UNDEFINED" { get { CodeGet("", "undefined") } }
+        "ERROR" { get { CodeGet("", "(message => { throw new Error(runtime.toString(message)); })") } }
         "OPERATOR_TO_STRING" { get { CodeGet("", "(runtime.symbolToString)") } }
         "OPERATOR_ADD" { get { CodeGet("", "(runtime.symbolAdd)") } }
         "OPERATOR_SUBTRACT" { get { CodeGet("", "(runtime.symbolSubtract)") } }

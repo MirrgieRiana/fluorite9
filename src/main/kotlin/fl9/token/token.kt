@@ -10,6 +10,7 @@ class RightEmptyBracketsArgument(val left: Node)
 class RightBracketsArgument(val left: Node, val main: Node)
 class LeftUnaryOperatorArgument(val right: Node)
 class BinaryOperatorArgument(val left: Node, val right: Node)
+class TernaryOperatorArgument(val left: Node, val center: Node, val right: Node)
 
 val void = Token<Unit>("void")
 
@@ -59,6 +60,11 @@ val tilde = Token<BinaryOperatorArgument>("tilde")
 val ampersand_ampersand = Token<BinaryOperatorArgument>("ampersand_ampersand")
 
 val pipe_pipe = Token<BinaryOperatorArgument>("pipe_pipe")
+
+val ternary_question_colon = Token<TernaryOperatorArgument>("ternary_question_colon")
+val question_colon = Token<BinaryOperatorArgument>("question_colon")
+val exclamation_colon = Token<BinaryOperatorArgument>("exclamation_colon")
+val exclamation_question = Token<BinaryOperatorArgument>("exclamation_question")
 
 val comma = Token<Array<Node>>("comma")
 

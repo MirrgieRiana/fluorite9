@@ -131,11 +131,22 @@ Or
     "||" { return (left, right) => node("pipe_pipe" , {left, right}); }
   ) _ And)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
-Comma
-  = head:(Or / Void) tail:(_ "," _ (Or / Void))+ {
-    return node("comma", [head, ...tail.map(item => item[3])]);
+If
+  = left:Or _ "?" _ center:If _ ":" _ right:If { return node("ternary_question_colon", {left, center, right});
+  }
+  / left:Or _ "?:" _ right:If { return node("question_colon", {left, right});
+  }
+  / left:Or _ "!:" _ right:If { return node("exclamation_colon", {left, right});
+  }
+  / left:Or _ "!?" _ right:If { return node("exclamation_question", {left, right});
   }
   / Or
+
+Comma
+  = head:(If / Void) tail:(_ "," _ (If / Void))+ {
+    return node("comma", [head, ...tail.map(item => item[3])]);
+  }
+  / If
 
 Assignment
   = head:(Comma _ (
