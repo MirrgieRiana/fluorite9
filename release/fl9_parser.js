@@ -179,11 +179,7 @@ function peg$parse(input, options) {
       peg$c35 = "\\$",
       peg$c36 = peg$literalExpectation("\\$", false),
       peg$c37 = function() { return "$" ; },
-      peg$c38 = function(main) {
-          if (main.length == 0) return node("string", "");
-          if (main.length == 1) return main[0];
-          return node("join", main);
-        },
+      peg$c38 = function(main) { return node("join", main); },
       peg$c39 = /^[a-zA-Z_]/,
       peg$c40 = peg$classExpectation([["a", "z"], ["A", "Z"], "_"], false, false),
       peg$c41 = /^[a-zA-Z_0-9]/,
