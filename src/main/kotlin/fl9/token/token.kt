@@ -11,6 +11,7 @@ class RightBracketsArgument(val left: Node, val main: Node)
 class LeftUnaryOperatorArgument(val right: Node)
 class BinaryOperatorArgument(val left: Node, val right: Node)
 class TernaryOperatorArgument(val left: Node, val center: Node, val right: Node)
+class ComparisonArgument(val types: Array<String>, val nodes: Array<Node>)
 
 val void = Token<Unit>("void")
 
@@ -56,6 +57,16 @@ val minus = Token<BinaryOperatorArgument>("minus")
 
 val period_period = Token<BinaryOperatorArgument>("period_period")
 val tilde = Token<BinaryOperatorArgument>("tilde")
+
+val comparison = Token<ComparisonArgument>("comparison")
+val equal_equal_equal = Token<Unit>("equal_equal_equal")
+val exclamation_equal_equal = Token<Unit>("exclamation_equal_equal")
+val equal_equal = Token<Unit>("equal_equal")
+val exclamation_equal = Token<Unit>("exclamation_equal")
+val greater_equal = Token<Unit>("greater_equal")
+val less_equal = Token<Unit>("less_equal")
+val greater = Token<Unit>("greater")
+val less = Token<Unit>("less")
 
 val ampersand_ampersand = Token<BinaryOperatorArgument>("ampersand_ampersand")
 

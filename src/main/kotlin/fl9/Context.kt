@@ -8,6 +8,7 @@ class CodeRun(val head: String)
 class CodeSet(val consumer: (CodeGet) -> CodeRun)
 class CodeArrayInit(val generator: ((CodeGet) -> Unit) -> Unit)
 class CodeObjectInit(val generator: ((CodeGet, CodeGet) -> Unit) -> Unit)
+class CodeCompare(val comparator: (String, String) -> String)
 
 
 class DomainSlot<A, C> {
@@ -28,6 +29,7 @@ class Operator<V> {
     val set = DomainSlot<OperatorCompilerArgument<V>, CodeSet>()
     val arrayInit = DomainSlot<OperatorCompilerArgument<V>, CodeArrayInit>()
     val objectInit = DomainSlot<OperatorCompilerArgument<V>, CodeObjectInit>()
+    val compare = DomainSlot<OperatorCompilerArgument<V>, CodeCompare>()
 
     constructor() {
 
@@ -55,6 +57,7 @@ class Alias {
     val set = DomainSlot<AliasCompilerArgument, CodeSet>()
     val arrayInit = DomainSlot<AliasCompilerArgument, CodeArrayInit>()
     val objectInit = DomainSlot<AliasCompilerArgument, CodeObjectInit>()
+    val compare = DomainSlot<AliasCompilerArgument, CodeCompare>()
 
     constructor() {
 

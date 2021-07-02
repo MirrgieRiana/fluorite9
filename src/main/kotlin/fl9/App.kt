@@ -245,6 +245,45 @@ fun getStandardCompiler(): Any = { node: Node ->
         period_period { get(binaryOperatorGetter { left, right -> "runtime.rangeClosed($left, $right)" }) }
         tilde { get(binaryOperatorGetter { left, right -> "runtime.rangeOpened($left, $right)" }) }
 
+        comparison {
+            get {
+                val idVars = value.nodes.indices.map { "v${context.nextId()}\$$it" }
+                val idVarResult = "v${context.nextId()}\$result"
+                val idLabel = "l" + context.nextId()
+                val codesOperator = value.types.indices.map { Node(value.types[it], Unit).mustCompare(context) }
+                val codesTerm = value.nodes.map { it.mustGet(context) }
+                CodeGet(code {
+                    !"let $idVarResult;\n"
+                    !"$idLabel:\n"
+                    !"{\n"
+                    indent {
+                        !codesTerm[0].head
+                        !"const ${idVars[0]} = ${codesTerm[0].body};\n"
+                        value.types.indices.forEach { i ->
+                            !codesTerm[i + 1].head
+                            !"const ${idVars[i + 1]} = ${codesTerm[i + 1].body};\n"
+                            !"if (!(${codesOperator[i].comparator(idVars[i], idVars[i + 1])})) {\n"
+                            indent {
+                                !"$idVarResult = false;\n"
+                                !"break $idLabel;\n"
+                            }
+                            !"}\n"
+                        }
+                        !"$idVarResult = true;\n"
+                    }
+                    !"}\n"
+                }, idVarResult)
+            }
+        }
+        equal_equal { compare { CodeCompare { left, right -> "$left == $right" } } }
+        exclamation_equal { compare { CodeCompare { left, right -> "$left != $right" } } }
+        equal_equal_equal { compare { CodeCompare { left, right -> "$left === $right" } } }
+        exclamation_equal_equal { compare { CodeCompare { left, right -> "$left !== $right" } } }
+        greater { compare { CodeCompare { left, right -> "$left > $right" } } }
+        less { compare { CodeCompare { left, right -> "$left < $right" } } }
+        greater_equal { compare { CodeCompare { left, right -> "$left >= $right" } } }
+        less_equal { compare { CodeCompare { left, right -> "$left <= $right" } } }
+
         fun binaryConditionOperatorGetter(function: (String) -> String): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeGet = {
             val codeLeft = value.left.mustGet(context)
             val codeRight = context.aliases.stack { value.right.mustGet(context) }

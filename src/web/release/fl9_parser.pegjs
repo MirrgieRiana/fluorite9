@@ -117,10 +117,26 @@ Range
   / "~"  { return (left, right) => node("tilde"        , {left, right}); }
   ) _ Add)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
-And
+Compare
   = head:Range tail:(_ (
+    "===" { return "equal_equal_equal"; }
+  / "!==" { return "exclamation_equal_equal"; }
+  / "==" { return "equal_equal"; }
+  / "!=" { return "exclamation_equal"; }
+  / ">=" { return "greater_equal"; }
+  / "<=" { return "less_equal"; }
+  / ">" { return "greater"; }
+  / "<" { return "less"; }
+  ) _ Range)+ { return node("comparison", {
+    types: [...tail.map(right => right[1])],
+    nodes: [head, ...tail.map(right => right[3])],
+  }); }
+  / Range
+
+And
+  = head:Compare tail:(_ (
     "&&" { return (left, right) => node("ampersand_ampersand" , {left, right}); }
-  ) _ Range)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+  ) _ Compare)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Or
   = head:And tail:(_ (
