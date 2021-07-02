@@ -509,6 +509,34 @@ fun getStandardCompiler(): Any = { node: Node ->
                     !"});\n"
                 }, "v$id")
             }
+            run {
+                val codeLeft = value.left.mustGet(context)
+                val idArgument = context.nextId()
+                val idArgument2 = context.nextId()
+                val codeRight = context.aliases.stack {
+                    context.aliases["_"] = Alias {
+                        get { CodeGet("", "v$idArgument") }
+                        set {
+                            CodeSet { code ->
+                                CodeRun(code {
+                                    !code.head
+                                    !"v$idArgument = ${code.body};\n"
+                                })
+                            }
+                        }
+                    }
+                    value.right.mustRun(context)
+                }
+                CodeRun(code {
+                    !codeLeft.head
+                    !"for (let v$idArgument2 of runtime.toStream(${codeLeft.body})[runtime.symbolStream]()) {\n"
+                    indent {
+                        !"let v$idArgument = v$idArgument2;\n"
+                        !codeRight.head
+                    }
+                    !"}\n"
+                })
+            }
         }
 
         semicolon {
