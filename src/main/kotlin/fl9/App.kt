@@ -17,14 +17,20 @@ fun getStandardCompiler(): Any = { node: Node ->
         string { get { CodeGet("", JSON.stringify(value)) } }
         join {
             get {
-                var codes = value.map { it.mustGet(context) }
-                val id = context.nextId()
-                CodeGet(code {
-                    codes.forEach {
-                        !it.head
-                    }
-                    !"const v$id = `${codes.joinToString("") { "\${runtime.toString(${it.body})}" }}`;\n"
-                }, "v$id")
+                if (value.isEmpty()) {
+                    CodeGet("", "\"\"")
+                } else if (value.size == 1 && value[0].isType(string)) {
+                    value[0].mustGet(context)
+                } else {
+                    val codes = value.map { it.mustGet(context) }
+                    val id = context.nextId()
+                    CodeGet(code {
+                        codes.forEach {
+                            !it.head
+                        }
+                        !"const v$id = `${codes.joinToString("") { "\${runtime.toString(${it.body})}" }}`;\n"
+                    }, "v$id")
+                }
             }
         }
         identifier {

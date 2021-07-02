@@ -32,11 +32,7 @@ EmbedString
     / "\\$"  { return "$" ; }
     )+ { return node("string", main.join("")); }
   / DollarFactor
-  )* "\"" {
-    if (main.length == 0) return node("string", "");
-    if (main.length == 1) return main[0];
-    return node("join", main);
-  }
+  )* "\"" { return node("join", main); }
 
 Identifier
   = [a-zA-Z_][a-zA-Z_0-9]* { return node("identifier", text()); }
