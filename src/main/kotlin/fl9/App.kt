@@ -8,6 +8,7 @@ fun getStandardCompiler(): Any = { node: Node ->
 
         void {
             get { CodeGet("", "(runtime.void)") }
+            run { CodeRun("") }
             arrayInit { CodeArrayInit { } }
             objectInit { CodeObjectInit { } }
         }
