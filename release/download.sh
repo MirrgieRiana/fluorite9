@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+type git > /dev/null || exit
+
 (
 
   # コンテナディレクトリ内に移動
