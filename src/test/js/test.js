@@ -78,4 +78,87 @@ function assertEquals(expected, src) {
 
 }
 
+// 等価性比較
+{
+
+  // 抽象的な等価性比較
+  assertEquals(true, '    1  ==   1 ');
+  assertEquals(true, '   "1" ==   1 ');
+  assertEquals(false, '   2  ==   1 ');
+  assertEquals(false, '  "2" ==   1 ');
+  assertEquals(true, '   "1" ==  "1"');
+  assertEquals(false, '  "2" ==  "1"');
+  assertEquals(false, ' "01" ==  "1"');
+  assertEquals(true, '    1  ==  "1"');
+  assertEquals(false, '   2  ==  "1"');
+  assertEquals(true, '   01  ==  "1"');
+
+  assertEquals(!true, '   1  !=   1 ');
+  assertEquals(!true, '  "1" !=   1 ');
+  assertEquals(!false, '  2  !=   1 ');
+  assertEquals(!false, ' "2" !=   1 ');
+  assertEquals(!true, '  "1" !=  "1"');
+  assertEquals(!false, ' "2" !=  "1"');
+  assertEquals(!false, '"01" !=  "1"');
+  assertEquals(!true, '   1  !=  "1"');
+  assertEquals(!false, '  2  !=  "1"');
+  assertEquals(!true, '  01  !=  "1"');
+
+  // 厳格な等価性比較
+  assertEquals(true, '    1  ===  1 ');
+  assertEquals(false, '  "1" ===  1 ');
+  assertEquals(false, '   2  ===  1 ');
+  assertEquals(false, '  "2" ===  1 ');
+  assertEquals(true, '   "1" === "1"');
+  assertEquals(false, '  "2" === "1"');
+  assertEquals(false, ' "01" === "1"');
+  assertEquals(false, '   1  === "1"');
+  assertEquals(false, '   2  === "1"');
+  assertEquals(false, '  01  === "1"');
+
+  assertEquals(!true, '   1  !==  1 ');
+  assertEquals(!false, ' "1" !==  1 ');
+  assertEquals(!false, '  2  !==  1 ');
+  assertEquals(!false, ' "2" !==  1 ');
+  assertEquals(!true, '  "1" !== "1"');
+  assertEquals(!false, ' "2" !== "1"');
+  assertEquals(!false, '"01" !== "1"');
+  assertEquals(!false, '  1  !== "1"');
+  assertEquals(!false, '  2  !== "1"');
+  assertEquals(!false, ' 01  !== "1"');
+
+}
+
+// 大小比較
+{
+
+  // 数値の大小比較
+  {
+    assertEquals(true, ' 2 >  1');
+    assertEquals(true, ' 2 >= 1');
+    assertEquals(false, '2 <  1');
+    assertEquals(false, '2 <= 1');
+
+    assertEquals(false, '1 >  2');
+    assertEquals(false, '1 >= 2');
+    assertEquals(true, ' 1 <  2');
+    assertEquals(true, ' 1 <= 2');
+
+    assertEquals(false, '1 >  1');
+    assertEquals(true, ' 1 >= 1');
+    assertEquals(false, '1 <  1');
+    assertEquals(true, ' 1 <= 1');
+  }
+
+  // 連続した比較
+  assertEquals(true, ' 1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 2 > -5 !== 7 ');
+  assertEquals(false, '1 < 1 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 2 > -5 !== 7 ');
+  assertEquals(false, '1 < 2 <= 2 <= 3 < 40 < 5 == 5 > 3  === 3 > 0 != 2 > -5 !== 7 ');
+  assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 4 > 3  === 3 > 0 != 2 > -5 !== 7 ');
+  assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 4 > 0 != 2 > -5 !== 7 ');
+  assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 0 > -5 !== 7 ');
+  assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 2 > -5 !== -5');
+
+}
+
 console.log("Test OK");
