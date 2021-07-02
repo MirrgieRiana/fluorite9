@@ -18,7 +18,7 @@ function compile() {
   try {
     node = parser.parse(src);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     document.getElementById("node").value = "" + e;
     document.getElementById("code").value = "";
     document.getElementById("result").value = "";
@@ -31,7 +31,7 @@ function compile() {
   try {
     code = fl9_compiler.fl9.getStandardCompiler()(node);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     document.getElementById("code").value = "" + e;
     document.getElementById("result").value = "";
     return;
@@ -43,7 +43,7 @@ function compile() {
   try {
     result = eval(code)(fl9_runtime);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     document.getElementById("result").value = "" + e;
     return;
   }
@@ -53,7 +53,7 @@ function compile() {
   try {
     string = fl9_runtime.toString(result);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     document.getElementById("result").value = "" + e;
     return;
   }
