@@ -38,6 +38,15 @@
     - [オーバーライド](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
   - [閉じた範囲 `start .. end`](#%E9%96%89%E3%81%98%E3%81%9F%E7%AF%84%E5%9B%B2-start--end)
   - [開いた範囲 `start ~ endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
+  - [等号演算子 `actual == expected` `actual === expected` `actual != notExpected` `actual !== notExpected`](#%E7%AD%89%E5%8F%B7%E6%BC%94%E7%AE%97%E5%AD%90-actual--expected-actual--expected-actual--notexpected-actual--notexpected)
+    - [暗黙の型変換](#%E6%9A%97%E9%BB%99%E3%81%AE%E5%9E%8B%E5%A4%89%E6%8F%9B)
+    - [配列・オブジェクトの扱い【未実装の項目】](#%E9%85%8D%E5%88%97%E3%83%BB%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E6%89%B1%E3%81%84%E6%9C%AA%E5%AE%9F%E8%A3%85%E3%81%AE%E9%A0%85%E7%9B%AE)
+    - [演算子オーバーライド【未実装の項目】](#%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E6%9C%AA%E5%AE%9F%E8%A3%85%E3%81%AE%E9%A0%85%E7%9B%AE)
+    - [NANおよび-0の扱い](#nan%E3%81%8A%E3%82%88%E3%81%B3-0%E3%81%AE%E6%89%B1%E3%81%84)
+    - [連鎖 `a == b == c`](#%E9%80%A3%E9%8E%96-a--b--c)
+  - [不等号演算子 `left > right` `left >= right` `left < right` `left <= right`](#%E4%B8%8D%E7%AD%89%E5%8F%B7%E6%BC%94%E7%AE%97%E5%AD%90-left--right-left--right-left--right-left--right)
+    - [演算子オーバーライド【未実装の項目】](#%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E6%9C%AA%E5%AE%9F%E8%A3%85%E3%81%AE%E9%A0%85%E7%9B%AE-1)
+    - [連鎖 `a < b < c`](#%E9%80%A3%E9%8E%96-a--b--c-1)
   - [論理演算子 `left && right` `left || right`](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90-left--right-left--right)
     - [条件文としての論理演算子](#%E6%9D%A1%E4%BB%B6%E6%96%87%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AE%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
   - [三項演算子 `condition ? then : else`](#%E4%B8%89%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90-condition--then--else)
@@ -469,6 +478,181 @@ array : [1; 2; 3];
 0
 1
 2
+```
+
+## 等号演算子 `actual == expected` `actual === expected` `actual != notExpected` `actual !== notExpected`
+
+`==`は抽象的な等号演算子で、左辺の値が右辺に等しいか否かを判定します。
+`!=`はその値を単純に反転したものです。
+
+```
+[
+  10 == 10;
+  10 != 10;
+  10 == 100;
+  10 != 100;
+]
+```
+↓
+```
+TRUE,FALSE,FALSE,TRUE
+```
+
+`===`は厳格な等号演算子で、両辺の値が同一であるかを判定します。
+`!==`はその値を単純に反転したものです。
+
+```
+[
+  10 === 10;
+  10 !== 10;
+  10 === 100;
+  10 !== 100;
+]
+```
+↓
+```
+TRUE,FALSE,FALSE,TRUE
+```
+
+単純な数値同士の比較においては、両者は同じ働きをします。
+
+### 暗黙の型変換
+
+`==`は左辺の型が右辺の値から想定された型と異なる場合、左辺の値を適切な型にキャストして比較します。
+一方、`===`では両辺の型が異なる場合は偽を返します。
+
+```
+10 == "10"
+```
+↓
+```
+TRUE
+```
+
+```
+10 === "10"
+```
+↓
+```
+FALSE
+```
+
+### 配列・オブジェクトの扱い【未実装の項目】
+
+`==`
+`===`
+
+### 演算子オーバーライド【未実装の項目】
+
+等号演算子のオーバーライドは`==`側にのみ存在する機能です。
+`==`演算子が評価された際に右辺がオブジェクトであった場合、右辺の`(OPERATOR_EQUAL)`メソッドが呼び出されます。
+この際、引数を右辺の値・左辺の値の順番で与えます。
+
+```
+four : {
+  (OPERATOR_EQUAL) = right, left -> left == 4;
+};
+
+4 == four, 5 == four
+```
+
+`==`演算子は右辺が主体となって行うという挙動に注意してください。
+この挙動は、左辺にnullが現れる可能性があるようなケースの記述を分かりやすくします。
+
+```
+nullableObject == object
+```
+
+### NANおよび-0の扱い
+
+どちらの比較でも、NAN同士の等価性は常に偽です。
+
+```
+[
+  NAN == NAN;
+  NAN === NAN;
+]
+```
+↓
+```
+FALSE,FALSE
+```
+
+逆に0と-0の等価性は常に真です。
+
+```
+[
+  0 == -0;
+  0 === -0;
+]
+```
+↓
+```
+TRUE,TRUE
+```
+
+### 連鎖 `a == b == c`
+
+すべての等号演算子は不等号演算子と連鎖を引き起こします。
+
+## 不等号演算子 `left > right` `left >= right` `left < right` `left <= right`
+
+fl9には4種類の不等号演算子が存在します。
+不等号演算子では数値同士の比較ができます。
+
+### 演算子オーバーライド【未実装の項目】
+
+
+
+### 連鎖 `a < b < c`
+
+等価性演算子と不等号演算子は、繋げて記述した場合に、各演算子の左右を比較したのちに論理積を取るという挙動をします。
+
+```
+value : 56;
+10 <= value <= 100
+```
+↓
+```
+TRUE
+```
+
+この記述は次のものと概ね同等です。
+
+```
+value : 56;
+10 <= value && value <= 100
+```
+
+違いは、2度使われる項が1度だけ評価されて、その結果を左右の比較で使いまわすことです。
+これは項の評価にかかる処理時間や副作用を抑制します。
+
+```
+currentValue : 5;
+getNextValue : () -> (
+  currentValue = currentValue + 1;
+  currentValue
+);
+
+6 <= getNextValue[] <= 6
+```
+↓
+```
+TRUE
+```
+
+```
+currentValue : 5;
+getNextValue : () -> (
+  currentValue = currentValue + 1;
+  currentValue
+);
+
+6 <= getNextValue[] && getNextValue[] <= 6
+```
+↓
+```
+FALSE
 ```
 
 ## 論理演算子 `left && right` `left || right`
