@@ -1,6 +1,6 @@
-const parser = require("./fl9_parser.js");
-const compiler = require("./fl9_compiler.js");
-const runtime = require("./fl9_runtime.js");
+const parser = require("fl9_parser.js");
+const compiler = require("fl9_compiler.js");
+const runtime = require("fl9_runtime.js");
 
 function usage() {
   console.log("Usage: [-N] [-n] [-C] [-c] [--] <exec>");
