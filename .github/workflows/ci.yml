@@ -30,7 +30,7 @@ jobs:
           bash make.sh
 
       - name: Test
-        run: bash test.js
+        run: bash test.sh
 
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v3
