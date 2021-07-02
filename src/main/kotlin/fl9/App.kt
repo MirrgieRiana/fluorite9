@@ -121,11 +121,11 @@ fun getStandardCompiler(): Any = { node: Node ->
                 val codeLeft = value.left.mustGet(context)
 
                 // 引数列セミコロン解体
-                val nodesMain: List<Node>
-                if (value.main.type == "semicolon") {
-                    nodesMain = value.main.value.unsafeCast<Array<Node>>().toList()
-                } else {
-                    nodesMain = listOf(value.main)
+                val nodesMain = let {
+                    value.main.maybe(semicolon) {
+                        return@let it.toList()
+                    }
+                    return@let listOf(value.main)
                 }
 
                 // 引数列void解体
@@ -136,9 +136,8 @@ fun getStandardCompiler(): Any = { node: Node ->
                     if (it.type == "void") {
                         if (!namedMode) {
                             codesMain += CodeGet("", "undefined")
-                        } else {
-                            // Ignore
                         }
+                        // 名前付き引数モードになった場合はvoidは単に無視する
                     } else if (it.type == "colon") {
                         namedMode = true
                         val nodeKey = it.value.unsafeCast<BinaryOperatorArgument>().left
@@ -163,7 +162,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                         codesMain.forEach {
                             !it.head
                         }
-                        !"const v$id = runtime.apply(${codeLeft.body}, [${codesMain.map { it.body }.joinToString(", ")}]);\n"
+                        !"const v$id = runtime.apply(${codeLeft.body}, [${codesMain.joinToString(", ") { it.body }}]);\n"
                     }, "v$id")
                 } else {
                     val id = context.nextId()
@@ -412,7 +411,7 @@ fun getStandardCompiler(): Any = { node: Node ->
                 }
                 val id = context.nextId()
                 CodeGet(code {
-                    !"const v$id = function(${arguments.map { argument -> argument.code }.joinToString(", ")}) {\n"
+                    !"const v$id = function(${arguments.joinToString(", ") { argument -> argument.code }}) {\n"
                     indent {
                         !codeRight.head
                         !"return ${codeRight.body};\n"
