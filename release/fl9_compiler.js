@@ -473,6 +473,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$codeRight) {
     return function ($receiver) {
+      $receiver.not_pdl1vz$('"use strict";\n');
       $receiver.not_pdl1vz$(closure$codeRight.head);
       $receiver.not_pdl1vz$('return ' + closure$codeRight.body + ';' + '\n');
       return Unit;
@@ -1148,6 +1149,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_15(closure$codeRight) {
     return function ($receiver) {
+      $receiver.not_pdl1vz$('"use strict";\n');
       $receiver.not_pdl1vz$(closure$codeRight.head);
       $receiver.not_pdl1vz$('return ' + closure$codeRight.body + ';' + '\n');
       return Unit;
@@ -1395,6 +1397,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_20(closure$codeRight) {
     return function ($receiver) {
+      $receiver.not_pdl1vz$('"use strict";\n');
       $receiver.not_pdl1vz$(closure$codeRight.head);
       $receiver.not_pdl1vz$('return ' + closure$codeRight.body + ';' + '\n');
       return Unit;
@@ -1741,6 +1744,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_68(closure$code) {
     return function ($receiver) {
+      $receiver.not_pdl1vz$('"use strict";\n');
       $receiver.not_pdl1vz$(closure$code.head);
       $receiver.not_pdl1vz$('return ' + closure$code.body + ';' + '\n');
       return Unit;
