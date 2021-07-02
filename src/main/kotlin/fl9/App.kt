@@ -205,7 +205,6 @@ fun getStandardCompiler(): Any = { node: Node ->
                     !codeLeft.head
                     !"const v$id = runtime.apply(${codeLeft.body}, [function(v$idArgument) {\n"
                     indent {
-                        !"\"use strict\";\n"
                         !codeRight.head
                         !"return ${codeRight.body};\n"
                     }
@@ -453,7 +452,6 @@ fun getStandardCompiler(): Any = { node: Node ->
                 CodeGet(code {
                     !"const v$id = function(${arguments.joinToString(", ") { argument -> argument.code }}) {\n"
                     indent {
-                        !"\"use strict\";\n"
                         !codeRight.head
                         !"return ${codeRight.body};\n"
                     }
@@ -544,7 +542,6 @@ fun getStandardCompiler(): Any = { node: Node ->
                     !codeLeft.head
                     !"const v$id = runtime.map(${codeLeft.body}, function(v$idArgument) {\n"
                     indent {
-                        !"\"use strict\";\n"
                         !codeRight.head
                         !"return ${codeRight.body};\n"
                     }
