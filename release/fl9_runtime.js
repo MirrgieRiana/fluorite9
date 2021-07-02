@@ -52,6 +52,8 @@
     if (typeof value === "string") return value;
     if (typeof value === "number") return "" + value;
     if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
+    if (value === undefined) return "UNDEFINED";
+    if (value === null) return "NULL";
     if (value instanceof Array) return value.map(item => runtime.toString(item)).join(",");
     if (typeof value === "object" && value[runtime.symbolToString] !== undefined) return value[runtime.symbolToString]();
     if (typeof value === "object") return Object.getOwnPropertyNames(value).map(name => `${name}:${runtime.toString(value[name])};`).join("");

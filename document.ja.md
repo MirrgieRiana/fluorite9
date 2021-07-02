@@ -40,6 +40,10 @@
   - [開いた範囲 `start ~ endExcluded`](#%E9%96%8B%E3%81%84%E3%81%9F%E7%AF%84%E5%9B%B2-start--endexcluded)
   - [論理演算子 `left && right` `left || right`](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90-left--right-left--right)
     - [条件文としての論理演算子](#%E6%9D%A1%E4%BB%B6%E6%96%87%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AE%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
+  - [三項演算子 `condition ? then : else`](#%E4%B8%89%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90-condition--then--else)
+  - [エルビス演算子 `left ?: right`](#%E3%82%A8%E3%83%AB%E3%83%93%E3%82%B9%E6%BC%94%E7%AE%97%E5%AD%90-left--right)
+  - [逆エルビス演算子 `left !: right`](#%E9%80%86%E3%82%A8%E3%83%AB%E3%83%93%E3%82%B9%E6%BC%94%E7%AE%97%E5%AD%90-left--right)
+  - [try演算子 `try !? catch`](#try%E6%BC%94%E7%AE%97%E5%AD%90-try--catch)
   - [ラムダ式 `arguments -> body`](#%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F-arguments---body)
     - [引数](#%E5%BC%95%E6%95%B0)
     - [高階関数](#%E9%AB%98%E9%9A%8E%E9%96%A2%E6%95%B0)
@@ -529,6 +533,90 @@ a
 2
 ```
 
+## 三項演算子 `condition ? then : else`
+
+`condition`が真だった場合に`then`を、偽だった場合に`else`を返します。
+
+fl9には「if文」はないため、三項演算子をif文として使います。
+
+```
+a : NULL;
+
+TRUE ? (
+  a = 1;
+) : (
+  a = 2;
+);
+
+a
+```
+
+## エルビス演算子 `left ?: right`
+
+左辺がUNDEFINEDだった場合に右辺を返します。
+`||`演算子とは異なり、左辺がFALSEやNULLであって場合は、そのまま左辺を返します。
+
+この演算子はデフォルト値を与えるのに便利です。
+
+```
+obj : {
+  name = UNDEFINED;
+};
+
+obj.name ?: "Anonymous"
+```
+↓
+```
+Anonymous
+```
+
+## 逆エルビス演算子 `left !: right`
+
+左辺がUNDEFINED以外だった場合に右辺を返します。
+`&&`演算子とは異なり、左辺がFALSEやNULLであって場合は、そのまま左辺を返します。
+
+この演算子はnullチェックを行うのに便利です。
+
+```
+obj : UNDEFINED;
+
+obj !: obj.name
+```
+↓
+```
+UNDEFINED
+```
+
+## try演算子 `try !? catch`
+
+左辺でエラーが出た場合に右辺を返します。
+
+```
+"Success" !? "Caught"
+```
+↓
+```
+Success
+```
+
+```
+ERROR["Error!!!"]
+```
+↓
+```
+Error: Error!!!
+```
+
+```
+ERROR["Error!!!"] !? "Caught"
+```
+↓
+```
+Caught
+```
+
+より厳密には、左辺の評価を試みて、成功した場合にはそのまま左辺を、失敗した場合には右辺を評価して返します。
+
 ## ラムダ式 `arguments -> body`
 
 無名関数を作る演算子です。
@@ -736,4 +824,6 @@ four * 25
 例えば、「加算」であれば、呼び出されるメソッドは`(OPERATOR_MULTIPLY)`です。
 `OPERATOR_MULTIPLY`は加算の演算子オーバーライドに使うメソッドを表す組み込み定数です。
 この挙動のため、fl9では演算子オーバーロードではなく演算子オーバーライドと呼ばれています。
+演算子オーバーロードではないため、「左辺に数値を、右辺に独自オブジェクトを取るような加算演算子」のような演算子を定義することはできません。
+
 演算子オーバーライドのメソッドは、必ず第一引数に受け手となったオブジェクト、その他の引数に演算子の他の項が渡されます。
