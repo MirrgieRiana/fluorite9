@@ -26,7 +26,6 @@
   var joinToString = Kotlin.kotlin.collections.joinToString_fmv235$;
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  var UnsupportedOperationException_init = Kotlin.kotlin.UnsupportedOperationException_init_pdl1vj$;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Regex_init = Kotlin.kotlin.text.Regex_init_61zpoe$;
   var contains = Kotlin.kotlin.text.contains_li3zpu$;
@@ -100,14 +99,21 @@
         var this$_0 = this$;
         tmp$_2.call(destination, plus_1(plus_1(this$_0.not_pdl1vz$('${runtime.toString('), item.body), this$_0.not_pdl1vz$(')}')));
       }
-      var iterator = destination.iterator();
-      if (!iterator.hasNext())
-        throw UnsupportedOperationException_init("Empty collection can't be reduced.");
-      var accumulator = iterator.next();
-      while (iterator.hasNext()) {
-        accumulator = plus_1(accumulator, iterator.next());
+      var tmp$_3;
+      var reduceOrNull$result;
+      reduceOrNull$break: do {
+        var iterator = destination.iterator();
+        if (!iterator.hasNext()) {
+          reduceOrNull$result = null;
+          break reduceOrNull$break;
+        }var accumulator = iterator.next();
+        while (iterator.hasNext()) {
+          accumulator = plus_1(accumulator, iterator.next());
+        }
+        reduceOrNull$result = accumulator;
       }
-      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_0, accumulator), this$.not_pdl1vz$('`;')));
+       while (false);
+      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_0, (tmp$_3 = reduceOrNull$result) != null ? tmp$_3 : package$fl9.zeroLine), this$.not_pdl1vz$('`;')));
       return Unit;
     };
   }
@@ -376,17 +382,24 @@
         var item = tmp$_1.next();
         destination.add_11rb$(item.body);
       }
-      var iterator = destination.iterator();
-      if (!iterator.hasNext())
-        throw UnsupportedOperationException_init("Empty collection can't be reduced.");
-      var accumulator = iterator.next();
-      while (iterator.hasNext()) {
-        var this$_0 = this$;
-        var left = accumulator;
-        var right = iterator.next();
-        accumulator = plus_1(plus_1(left, this$_0.not_pdl1vz$(', ')), right);
+      var tmp$_2;
+      var reduceOrNull$result;
+      reduceOrNull$break: do {
+        var iterator = destination.iterator();
+        if (!iterator.hasNext()) {
+          reduceOrNull$result = null;
+          break reduceOrNull$break;
+        }var accumulator = iterator.next();
+        while (iterator.hasNext()) {
+          var this$_0 = this$;
+          var left = accumulator;
+          var right = iterator.next();
+          accumulator = plus_1(plus_1(left, this$_0.not_pdl1vz$(', ')), right);
+        }
+        reduceOrNull$result = accumulator;
       }
-      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_0, accumulator), this$.not_pdl1vz$(']);')));
+       while (false);
+      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_0, (tmp$_2 = reduceOrNull$result) != null ? tmp$_2 : package$fl9.zeroLine), this$.not_pdl1vz$(']);')));
       return Unit;
     };
   }
@@ -420,17 +433,24 @@
         destination.add_11rb$(item.body);
       }
       var $receiver_2 = plus(destination, this$.not_pdl1vz$('v' + closure$idObject));
-      var iterator = $receiver_2.iterator();
-      if (!iterator.hasNext())
-        throw UnsupportedOperationException_init("Empty collection can't be reduced.");
-      var accumulator = iterator.next();
-      while (iterator.hasNext()) {
-        var this$_1 = this$;
-        var left = accumulator;
-        var right = iterator.next();
-        accumulator = plus_1(plus_1(left, this$_1.not_pdl1vz$(', ')), right);
+      var tmp$_3;
+      var reduceOrNull$result;
+      reduceOrNull$break: do {
+        var iterator = $receiver_2.iterator();
+        if (!iterator.hasNext()) {
+          reduceOrNull$result = null;
+          break reduceOrNull$break;
+        }var accumulator = iterator.next();
+        while (iterator.hasNext()) {
+          var this$_1 = this$;
+          var left = accumulator;
+          var right = iterator.next();
+          accumulator = plus_1(plus_1(left, this$_1.not_pdl1vz$(', ')), right);
+        }
+        reduceOrNull$result = accumulator;
       }
-      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_1, accumulator), this$.not_pdl1vz$(']);')));
+       while (false);
+      $receiver.line_3pad5q$(plus_1(plus_1(tmp$_1, (tmp$_3 = reduceOrNull$result) != null ? tmp$_3 : package$fl9.zeroLine), this$.not_pdl1vz$(']);')));
       return Unit;
     };
   }
@@ -1224,9 +1244,10 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23(closure$id, this$, closure$arguments, closure$codeRight) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23(closure$idSymbol, closure$label, this$, closure$id, closure$arguments, closure$codeRight) {
     return function ($receiver) {
-      var tmp$ = this$.not_pdl1vz$('const v' + closure$id + ' = function(');
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const v' + closure$idSymbol + ' = Symbol(' + JSON.stringify(closure$label) + ');'));
+      var tmp$ = this$.not_pdl1vz$('const v' + closure$id + ' = {[v' + closure$idSymbol + ']: function(');
       var $receiver_0 = closure$arguments;
       var destination = ArrayList_init(collectionSizeOrDefault($receiver_0, 10));
       var tmp$_0;
@@ -1235,19 +1256,26 @@
         var item = tmp$_0.next();
         destination.add_11rb$(times(item.code, item.location));
       }
-      var iterator = destination.iterator();
-      if (!iterator.hasNext())
-        throw UnsupportedOperationException_init("Empty collection can't be reduced.");
-      var accumulator = iterator.next();
-      while (iterator.hasNext()) {
-        var this$_0 = this$;
-        var left = accumulator;
-        var right = iterator.next();
-        accumulator = plus_1(plus_1(left, this$_0.not_pdl1vz$(', ')), right);
+      var tmp$_1;
+      var reduceOrNull$result;
+      reduceOrNull$break: do {
+        var iterator = destination.iterator();
+        if (!iterator.hasNext()) {
+          reduceOrNull$result = null;
+          break reduceOrNull$break;
+        }var accumulator = iterator.next();
+        while (iterator.hasNext()) {
+          var this$_0 = this$;
+          var left = accumulator;
+          var right = iterator.next();
+          accumulator = plus_1(plus_1(left, this$_0.not_pdl1vz$(', ')), right);
+        }
+        reduceOrNull$result = accumulator;
       }
-      $receiver.line_3pad5q$(plus_1(plus_1(tmp$, accumulator), this$.not_pdl1vz$(') {')));
+       while (false);
+      $receiver.line_3pad5q$(plus_1(plus_1(tmp$, (tmp$_1 = reduceOrNull$result) != null ? tmp$_1 : package$fl9.zeroLine), this$.not_pdl1vz$(') {')));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_12(closure$codeRight, this$));
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('};'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('}}[v' + closure$idSymbol + '];'));
       return Unit;
     };
   }
@@ -1332,7 +1360,9 @@
       $this.pop();
       var codeRight = result;
       var id = closure$context.nextId();
-      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23(id, $receiver, arguments_0, codeRight)), $receiver.not_pdl1vz$('v' + id));
+      var idSymbol = closure$context.nextId();
+      var label = 'ANONYMOUS (EVAL.fl9:' + $receiver.location.row + ',' + $receiver.location.column + ')';
+      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23(idSymbol, label, $receiver, id, arguments_0, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda_43(closure$context) {
@@ -2284,6 +2314,27 @@
   function plus_1($receiver, right) {
     return new SourcedLine(plus_0($receiver.sourcesStrings, right.sourcesStrings));
   }
+  var zeroLine;
+  var reduceOrZero = defineInlineFunction('fl9_compiler.fl9.reduceOrZero_tvz5es$', wrapFunction(function () {
+    var fl9 = _.fl9;
+    return function ($receiver, operation) {
+      var tmp$;
+      var reduceOrNull$result;
+      reduceOrNull$break: do {
+        var iterator = $receiver.iterator();
+        if (!iterator.hasNext()) {
+          reduceOrNull$result = null;
+          break reduceOrNull$break;
+        }var accumulator = iterator.next();
+        while (iterator.hasNext()) {
+          accumulator = operation(accumulator, iterator.next());
+        }
+        reduceOrNull$result = accumulator;
+      }
+       while (false);
+      return (tmp$ = reduceOrNull$result) != null ? tmp$ : fl9.zeroLine;
+    };
+  }));
   function SourcedFile(sourcedLines) {
     this.sourcedLines = sourcedLines;
   }
@@ -2291,6 +2342,7 @@
     throw Error_init_0();
   };
   SourcedFile.$metadata$ = {kind: Kind_CLASS, simpleName: 'SourcedFile', interfaces: []};
+  var zeroFile;
   function code$ObjectLiteral(closure$sourcedLines) {
     this.closure$sourcedLines = closure$sourcedLines;
   }
@@ -2471,7 +2523,14 @@
   package$fl9.SourcedLine = SourcedLine;
   package$fl9.times_qho2lb$ = times;
   package$fl9.plus_v2wlsb$ = plus_1;
+  Object.defineProperty(package$fl9, 'zeroLine', {get: function () {
+    return zeroLine;
+  }});
+  package$fl9.reduceOrZero_tvz5es$ = reduceOrZero;
   package$fl9.SourcedFile = SourcedFile;
+  Object.defineProperty(package$fl9, 'zeroFile', {get: function () {
+    return zeroFile;
+  }});
   package$fl9.code_3vmjfp$ = code;
   package$fl9.CodeScope = CodeScope;
   var package$token = package$fl9.token || (package$fl9.token = {});
@@ -2661,6 +2720,8 @@
   code$ObjectLiteral.prototype.line_3pe74m$ = CodeScope.prototype.line_3pe74m$;
   code$ObjectLiteral.prototype.indent_3vmjfp$ = CodeScope.prototype.indent_3vmjfp$;
   nullLocation = new Location(-1, -1);
+  zeroLine = new SourcedLine(emptyList());
+  zeroFile = new SourcedFile(emptyList());
   void_0 = new Token('void');
   number = new Token('number');
   string = new Token('string');

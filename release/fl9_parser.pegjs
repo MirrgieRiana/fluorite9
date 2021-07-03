@@ -99,32 +99,32 @@ Right
 
 Left
   = head:((
-    "+"  { return right => node("left_plus"         , {right}, location()); }
-  / "-"  { return right => node("left_minus"        , {right}, location()); }
-  / "&"  { return right => node("left_ampersand"    , {right}, location()); }
-  / "?"  { return right => node("left_question"     , {right}, location()); }
-  / "!"  { return right => node("left_exclamation"  , {right}, location()); }
-  / "*"  { return right => node("left_asterisk"     , {right}, location()); }
-  / "\\" { return right => node("left_backslash"    , {right}, location()); }
-  / "$#" { return right => node("left_dollar_number", {right}, location()); }
+    "+"  { return (location => right => node("left_plus"         , {right}, location))(location()); }
+  / "-"  { return (location => right => node("left_minus"        , {right}, location))(location()); }
+  / "&"  { return (location => right => node("left_ampersand"    , {right}, location))(location()); }
+  / "?"  { return (location => right => node("left_question"     , {right}, location))(location()); }
+  / "!"  { return (location => right => node("left_exclamation"  , {right}, location))(location()); }
+  / "*"  { return (location => right => node("left_asterisk"     , {right}, location))(location()); }
+  / "\\" { return (location => right => node("left_backslash"    , {right}, location))(location()); }
+  / "$#" { return (location => right => node("left_dollar_number", {right}, location))(location()); }
   ) _)* tail:Right { return [tail, ...head.reverse()].reduce((right, left) => left[0](right)); }
 
 Mul
   = head:Left tail:(_ (
-    "*" { return (left, right) => node("asterisk", {left, right}, location()); }
-  / "/" { return (left, right) => node("slash"   , {left, right}, location()); }
+    "*" { return (location => (left, right) => node("asterisk", {left, right}, location))(location()); }
+  / "/" { return (location => (left, right) => node("slash"   , {left, right}, location))(location()); }
   ) _ Left)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Add
   = head:Mul tail:(_ (
-    "+" { return (left, right) => node("plus" , {left, right}, location()); }
-  / "-" { return (left, right) => node("minus", {left, right}, location()); }
+    "+" { return (location => (left, right) => node("plus" , {left, right}, location))(location()); }
+  / "-" { return (location => (left, right) => node("minus", {left, right}, location))(location()); }
   ) _ Mul)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Range
   = head:Add tail:(_ (
-    ".." { return (left, right) => node("period_period", {left, right}, location()); }
-  / "~"  { return (left, right) => node("tilde"        , {left, right}, location()); }
+    ".." { return (location => (left, right) => node("period_period", {left, right}, location))(location()); }
+  / "~"  { return (location => (left, right) => node("tilde"        , {left, right}, location))(location()); }
   ) _ Add)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Compare
@@ -146,12 +146,12 @@ Compare
 
 And
   = head:Compare tail:(_ (
-    "&&" { return (left, right) => node("ampersand_ampersand" , {left, right}, location()); }
+    "&&" { return (location => (left, right) => node("ampersand_ampersand" , {left, right}, location))(location()); }
   ) _ Compare)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Or
   = head:And tail:(_ (
-    "||" { return (left, right) => node("pipe_pipe" , {left, right}, location()); }
+    "||" { return (location => (left, right) => node("pipe_pipe" , {left, right}, location))(location()); }
   ) _ And)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 If
@@ -173,15 +173,15 @@ Comma
 
 Assignment
   = head:(Comma _ (
-    "->" { return (left, right) => node("minus_greater", {left, right}, location()); }
-  / "=>" { return (left, right) => node("equal_greater", {left, right}, location()); }
-  / ":"  { return (left, right) => node("colon"        , {left, right}, location()); }
-  / "="  { return (left, right) => node("equal"        , {left, right}, location()); }
+    "->" { return (location => (left, right) => node("minus_greater", {left, right}, location))(location()); }
+  / "=>" { return (location => (left, right) => node("equal_greater", {left, right}, location))(location()); }
+  / ":"  { return (location => (left, right) => node("colon"        , {left, right}, location))(location()); }
+  / "="  { return (location => (left, right) => node("equal"        , {left, right}, location))(location()); }
   ) _)* tail:Comma { return [tail, ...head.reverse()].reduce((right, left) => left[2](left[0], right)); }
 
 Pipe
   = head:(Assignment _ (
-    "|" { return (left, right) => node("pipe", {left, right}, location()); }
+    "|" { return (location => (left, right) => node("pipe", {left, right}, location))(location()); }
   ) _)* tail:Assignment { return [tail, ...head.reverse()].reduce((right, left) => left[2](left[0], right)); }
 
 Semicolon
