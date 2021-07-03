@@ -36,6 +36,7 @@ val empty_dollar_curly = Token<EmptyBracketsArgument>("empty_dollar_curly")
 val dollar_curly = Token<BracketsArgument>("dollar_curly")
 
 val period = Token<BinaryOperatorArgument>("period")
+val colon_colon = Token<BinaryOperatorArgument>("colon_colon")
 
 val right_empty_round = Token<RightEmptyBracketsArgument>("right_empty_round")
 val right_round = Token<RightBracketsArgument>("right_round")

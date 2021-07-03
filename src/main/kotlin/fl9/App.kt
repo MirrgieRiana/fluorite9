@@ -123,6 +123,21 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
             }
         }
+        colon_colon {
+            get {
+                let {
+                    channel.value.right.maybe(identifier) { name ->
+                        val codeLeft = channel.value.left.mustGet(compiler)
+                        val id = "v" + compiler.nextId()
+                        return@let CodeGet(code {
+                            line(codeLeft.head)
+                            line(!"const $id = runtime.createDelegate(" + codeLeft.body + !", " + JSON.stringify(name) * channel.value.right.location + !");")
+                        }, !id)
+                    }
+                    throw Exception("Illegal Operator Argument: ${channel.value.left.type}::${channel.value.right.type}")
+                }
+            }
+        }
 
         right_empty_square {
             get {

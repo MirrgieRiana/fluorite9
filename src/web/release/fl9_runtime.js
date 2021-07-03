@@ -112,6 +112,12 @@
       throw new Error(`Illegal Argument: ${value.constructor.name}[${args.constructor.name}]`);
     }
   };
+  runtime.createDelegate = function(object, key) {
+    const symbol = Symbol("<DELEGATE>")
+    return {[symbol]: function() {
+      return object[key].apply(object, [object, ...arguments]);
+    }}[symbol];
+  };
   runtime.rangeOpened = function(start, endExcluded) {
     start = runtime.toNumber(start);
     endExcluded = runtime.toNumber(endExcluded);

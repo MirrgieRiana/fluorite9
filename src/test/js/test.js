@@ -47,6 +47,13 @@ function assertEquals(expected, src) {
 
 }
 
+// デリゲート
+{
+  assertEquals(100, "o : {v = 100; m = _       -> _.v        }; o::m[     ]"); // メソッド
+  assertEquals(120, "o : {v = 100; m = _, b    -> _.v + b    }; o::m[20   ]"); // 1個の引数を受け取るメソッド
+  assertEquals(123, "o : {v = 100; m = _, b, c -> _.v + b + c}; o::m[20; 3]"); // 2個の引数を受け取るメソッド
+}
+
 // 四則演算
 {
 
