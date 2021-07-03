@@ -119,7 +119,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             line(!"const v$id = " + codeLeft.body + !"[" + JSON.stringify(name) * channel.value.right.location + !"];")
                         }, !"v$id")
                     }
-                    throw Exception("Illegal Operator Argument: ${channel.value.left.type} : ${channel.value.right.type}")
+                    throw Exception("Illegal Operator Argument: ${channel.value.left.type}.${channel.value.right.type}")
                 }
             }
         }
