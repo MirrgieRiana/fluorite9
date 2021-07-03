@@ -27,20 +27,23 @@ class DomainSlot<A, C> {
 }
 
 
-class OperatorCompilerArgument<V>(val compiler: Compiler, val value: V, val location: Location) {
+class Context<C>(val compiler: Compiler, val location: Location, val channel: C) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
     }
 }
 
+
+class OperatorCompilerArgument<V>(val value: V)
+
 class Operator<V> {
-    val get = DomainSlot<OperatorCompilerArgument<V>, CodeGet>()
-    val run = DomainSlot<OperatorCompilerArgument<V>, CodeRun>()
-    val set = DomainSlot<OperatorCompilerArgument<V>, CodeSet>()
-    val arrayInit = DomainSlot<OperatorCompilerArgument<V>, CodeArrayInit>()
-    val objectInit = DomainSlot<OperatorCompilerArgument<V>, CodeObjectInit>()
-    val compare = DomainSlot<OperatorCompilerArgument<V>, CodeCompare>()
+    val get = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeGet>()
+    val run = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeRun>()
+    val set = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeSet>()
+    val arrayInit = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeObjectInit>()
+    val compare = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeCompare>()
 
     constructor()
 
@@ -58,20 +61,15 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 }
 
 
-class AliasCompilerArgument(val compiler: Compiler, val location: Location) {
-    operator fun String.not(): SourcedLine {
-        if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
-        return SourcedLine(listOf(SourcedString(this, location)))
-    }
-}
+class AliasCompilerArgument
 
 class Alias {
-    val get = DomainSlot<AliasCompilerArgument, CodeGet>()
-    val run = DomainSlot<AliasCompilerArgument, CodeRun>()
-    val set = DomainSlot<AliasCompilerArgument, CodeSet>()
-    val arrayInit = DomainSlot<AliasCompilerArgument, CodeArrayInit>()
-    val objectInit = DomainSlot<AliasCompilerArgument, CodeObjectInit>()
-    val compare = DomainSlot<AliasCompilerArgument, CodeCompare>()
+    val get = DomainSlot<Context<AliasCompilerArgument>, CodeGet>()
+    val run = DomainSlot<Context<AliasCompilerArgument>, CodeRun>()
+    val set = DomainSlot<Context<AliasCompilerArgument>, CodeSet>()
+    val arrayInit = DomainSlot<Context<AliasCompilerArgument>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<AliasCompilerArgument>, CodeObjectInit>()
+    val compare = DomainSlot<Context<AliasCompilerArgument>, CodeCompare>()
 
     constructor()
 
