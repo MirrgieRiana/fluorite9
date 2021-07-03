@@ -3,8 +3,8 @@ package fl9
 import fl9.token.*
 
 fun getStandardCompiler(): Any = { nodeRoot: Node ->
-    val context = Context()
-    context.operators.apply {
+    val compiler = Compiler()
+    compiler.operators.apply {
 
         void {
             get { CodeGet(!"(runtime.void)") }
@@ -20,10 +20,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 if (value.isEmpty()) {
                     CodeGet(!"\"\"")
                 } else if (value.size == 1 && value[0].isType(string)) {
-                    value[0].mustGet(context)
+                    value[0].mustGet(compiler)
                 } else {
-                    val codes = value.map { it.mustGet(context) }
-                    val id = context.nextId()
+                    val codes = value.map { it.mustGet(compiler) }
+                    val id = compiler.nextId()
                     CodeGet(code {
                         codes.forEach {
                             line(it.head)
@@ -36,18 +36,18 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         identifier {
-            get { context.aliases[value]?.get?.invoke(AliasCompilerArgument(context, location)) ?: throw Exception("Unknown Identifier: $value") }
-            set { context.aliases[value]?.set?.invoke(AliasCompilerArgument(context, location)) ?: throw Exception("Unknown Identifier: $value") }
+            get { compiler.aliases[value]?.get?.invoke(AliasCompilerArgument(compiler, location)) ?: throw Exception("Unknown Identifier: $value") }
+            set { compiler.aliases[value]?.set?.invoke(AliasCompilerArgument(compiler, location)) ?: throw Exception("Unknown Identifier: $value") }
         }
 
         empty_round { get { CodeGet(!"(runtime.empty)") } }
         round {
-            get { context.aliases.stack { value.main.mustGet(context) } }
-            run { context.aliases.stack { value.main.mustRun(context) } }
+            get { compiler.aliases.stack { value.main.mustGet(compiler) } }
+            run { compiler.aliases.stack { value.main.mustRun(compiler) } }
         }
         empty_square {
             get {
-                val id = context.nextId()
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(!"const v$id = [];")
                 }, !"v$id")
@@ -55,8 +55,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         square {
             get {
-                val codeMain = value.main.mustArrayInit(context)
-                val id = context.nextId()
+                val codeMain = value.main.mustArrayInit(compiler)
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(!"const v$id = [];")
                     codeMain.generator { code ->
@@ -68,7 +68,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         empty_curly {
             get {
-                val id = context.nextId()
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(!"const v$id = {};")
                 }, !"v$id")
@@ -76,8 +76,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         curly {
             get {
-                val codeMain = value.main.mustObjectInit(context)
-                val id = context.nextId()
+                val codeMain = value.main.mustObjectInit(compiler)
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(!"const v$id = {};")
                     codeMain.generator { key, code ->
@@ -89,14 +89,14 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         empty_dollar_round { get { CodeGet(!"(runtime.empty)") } }
-        dollar_round { get { context.aliases.stack { value.main.mustGet(context) } } }
+        dollar_round { get { compiler.aliases.stack { value.main.mustGet(compiler) } } }
 
         period {
             get {
                 let {
                     value.right.maybe(identifier) { name ->
-                        val codeLeft = value.left.mustGet(context)
-                        val id = context.nextId()
+                        val codeLeft = value.left.mustGet(compiler)
+                        val id = compiler.nextId()
                         return@let CodeGet(code {
                             line(codeLeft.head)
                             line(!"const v$id = " + codeLeft.body + !"[" + JSON.stringify(name) * value.right.location + !"];")
@@ -109,8 +109,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         right_empty_square {
             get {
-                val codeLeft = value.left.mustGet(context)
-                val id = context.nextId()
+                val codeLeft = value.left.mustGet(compiler)
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(codeLeft.head)
                     line(!"const v$id = runtime.apply(" + codeLeft.body + !", []);")
@@ -121,7 +121,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             get {
 
                 // 関数
-                val codeLeft = value.left.mustGet(context)
+                val codeLeft = value.left.mustGet(compiler)
 
                 // 引数列セミコロン解体
                 val nodesMain = let {
@@ -148,19 +148,19 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         if (nodeKey.type == "identifier") {
                             codesMainNamed += Triple(
                                     nodeKey.value.unsafeCast<String>(),
-                                    context.aliases.stack { nodeValue.mustGet(context) },
+                                    compiler.aliases.stack { nodeValue.mustGet(compiler) },
                                     nodeKey.location
                             )
                         } else {
                             throw Exception("Illegal Argument Name: ${nodeKey.type}")
                         }
                     } else {
-                        codesMain += context.aliases.stack { it.mustGet(context) }
+                        codesMain += compiler.aliases.stack { it.mustGet(compiler) }
                     }
                 }
 
                 if (codesMainNamed.isEmpty()) {
-                    val id = context.nextId()
+                    val id = compiler.nextId()
                     CodeGet(code {
                         line(codeLeft.head)
                         codesMain.forEach {
@@ -171,8 +171,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                                 .reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 } else {
-                    val id = context.nextId()
-                    val idObject = context.nextId()
+                    val id = compiler.nextId()
+                    val idObject = compiler.nextId()
                     CodeGet(code {
                         line(codeLeft.head)
                         codesMain.forEach {
@@ -193,10 +193,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         right_round {
             get {
-                val codeLeft = value.left.mustGet(context)
-                val idArgument = context.nextId()
-                val codeRight = context.aliases.stack {
-                    context.aliases["_"] = Alias {
+                val codeLeft = value.left.mustGet(compiler)
+                val idArgument = compiler.nextId()
+                val codeRight = compiler.aliases.stack {
+                    compiler.aliases["_"] = Alias {
                         get { CodeGet(!"v$idArgument") }
                         set {
                             CodeSet { code ->
@@ -207,10 +207,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    value.main.mustGet(context)
+                    value.main.mustGet(compiler)
                 }
-                val id = context.nextId()
-                val idSymbol = context.nextId()
+                val id = compiler.nextId()
+                val idSymbol = compiler.nextId()
                 val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(codeLeft.head)
@@ -226,8 +226,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         fun leftUnaryOperatorGetter(function: OperatorCompilerArgument<LeftUnaryOperatorArgument>.(SourcedLine) -> SourcedLine): OperatorCompilerArgument<LeftUnaryOperatorArgument>.() -> CodeGet = {
-            val codeRight = value.right.mustGet(context)
-            val id = context.nextId()
+            val codeRight = value.right.mustGet(compiler)
+            val id = compiler.nextId()
             CodeGet(code {
                 line(codeRight.head)
                 line(!"const v$id = " + function(codeRight.body) + !";")
@@ -241,9 +241,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         left_dollar_number { get(leftUnaryOperatorGetter { !"runtime.getLength(" + it + !")" }) }
 
         fun binaryOperatorGetter(function: OperatorCompilerArgument<BinaryOperatorArgument>.(SourcedLine, SourcedLine) -> SourcedLine): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeGet = {
-            val codeLeft = value.left.mustGet(context)
-            val codeRight = value.right.mustGet(context)
-            val id = context.nextId()
+            val codeLeft = value.left.mustGet(compiler)
+            val codeRight = value.right.mustGet(compiler)
+            val id = compiler.nextId()
             CodeGet(code {
                 line(codeLeft.head)
                 line(codeRight.head)
@@ -259,11 +259,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         comparison {
             get {
-                val idVars = value.nodes.indices.map { "v${context.nextId()}\$$it" }
-                val idVarResult = "v${context.nextId()}\$result"
-                val idLabel = "l" + context.nextId()
-                val codesOperator = value.types.indices.map { Node(value.types[it], Unit, value.locations[it]).mustCompare(context) }
-                val codesTerm = value.nodes.map { it.mustGet(context) }
+                val idVars = value.nodes.indices.map { "v${compiler.nextId()}\$$it" }
+                val idVarResult = "v${compiler.nextId()}\$result"
+                val idLabel = "l" + compiler.nextId()
+                val codesOperator = value.types.indices.map { Node(value.types[it], Unit, value.locations[it]).mustCompare(compiler) }
+                val codesTerm = value.nodes.map { it.mustGet(compiler) }
                 CodeGet(code {
                     line(!"let $idVarResult;")
                     line(!"$idLabel:")
@@ -297,9 +297,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         less_equal { compare { CodeCompare { left, right -> left + !" <= " + right } } }
 
         fun binaryConditionOperatorGetter(function: OperatorCompilerArgument<BinaryOperatorArgument>.(SourcedLine) -> SourcedLine): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeGet = {
-            val codeLeft = value.left.mustGet(context)
-            val codeRight = context.aliases.stack { value.right.mustGet(context) }
-            val id = context.nextId()
+            val codeLeft = value.left.mustGet(compiler)
+            val codeRight = compiler.aliases.stack { value.right.mustGet(compiler) }
+            val id = compiler.nextId()
             CodeGet(code {
                 line(codeLeft.head)
                 line(!"let v$id;")
@@ -317,8 +317,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         fun binaryConditionOperatorRunner(function: OperatorCompilerArgument<BinaryOperatorArgument>.(SourcedLine) -> SourcedLine): OperatorCompilerArgument<BinaryOperatorArgument>.() -> CodeRun = {
-            val codeLeft = value.left.mustGet(context)
-            val codeRight = context.aliases.stack { value.right.mustRun(context) }
+            val codeLeft = value.left.mustGet(compiler)
+            val codeRight = compiler.aliases.stack { value.right.mustRun(compiler) }
             CodeRun(code {
                 line(codeLeft.head)
                 line(!"if (" + function(codeLeft.body) + !") {")
@@ -347,10 +347,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         ternary_question_colon {
             get {
-                val codeLeft = value.left.mustGet(context)
-                val codeCenter = context.aliases.stack { value.center.mustGet(context) }
-                val codeRight = context.aliases.stack { value.right.mustGet(context) }
-                val id = context.nextId()
+                val codeLeft = value.left.mustGet(compiler)
+                val codeCenter = compiler.aliases.stack { value.center.mustGet(compiler) }
+                val codeRight = compiler.aliases.stack { value.right.mustGet(compiler) }
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(codeLeft.head)
                     line(!"let v$id;")
@@ -368,9 +368,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !"v$id")
             }
             run {
-                val codeLeft = value.left.mustGet(context)
-                val codeCenter = context.aliases.stack { value.center.mustRun(context) }
-                val codeRight = context.aliases.stack { value.right.mustRun(context) }
+                val codeLeft = value.left.mustGet(compiler)
+                val codeCenter = compiler.aliases.stack { value.center.mustRun(compiler) }
+                val codeRight = compiler.aliases.stack { value.right.mustRun(compiler) }
                 CodeRun(code {
                     line(codeLeft.head)
                     line(!"if (runtime.toBoolean(" + codeLeft.body + !")) {")
@@ -387,9 +387,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         exclamation_question {
             get {
-                val codeLeft = value.left.mustGet(context)
-                val codeRight = context.aliases.stack { value.right.mustGet(context) }
-                val id = context.nextId()
+                val codeLeft = value.left.mustGet(compiler)
+                val codeRight = compiler.aliases.stack { value.right.mustGet(compiler) }
+                val id = compiler.nextId()
                 CodeGet(code {
                     line(!"let v$id;")
                     line(!"try {")
@@ -406,8 +406,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !"v$id")
             }
             run {
-                val codeLeft = value.left.mustRun(context)
-                val codeRight = context.aliases.stack { value.right.mustRun(context) }
+                val codeLeft = value.left.mustRun(compiler)
+                val codeRight = compiler.aliases.stack { value.right.mustRun(compiler) }
                 CodeRun(code {
                     line(!"try {")
                     indent {
@@ -442,11 +442,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     if (node.isType(void)) return@mapNotNull null
                     node.maybe(identifier) { value -> return@mapNotNull Pair(value, node.location) }
                     throw Exception("Illegal Operator Argument: ${node.type}")
-                }.map { Argument(it.first, "v${context.nextId()}\$${it.first.replace("""[^a-zA-Z0-9_]""".toRegex(), "")}", it.second) }
+                }.map { Argument(it.first, "v${compiler.nextId()}\$${it.first.replace("""[^a-zA-Z0-9_]""".toRegex(), "")}", it.second) }
 
-                val codeRight = context.aliases.stack {
+                val codeRight = compiler.aliases.stack {
                     arguments.forEach { argument ->
-                        context.aliases[argument.name] = Alias {
+                        compiler.aliases[argument.name] = Alias {
                             get { CodeGet(!argument.code) }
                             set {
                                 CodeSet { code ->
@@ -458,10 +458,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    value.right.mustGet(context)
+                    value.right.mustGet(compiler)
                 }
-                val id = context.nextId()
-                val idSymbol = context.nextId()
+                val id = compiler.nextId()
+                val idSymbol = compiler.nextId()
                 val label = "<LAMBDA> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
@@ -482,8 +482,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 if (value.left.type == "identifier") {
                     val name = value.left.value.unsafeCast<String>()
                     val internalName = name.replace("""[^a-zA-Z0-9_]""".toRegex(), "")
-                    val id = context.nextId()
-                    context.aliases[name] = Alias {
+                    val id = compiler.nextId()
+                    compiler.aliases[name] = Alias {
                         get { CodeGet(!"v$id\$$internalName") }
                         set {
                             CodeSet { code ->
@@ -494,7 +494,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    val codeRight = value.right.mustGet(context)
+                    val codeRight = value.right.mustGet(compiler)
                     CodeRun(code {
                         line(!"let v$id\$$internalName;")
                         line(codeRight.head)
@@ -508,26 +508,26 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         equal {
             get {
-                val id = context.nextId()
-                val codeRight = value.right.mustGet(context)
-                val codeLeft = value.left.mustSet(context).consumer(CodeGet(!"v$id"))
+                val id = compiler.nextId()
+                val codeRight = value.right.mustGet(compiler)
+                val codeLeft = value.left.mustSet(compiler).consumer(CodeGet(!"v$id"))
                 CodeGet(code {
                     line(codeRight.head)
                     line(!"const v$id = " + codeRight.body + !";")
                     line(codeLeft.head)
                 }, !"v$id")
             }
-            run { value.left.mustSet(context).consumer(value.right.mustGet(context)) }
+            run { value.left.mustSet(compiler).consumer(value.right.mustGet(compiler)) }
             objectInit {
                 value.left.maybe(identifier) { key ->
-                    val codeRight = value.right.mustGet(context)
+                    val codeRight = value.right.mustGet(compiler)
                     return@objectInit CodeObjectInit { consumer ->
                         consumer(CodeGet(JSON.stringify(key) * value.left.location), codeRight)
                     }
                 }
                 if (value.left.isType(round)) {
-                    val codeLeft = context.aliases.stack { value.left.mustGet(context) }
-                    val codeRight = value.right.mustGet(context)
+                    val codeLeft = compiler.aliases.stack { value.left.mustGet(compiler) }
+                    val codeRight = value.right.mustGet(compiler)
                     return@objectInit CodeObjectInit { consumer ->
                         consumer(codeLeft, codeRight)
                     }
@@ -538,10 +538,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         pipe {
             get {
-                val codeLeft = value.left.mustGet(context)
-                val idArgument = context.nextId()
-                val codeRight = context.aliases.stack {
-                    context.aliases["_"] = Alias {
+                val codeLeft = value.left.mustGet(compiler)
+                val idArgument = compiler.nextId()
+                val codeRight = compiler.aliases.stack {
+                    compiler.aliases["_"] = Alias {
                         get { CodeGet(!"v$idArgument") }
                         set {
                             CodeSet { code ->
@@ -552,10 +552,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    value.right.mustGet(context)
+                    value.right.mustGet(compiler)
                 }
-                val id = context.nextId()
-                val idSymbol = context.nextId()
+                val id = compiler.nextId()
+                val idSymbol = compiler.nextId()
                 val label = "<PIPE> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(codeLeft.head)
@@ -569,11 +569,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !"v$id")
             }
             run {
-                val codeLeft = value.left.mustGet(context)
-                val idArgument = context.nextId()
-                val idArgument2 = context.nextId()
-                val codeRight = context.aliases.stack {
-                    context.aliases["_"] = Alias {
+                val codeLeft = value.left.mustGet(compiler)
+                val idArgument = compiler.nextId()
+                val idArgument2 = compiler.nextId()
+                val codeRight = compiler.aliases.stack {
+                    compiler.aliases["_"] = Alias {
                         get { CodeGet(!"v$idArgument") }
                         set {
                             CodeSet { code ->
@@ -584,7 +584,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    value.right.mustRun(context)
+                    value.right.mustRun(compiler)
                 }
                 CodeRun(code {
                     line(codeLeft.head)
@@ -600,8 +600,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
         semicolon {
             get {
-                val codesLeft = value.slice(0..value.size - 2).map { it.mustRun(context) }
-                val codeRight = value[value.size - 1].mustGet(context)
+                val codesLeft = value.slice(0..value.size - 2).map { it.mustRun(compiler) }
+                val codeRight = value[value.size - 1].mustGet(compiler)
                 CodeGet(code {
                     codesLeft.forEach {
                         line(it.head)
@@ -610,7 +610,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, codeRight.body)
             }
             run {
-                val codes = value.map { it.mustRun(context) }
+                val codes = value.map { it.mustRun(compiler) }
                 CodeRun(code {
                     codes.forEach {
                         line(it.head)
@@ -618,7 +618,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 })
             }
             arrayInit {
-                val codes = value.map { it.mustArrayInit(context) }
+                val codes = value.map { it.mustArrayInit(compiler) }
                 CodeArrayInit { consumer ->
                     codes.forEach { code ->
                         code.generator(consumer)
@@ -626,7 +626,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
             }
             objectInit {
-                val codes = value.map { it.mustObjectInit(context) }
+                val codes = value.map { it.mustObjectInit(compiler) }
                 CodeObjectInit { consumer ->
                     codes.forEach { code ->
                         code.generator(consumer)
@@ -635,7 +635,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
     }
-    context.aliases.apply {
+    compiler.aliases.apply {
         "A" { get { CodeGet(!"([1, 2, 3])") } }
         "F" { get { CodeGet(!"(a => a * 20)") } }
         "O" { get { CodeGet(!"({m: a => a * 20})") } }
@@ -658,8 +658,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         "OPERATOR_STREAM" { get { CodeGet(!"(runtime.symbolStream)") } }
     }
 
-    val code = nodeRoot.mustGet(context)
-    val idSymbol = context.nextId()
+    val code = nodeRoot.mustGet(compiler)
+    val idSymbol = compiler.nextId()
     val label = "<ROOT> (<EVAL>)"
     val sourcedFile = code {
         line("(v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)

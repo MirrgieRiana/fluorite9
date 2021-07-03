@@ -27,7 +27,7 @@ class DomainSlot<A, C> {
 }
 
 
-class OperatorCompilerArgument<V>(val context: Context, val value: V, val location: Location) {
+class OperatorCompilerArgument<V>(val compiler: Compiler, val value: V, val location: Location) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
@@ -58,7 +58,7 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 }
 
 
-class AliasCompilerArgument(val context: Context, val location: Location) {
+class AliasCompilerArgument(val compiler: Compiler, val location: Location) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
@@ -89,7 +89,7 @@ class AliasRegistry : FramedRegistry<Alias>() {
 }
 
 
-class Context {
+class Compiler {
 
     val operators = OperatorRegistry()
     val aliases = AliasRegistry()
