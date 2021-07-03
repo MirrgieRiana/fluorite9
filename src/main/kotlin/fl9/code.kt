@@ -1,13 +1,16 @@
 package fl9
 
+
 class Location(val row: Int, val column: Int)
 
 val nullLocation = Location(-1, -1)
+
 
 class SourcedString(val string: String, val location: Location) {
     @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
     override fun toString() = throw Error()
 }
+
 
 class SourcedLine(val sourcesStrings: List<SourcedString>) {
     @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
@@ -21,10 +24,18 @@ operator fun String.times(location: Location): SourcedLine {
 
 operator fun SourcedLine.plus(right: SourcedLine) = SourcedLine(sourcesStrings + right.sourcesStrings)
 
+val zeroLine = SourcedLine(listOf())
+
+inline fun Iterable<SourcedLine>.reduceOrZero(operation: (SourcedLine, SourcedLine) -> SourcedLine) = reduce(operation) ?: zeroLine
+
+
 class SourcedFile(val sourcedLines: List<SourcedLine>) {
     @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
     override fun toString() = throw Error()
 }
+
+val zeroFile = SourcedFile(listOf())
+
 
 fun code(block: CodeScope.() -> Unit): SourcedFile {
     val sourcedLines = mutableListOf<SourcedLine>()

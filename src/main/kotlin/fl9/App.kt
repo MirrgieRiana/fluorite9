@@ -30,7 +30,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         }
                         line(!"const v$id = `" + codes
                                 .map { !"\${runtime.toString(" + it.body + !")}" }
-                                .reduce { left, right -> left + right } + !"`;")
+                                .reduceOrZero { left, right -> left + right } + !"`;")
                     }, !"v$id")
                 }
             }
@@ -168,7 +168,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         }
                         line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
                                 .map { it.body }
-                                .reduce { left, right -> left + !", " + right } + !"]);")
+                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 } else {
                     val id = context.nextId()
@@ -186,7 +186,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
                                 .map { it.body }
                                 .plus(!"v$idObject")
-                                .reduce { left, right -> left + !", " + right } + !"]);")
+                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 }
             }
@@ -461,7 +461,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 CodeGet(code {
                     line(!"const v$id = function(" + arguments
                             .map { argument -> argument.code * argument.location }
-                            .reduce { left, right -> left + !", " + right } + !") {")
+                            .reduceOrZero { left, right -> left + !", " + right } + !") {")
                     indent {
                         line(codeRight.head)
                         line(!"return " + codeRight.body + !";")
