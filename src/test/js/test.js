@@ -59,7 +59,7 @@ function assertEquals(expected, src) {
 
   // try演算子
   assertEquals(1, "1       !? 2");
-  assertEquals(2, "ERROR[] !? 2");
+  assertEquals(2, "THROW[] !? 2");
 
   // 三項演算子の結合優先度
   assertEquals(4, "FALSE ? FALSE ? 1 : 2 : FALSE ? 3 : 4");
