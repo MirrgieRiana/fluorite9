@@ -7,6 +7,7 @@
     root.fl9_runtime = factory(typeof fl9_runtime === 'undefined' ? {} : fl9_runtime);
   }
 }(this, function(runtime) {
+  "use strict";
   runtime.symbolToString = Symbol("fl9ToString");
   runtime.symbolAdd = Symbol("fl9Add");
   runtime.symbolSubtract = Symbol("fl9Subtract");
