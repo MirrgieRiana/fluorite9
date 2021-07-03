@@ -1271,6 +1271,18 @@
       result.add_11rb$(element);
       return result;
     }
+    function plus_4($receiver, elements) {
+      if (Kotlin.isType(elements, Collection)) {
+        var result = ArrayList_init_0($receiver.size + elements.size | 0);
+        result.addAll_brywnq$($receiver);
+        result.addAll_brywnq$(elements);
+        return result;
+      } else {
+        var result_0 = ArrayList_init_1($receiver);
+        addAll(result_0, elements);
+        return result_0;
+      }
+    }
     function joinTo_8($receiver, buffer, separator, prefix, postfix, limit, truncated, transform) {
       if (separator === void 0)
         separator = ', ';
@@ -1325,8 +1337,17 @@
     function asSequence_8($receiver) {
       return new Sequence$ObjectLiteral_0(asSequence$lambda_8($receiver));
     }
+    function downTo_4($receiver, to) {
+      return IntProgression$Companion_getInstance().fromClosedRange_qt1dr2$($receiver, to, -1);
+    }
     function reversed_9($receiver) {
       return IntProgression$Companion_getInstance().fromClosedRange_qt1dr2$($receiver.last, $receiver.first, -$receiver.step | 0);
+    }
+    function coerceAtLeast_2($receiver, minimumValue) {
+      return $receiver < minimumValue ? minimumValue : $receiver;
+    }
+    function coerceAtMost_2($receiver, maximumValue) {
+      return $receiver > maximumValue ? maximumValue : $receiver;
     }
     function take_9($receiver, n) {
       var tmp$;
@@ -2164,6 +2185,11 @@
       return this.cause_us9j0c$_0;
     }});
     Error_0.$metadata$ = {kind: Kind_CLASS, simpleName: 'Error', interfaces: [Throwable]};
+    function Error_init($this) {
+      $this = $this || Object.create(Error_0.prototype);
+      Error_0.call($this, null, null);
+      return $this;
+    }
     function Error_init_0(message, $this) {
       $this = $this || Object.create(Error_0.prototype);
       Error_0.call($this, message, null);
@@ -4198,6 +4224,11 @@
       return compareTo(a, b, true);
     }
     var STRING_CASE_INSENSITIVE_ORDER;
+    function regionMatches($receiver, thisOffset, other, otherOffset, length, ignoreCase) {
+      if (ignoreCase === void 0)
+        ignoreCase = false;
+      return regionMatchesImpl($receiver, thisOffset, other, otherOffset, length, ignoreCase);
+    }
     var MAX_BYTES_PER_CHAR;
     var REPLACEMENT_BYTE_SEQUENCE;
     var REPLACEMENT_CHAR;
@@ -4847,6 +4878,21 @@
       this.serialVersionUID_0 = L8246714829545688274;
     }
     var EmptyMap_instance = null;
+    function addAll($receiver, elements) {
+      var tmp$;
+      if (Kotlin.isType(elements, Collection))
+        return $receiver.addAll_brywnq$(elements);
+      else {
+        var result = false;
+        tmp$ = elements.iterator();
+        while (tmp$.hasNext()) {
+          var item = tmp$.next();
+          if ($receiver.add_11rb$(item))
+            result = true;
+        }
+        return result;
+      }
+    }
     function removeAll_3($receiver, predicate) {
       return filterInPlace($receiver, predicate, true);
     }
@@ -5516,6 +5562,15 @@
     function get_lastIndex_13($receiver) {
       return $receiver.length - 1 | 0;
     }
+    function regionMatchesImpl($receiver, thisOffset, other, otherOffset, length, ignoreCase) {
+      if (otherOffset < 0 || thisOffset < 0 || thisOffset > ($receiver.length - length | 0) || otherOffset > (other.length - length | 0)) {
+        return false;
+      }for (var index = 0; index < length; index++) {
+        if (!equals_1($receiver.charCodeAt(thisOffset + index | 0), other.charCodeAt(otherOffset + index | 0), ignoreCase))
+          return false;
+      }
+      return true;
+    }
     function startsWith_1($receiver, char, ignoreCase) {
       if (ignoreCase === void 0)
         ignoreCase = false;
@@ -5525,6 +5580,40 @@
       if (ignoreCase === void 0)
         ignoreCase = false;
       return $receiver.length > 0 && equals_1($receiver.charCodeAt(get_lastIndex_13($receiver)), char, ignoreCase);
+    }
+    function indexOf_15($receiver, other, startIndex, endIndex, ignoreCase, last) {
+      if (last === void 0)
+        last = false;
+      var tmp$, tmp$_0;
+      var indices = !last ? new IntRange(coerceAtLeast_2(startIndex, 0), coerceAtMost_2(endIndex, $receiver.length)) : downTo_4(coerceAtMost_2(startIndex, get_lastIndex_13($receiver)), coerceAtLeast_2(endIndex, 0));
+      if (typeof $receiver === 'string' && typeof other === 'string') {
+        tmp$ = indices.iterator();
+        while (tmp$.hasNext()) {
+          var index = tmp$.next();
+          if (regionMatches(other, 0, $receiver, index, other.length, ignoreCase))
+            return index;
+        }
+      } else {
+        tmp$_0 = indices.iterator();
+        while (tmp$_0.hasNext()) {
+          var index_0 = tmp$_0.next();
+          if (regionMatchesImpl(other, 0, $receiver, index_0, other.length, ignoreCase))
+            return index_0;
+        }
+      }
+      return -1;
+    }
+    function indexOf_17($receiver, string, startIndex, ignoreCase) {
+      if (startIndex === void 0)
+        startIndex = 0;
+      if (ignoreCase === void 0)
+        ignoreCase = false;
+      return ignoreCase || !(typeof $receiver === 'string') ? indexOf_15($receiver, string, startIndex, $receiver.length, ignoreCase) : $receiver.indexOf(string, startIndex);
+    }
+    function contains_53($receiver, other, ignoreCase) {
+      if (ignoreCase === void 0)
+        ignoreCase = false;
+      return typeof other === 'string' ? indexOf_17($receiver, other, void 0, ignoreCase) >= 0 : indexOf_15($receiver, other, 0, $receiver.length, ignoreCase) >= 0;
     }
     var Typography_instance = null;
     function MatchGroupCollection() {
@@ -5708,6 +5797,37 @@
     Pair.prototype.equals = function (other) {
       return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.first, other.first) && Kotlin.equals(this.second, other.second)))));
     };
+    function Triple(first, second, third) {
+      this.first = first;
+      this.second = second;
+      this.third = third;
+    }
+    Triple.prototype.toString = function () {
+      return '(' + this.first + ', ' + this.second + ', ' + this.third + ')';
+    };
+    Triple.$metadata$ = {kind: Kind_CLASS, simpleName: 'Triple', interfaces: [Serializable]};
+    Triple.prototype.component1 = function () {
+      return this.first;
+    };
+    Triple.prototype.component2 = function () {
+      return this.second;
+    };
+    Triple.prototype.component3 = function () {
+      return this.third;
+    };
+    Triple.prototype.copy_1llc0w$ = function (first, second, third) {
+      return new Triple(first === void 0 ? this.first : first, second === void 0 ? this.second : second, third === void 0 ? this.third : third);
+    };
+    Triple.prototype.hashCode = function () {
+      var result = 0;
+      result = result * 31 + Kotlin.hashCode(this.first) | 0;
+      result = result * 31 + Kotlin.hashCode(this.second) | 0;
+      result = result * 31 + Kotlin.hashCode(this.third) | 0;
+      return result;
+    };
+    Triple.prototype.equals = function (other) {
+      return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.first, other.first) && Kotlin.equals(this.second, other.second) && Kotlin.equals(this.third, other.third)))));
+    };
     var UByte$Companion_instance = null;
     var UInt$Companion_instance = null;
     var UIntRange$Companion_instance = null;
@@ -5733,8 +5853,11 @@
     package$collections.slice_l0m14x$ = slice;
     package$collections.toList_us0mfu$ = toList;
     package$collections.mapCapacity_za3lpa$ = mapCapacity;
+    package$ranges.coerceAtLeast_dqglrj$ = coerceAtLeast_2;
+    package$ranges.coerceAtMost_dqglrj$ = coerceAtMost_2;
     package$collections.toCollection_5n4o2z$ = toCollection;
     package$collections.toMutableList_us0mfu$ = toMutableList;
+    package$collections.addAll_ipc267$ = addAll;
     package$collections.LinkedHashMap_init_q3lmfv$ = LinkedHashMap_init;
     package$collections.ArrayList_init_ww73n8$ = ArrayList_init_0;
     package$kotlin.NoSuchElementException_init = NoSuchElementException_init;
@@ -5749,10 +5872,12 @@
     package$collections.toSet_7wnvza$ = toSet_8;
     package$collections.Collection = Collection;
     package$collections.plus_qloxvw$ = plus_0;
+    package$collections.plus_mydzjv$ = plus_4;
     package$collections.joinTo_gcc71v$ = joinTo_8;
     package$collections.joinToString_fmv235$ = joinToString_8;
     package$collections.asSequence_7wnvza$ = asSequence_8;
     var package$text = package$kotlin.text || (package$kotlin.text = {});
+    package$ranges.downTo_dqglrj$ = downTo_4;
     var package$sequences = package$kotlin.sequences || (package$kotlin.sequences = {});
     package$sequences.Sequence = Sequence;
     package$sequences.take_wuwhe2$ = take_9;
@@ -5823,6 +5948,7 @@
     Object.defineProperty(package$coroutines, 'CompletedContinuation', {get: CompletedContinuation_getInstance});
     var package$intrinsics = package$coroutines.intrinsics || (package$coroutines.intrinsics = {});
     package$intrinsics.intercepted_f9mg25$ = intercepted;
+    package$kotlin.Error_init = Error_init;
     package$kotlin.Error_init_pdl1vj$ = Error_init_0;
     package$kotlin.Error = Error_0;
     package$kotlin.Exception_init_pdl1vj$ = Exception_init_0;
@@ -5909,6 +6035,7 @@
     package$text.concatToString_355ntz$ = concatToString;
     package$text.concatToString_wlitf7$ = concatToString_0;
     package$text.compareTo_7epoxm$ = compareTo;
+    package$text.regionMatches_h3ii2q$ = regionMatches;
     package$collections.AbstractCollection = AbstractCollection;
     Object.defineProperty(AbstractList, 'Companion', {get: AbstractList$Companion_getInstance});
     package$collections.AbstractList = AbstractList;
@@ -5955,8 +6082,11 @@
     package$text.equals_4lte5s$ = equals_1;
     package$text.trimStart_wqw3xr$ = trimStart_2;
     package$text.trimEnd_wqw3xr$ = trimEnd_2;
+    package$text.regionMatchesImpl_4c7s8r$ = regionMatchesImpl;
     package$text.startsWith_sgbm27$ = startsWith_1;
     package$text.endsWith_sgbm27$ = endsWith_0;
+    package$text.indexOf_l5u8uk$ = indexOf_17;
+    package$text.contains_li3zpu$ = contains_53;
     package$text.MatchGroupCollection = MatchGroupCollection;
     MatchResult.Destructured = MatchResult$Destructured;
     package$text.MatchResult = MatchResult;
@@ -5966,6 +6096,7 @@
     package$kotlin.throwOnFailure_iacion$ = throwOnFailure;
     package$kotlin.NotImplementedError = NotImplementedError;
     package$kotlin.Pair = Pair;
+    package$kotlin.Triple = Triple;
     MutableMap.prototype.getOrDefault_xwzc9p$ = Map.prototype.getOrDefault_xwzc9p$;
     AbstractMap.prototype.getOrDefault_xwzc9p$ = Map.prototype.getOrDefault_xwzc9p$;
     AbstractMutableMap.prototype.remove_xwzc9p$ = MutableMap.prototype.remove_xwzc9p$;
