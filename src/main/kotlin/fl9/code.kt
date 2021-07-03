@@ -26,7 +26,7 @@ operator fun SourcedLine.plus(right: SourcedLine) = SourcedLine(sourcesStrings +
 
 val zeroLine = SourcedLine(listOf())
 
-inline fun Iterable<SourcedLine>.reduceOrZero(operation: (SourcedLine, SourcedLine) -> SourcedLine) = reduce(operation) ?: zeroLine
+inline fun Iterable<SourcedLine>.reduceOrZero(operation: (SourcedLine, SourcedLine) -> SourcedLine) = reduceOrNull(operation) ?: zeroLine
 
 
 class SourcedFile(val sourcedLines: List<SourcedLine>) {
