@@ -462,7 +462,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
                 val id = compiler.nextId()
                 val idSymbol = compiler.nextId()
-                val label = "<LAMBDA> (<EVAL>:${location.row},${location.column})"
+                val label = (domain.givenName ?: "<LAMBDA>") + " (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = {[v$idSymbol]: function(" + arguments
@@ -494,7 +494,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    val codeRight = channel.value.right.mustGet(compiler)
+                    val codeRight = channel.value.right.mustGet(compiler, givenName = name)
                     CodeRun(code {
                         line(!"let v$id\$$internalName;")
                         line(codeRight.head)
