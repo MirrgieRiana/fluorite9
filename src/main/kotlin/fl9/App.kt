@@ -210,14 +210,17 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     value.main.mustGet(context)
                 }
                 val id = context.nextId()
+                val idSymbol = context.nextId()
+                val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(codeLeft.head)
-                    line(!"const v$id = runtime.apply(" + codeLeft.body + !", [function(v$idArgument) {")
+                    line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
+                    line(!"const v$id = runtime.apply(" + codeLeft.body + !", [{[v$idSymbol]: function(v$idArgument) {")
                     indent {
                         line(codeRight.head)
                         line(!"return " + codeRight.body + !";")
                     }
-                    line(!"}]);")
+                    line(!"}}[v$idSymbol]]);")
                 }, !"v$id")
             }
         }
@@ -459,7 +462,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
                 val id = context.nextId()
                 val idSymbol = context.nextId()
-                val label = "ANONYMOUS (EVAL.fl9:${location.row},${location.column})"
+                val label = "<LAMBDA> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = {[v$idSymbol]: function(" + arguments
@@ -552,14 +555,17 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     value.right.mustGet(context)
                 }
                 val id = context.nextId()
+                val idSymbol = context.nextId()
+                val label = "<PIPE> (<EVAL>:${location.row},${location.column})"
                 CodeGet(code {
                     line(codeLeft.head)
-                    line(!"const v$id = runtime.map(" + codeLeft.body + !", function(v$idArgument) {")
+                    line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
+                    line(!"const v$id = runtime.map(" + codeLeft.body + !", {[v$idSymbol]: function(v$idArgument) {")
                     indent {
                         line(codeRight.head)
                         line(!"return " + codeRight.body + !";")
                     }
-                    line(!"});")
+                    line(!"}}[v$idSymbol]);")
                 }, !"v$id")
             }
             run {
@@ -653,14 +659,16 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
     }
 
     val code = nodeRoot.mustGet(context)
+    val idSymbol = context.nextId()
+    val label = "<ROOT> (<EVAL>)"
     val sourcedFile = code {
-        line("(function(runtime) {" * nullLocation)
+        line("(v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
         indent {
             line("\"use strict\";" * nullLocation)
             line(code.head)
             line("return " * nullLocation + code.body + ";" * nullLocation)
         }
-        line("})" * nullLocation)
+        line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}))" * nullLocation)
     }
     sourcedFile.sourcedLines.joinToString("") { sourcedLine ->
         sourcedLine.sourcesStrings.joinToString("") { sourcedString ->
