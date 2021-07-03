@@ -36,8 +36,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         identifier {
-            get { compiler.aliases[channel.value]?.get?.invoke(Context(compiler, location, AliasCompilerArgument())) ?: throw Exception("Unknown Identifier: ${channel.value}") }
-            set { compiler.aliases[channel.value]?.set?.invoke(Context(compiler, location, AliasCompilerArgument())) ?: throw Exception("Unknown Identifier: ${channel.value}") }
+            get { compiler.aliases[channel.value]?.get?.invoke(Context(compiler, location, AliasContext())) ?: throw Exception("Unknown Identifier: ${channel.value}") }
+            set { compiler.aliases[channel.value]?.set?.invoke(Context(compiler, location, AliasContext())) ?: throw Exception("Unknown Identifier: ${channel.value}") }
         }
 
         empty_round { get { CodeGet(!"(runtime.empty)") } }
@@ -225,7 +225,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
 
-        fun leftUnaryOperatorGetter(function: Context<OperatorCompilerArgument<LeftUnaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorCompilerArgument<LeftUnaryOperatorArgument>>.() -> CodeGet = {
+        fun leftUnaryOperatorGetter(function: Context<OperatorContext<LeftUnaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorContext<LeftUnaryOperatorArgument>>.() -> CodeGet = {
             val codeRight = channel.value.right.mustGet(compiler)
             val id = compiler.nextId()
             CodeGet(code {
@@ -240,7 +240,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         left_exclamation { get(leftUnaryOperatorGetter { !"!runtime.toBoolean(" + it + !")" }) }
         left_dollar_number { get(leftUnaryOperatorGetter { !"runtime.getLength(" + it + !")" }) }
 
-        fun binaryOperatorGetter(function: Context<OperatorCompilerArgument<BinaryOperatorArgument>>.(SourcedLine, SourcedLine) -> SourcedLine): Context<OperatorCompilerArgument<BinaryOperatorArgument>>.() -> CodeGet = {
+        fun binaryOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>>.(SourcedLine, SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>>.() -> CodeGet = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = channel.value.right.mustGet(compiler)
             val id = compiler.nextId()
@@ -296,7 +296,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         greater_equal { compare { CodeCompare { left, right -> left + !" >= " + right } } }
         less_equal { compare { CodeCompare { left, right -> left + !" <= " + right } } }
 
-        fun binaryConditionOperatorGetter(function: Context<OperatorCompilerArgument<BinaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorCompilerArgument<BinaryOperatorArgument>>.() -> CodeGet = {
+        fun binaryConditionOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>>.() -> CodeGet = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = compiler.aliases.stack { channel.value.right.mustGet(compiler) }
             val id = compiler.nextId()
@@ -316,7 +316,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }, !"v$id")
         }
 
-        fun binaryConditionOperatorRunner(function: Context<OperatorCompilerArgument<BinaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorCompilerArgument<BinaryOperatorArgument>>.() -> CodeRun = {
+        fun binaryConditionOperatorRunner(function: Context<OperatorContext<BinaryOperatorArgument>>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>>.() -> CodeRun = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = compiler.aliases.stack { channel.value.right.mustRun(compiler) }
             CodeRun(code {

@@ -35,15 +35,15 @@ class Context<C>(val compiler: Compiler, val location: Location, val channel: C)
 }
 
 
-class OperatorCompilerArgument<V>(val value: V)
+class OperatorContext<V>(val value: V)
 
 class Operator<V> {
-    val get = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeGet>()
-    val run = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeRun>()
-    val set = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeSet>()
-    val arrayInit = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeObjectInit>()
-    val compare = DomainSlot<Context<OperatorCompilerArgument<V>>, CodeCompare>()
+    val get = DomainSlot<Context<OperatorContext<V>>, CodeGet>()
+    val run = DomainSlot<Context<OperatorContext<V>>, CodeRun>()
+    val set = DomainSlot<Context<OperatorContext<V>>, CodeSet>()
+    val arrayInit = DomainSlot<Context<OperatorContext<V>>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<OperatorContext<V>>, CodeObjectInit>()
+    val compare = DomainSlot<Context<OperatorContext<V>>, CodeCompare>()
 
     constructor()
 
@@ -61,15 +61,15 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 }
 
 
-class AliasCompilerArgument
+class AliasContext
 
 class Alias {
-    val get = DomainSlot<Context<AliasCompilerArgument>, CodeGet>()
-    val run = DomainSlot<Context<AliasCompilerArgument>, CodeRun>()
-    val set = DomainSlot<Context<AliasCompilerArgument>, CodeSet>()
-    val arrayInit = DomainSlot<Context<AliasCompilerArgument>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<AliasCompilerArgument>, CodeObjectInit>()
-    val compare = DomainSlot<Context<AliasCompilerArgument>, CodeCompare>()
+    val get = DomainSlot<Context<AliasContext>, CodeGet>()
+    val run = DomainSlot<Context<AliasContext>, CodeRun>()
+    val set = DomainSlot<Context<AliasContext>, CodeSet>()
+    val arrayInit = DomainSlot<Context<AliasContext>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<AliasContext>, CodeObjectInit>()
+    val compare = DomainSlot<Context<AliasContext>, CodeCompare>()
 
     constructor()
 
