@@ -16,6 +16,8 @@ class CodeArrayInit(val generator: ((CodeGet) -> Unit) -> Unit)
 class CodeObjectInit(val generator: ((CodeGet, CodeGet) -> Unit) -> Unit)
 class CodeCompare(val comparator: (SourcedLine, SourcedLine) -> SourcedLine)
 
+class GetterContext(val givenName: String? = null)
+
 
 class DomainSlot<A, C> {
     private var value: (A.() -> C)? = null
@@ -27,7 +29,7 @@ class DomainSlot<A, C> {
 }
 
 
-class Context<C>(val compiler: Compiler, val location: Location, val channel: C) {
+class Context<C, D>(val compiler: Compiler, val location: Location, val channel: C, val domain: D) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
@@ -38,12 +40,12 @@ class Context<C>(val compiler: Compiler, val location: Location, val channel: C)
 class OperatorContext<V>(val value: V)
 
 class Operator<V> {
-    val get = DomainSlot<Context<OperatorContext<V>>, CodeGet>()
-    val run = DomainSlot<Context<OperatorContext<V>>, CodeRun>()
-    val set = DomainSlot<Context<OperatorContext<V>>, CodeSet>()
-    val arrayInit = DomainSlot<Context<OperatorContext<V>>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<OperatorContext<V>>, CodeObjectInit>()
-    val compare = DomainSlot<Context<OperatorContext<V>>, CodeCompare>()
+    val get = DomainSlot<Context<OperatorContext<V>, GetterContext>, CodeGet>()
+    val run = DomainSlot<Context<OperatorContext<V>, Unit>, CodeRun>()
+    val set = DomainSlot<Context<OperatorContext<V>, Unit>, CodeSet>()
+    val arrayInit = DomainSlot<Context<OperatorContext<V>, Unit>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<OperatorContext<V>, Unit>, CodeObjectInit>()
+    val compare = DomainSlot<Context<OperatorContext<V>, Unit>, CodeCompare>()
 
     constructor()
 
@@ -64,12 +66,12 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 class AliasContext
 
 class Alias {
-    val get = DomainSlot<Context<AliasContext>, CodeGet>()
-    val run = DomainSlot<Context<AliasContext>, CodeRun>()
-    val set = DomainSlot<Context<AliasContext>, CodeSet>()
-    val arrayInit = DomainSlot<Context<AliasContext>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<AliasContext>, CodeObjectInit>()
-    val compare = DomainSlot<Context<AliasContext>, CodeCompare>()
+    val get = DomainSlot<Context<AliasContext, GetterContext>, CodeGet>()
+    val run = DomainSlot<Context<AliasContext, Unit>, CodeRun>()
+    val set = DomainSlot<Context<AliasContext, Unit>, CodeSet>()
+    val arrayInit = DomainSlot<Context<AliasContext, Unit>, CodeArrayInit>()
+    val objectInit = DomainSlot<Context<AliasContext, Unit>, CodeObjectInit>()
+    val compare = DomainSlot<Context<AliasContext, Unit>, CodeCompare>()
 
     constructor()
 
