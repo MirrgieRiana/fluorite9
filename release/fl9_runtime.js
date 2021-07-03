@@ -7,6 +7,7 @@
     root.fl9_runtime = factory(typeof fl9_runtime === 'undefined' ? {} : fl9_runtime);
   }
 }(this, function(runtime) {
+  "use strict";
   runtime.symbolToString = Symbol("fl9ToString");
   runtime.symbolAdd = Symbol("fl9Add");
   runtime.symbolSubtract = Symbol("fl9Subtract");
@@ -111,6 +112,12 @@
     } else {
       throw new Error(`Illegal Argument: ${value.constructor.name}[${args.constructor.name}]`);
     }
+  };
+  runtime.createDelegate = function(object, key) {
+    const symbol = Symbol("<DELEGATE>")
+    return {[symbol]: function() {
+      return object[key].apply(object, [object, ...arguments]);
+    }}[symbol];
   };
   runtime.rangeOpened = function(start, endExcluded) {
     start = runtime.toNumber(start);
