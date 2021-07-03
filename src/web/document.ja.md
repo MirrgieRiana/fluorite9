@@ -1017,7 +1017,7 @@ four * 25
 
 ラムダ式などの「関数を生成する場所」では、関数名および元のソースコード上での位置が付与されています。
 
-例えばこのコードであれば、ソースコード`<EVAL>`内の`1`行目`11`文字目に由来する関数`<LAMBDA>`を経由したことが分かります。
+例えばこのコードであれば、ソースコード`<EVAL>`内の`1`行目`11`文字目に由来する関数`main`を経由したことが分かります。
 ソースコード上の位置の表記は1から始まります。
 
 ```
@@ -1029,7 +1029,7 @@ main[]
 Error: Error!!!
     v1 http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:6
     apply http://【中略】/fluorite9/build/web/release/fl9_runtime.js:108
-    [<LAMBDA> (<EVAL>:1,11)] http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:6
+    [main (<EVAL>:1,11)] http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:6
     apply http://【中略】/fluorite9/build/web/release/fl9_runtime.js:108
     [<ROOT> (<EVAL>)] http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:10
     compile http://【中略】/fluorite9/build/web/release/editor.js:44
