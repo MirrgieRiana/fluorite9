@@ -1,17 +1,18 @@
 package fl9.token
 
+import fl9.Location
 import fl9.Node
 
 class Token<T>(val type: String)
 
-class EmptyBracketsArgument()
+class EmptyBracketsArgument
 class BracketsArgument(val main: Node)
 class RightEmptyBracketsArgument(val left: Node)
 class RightBracketsArgument(val left: Node, val main: Node)
 class LeftUnaryOperatorArgument(val right: Node)
 class BinaryOperatorArgument(val left: Node, val right: Node)
 class TernaryOperatorArgument(val left: Node, val center: Node, val right: Node)
-class ComparisonArgument(val types: Array<String>, val nodes: Array<Node>)
+class ComparisonArgument(val types: Array<String>, val locations: Array<Location>, val nodes: Array<Node>)
 
 val void = Token<Unit>("void")
 

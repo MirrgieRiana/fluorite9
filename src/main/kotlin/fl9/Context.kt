@@ -3,12 +3,18 @@ package fl9
 import fl9.token.Token
 
 
-class CodeGet(val head: String, val body: String)
-class CodeRun(val head: String)
+class CodeGet(val head: SourcedFile, val body: SourcedLine) {
+    constructor(body: SourcedLine) : this(SourcedFile(listOf()), body)
+}
+
+class CodeRun(val head: SourcedFile) {
+    constructor() : this(SourcedFile(listOf()))
+}
+
 class CodeSet(val consumer: (CodeGet) -> CodeRun)
 class CodeArrayInit(val generator: ((CodeGet) -> Unit) -> Unit)
 class CodeObjectInit(val generator: ((CodeGet, CodeGet) -> Unit) -> Unit)
-class CodeCompare(val comparator: (String, String) -> String)
+class CodeCompare(val comparator: (SourcedLine, SourcedLine) -> SourcedLine)
 
 
 class DomainSlot<A, C> {
@@ -21,7 +27,12 @@ class DomainSlot<A, C> {
 }
 
 
-class OperatorCompilerArgument<V>(val context: Context, val value: V)
+class OperatorCompilerArgument<V>(val context: Context, val value: V, val location: Location) {
+    operator fun String.not(): SourcedLine {
+        if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
+        return SourcedLine(listOf(SourcedString(this, location)))
+    }
+}
 
 class Operator<V> {
     val get = DomainSlot<OperatorCompilerArgument<V>, CodeGet>()
@@ -31,9 +42,7 @@ class Operator<V> {
     val objectInit = DomainSlot<OperatorCompilerArgument<V>, CodeObjectInit>()
     val compare = DomainSlot<OperatorCompilerArgument<V>, CodeCompare>()
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(block: Operator<V>.() -> Unit) {
         block()
@@ -49,7 +58,12 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 }
 
 
-class AliasCompilerArgument(val context: Context)
+class AliasCompilerArgument(val context: Context, val location: Location) {
+    operator fun String.not(): SourcedLine {
+        if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
+        return SourcedLine(listOf(SourcedString(this, location)))
+    }
+}
 
 class Alias {
     val get = DomainSlot<AliasCompilerArgument, CodeGet>()
@@ -59,9 +73,7 @@ class Alias {
     val objectInit = DomainSlot<AliasCompilerArgument, CodeObjectInit>()
     val compare = DomainSlot<AliasCompilerArgument, CodeCompare>()
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(block: Alias.() -> Unit) {
         block()

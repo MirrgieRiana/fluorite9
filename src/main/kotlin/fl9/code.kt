@@ -1,18 +1,43 @@
 package fl9
 
-fun code(block: CodeScope.() -> Unit): String {
-    val strings = mutableListOf<String>()
+class Location(val row: Int, val column: Int)
+
+val nullLocation = Location(-1, -1)
+
+class SourcedString(val string: String, val location: Location) {
+    @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
+    override fun toString() = throw Error()
+}
+
+class SourcedLine(val sourcesStrings: List<SourcedString>) {
+    @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
+    override fun toString() = throw Error()
+}
+
+operator fun String.times(location: Location): SourcedLine {
+    if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
+    return SourcedLine(listOf(SourcedString(this, location)))
+}
+
+operator fun SourcedLine.plus(right: SourcedLine) = SourcedLine(sourcesStrings + right.sourcesStrings)
+
+class SourcedFile(val sourcedLines: List<SourcedLine>) {
+    @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
+    override fun toString() = throw Error()
+}
+
+fun code(block: CodeScope.() -> Unit): SourcedFile {
+    val sourcedLines = mutableListOf<SourcedLine>()
     object : CodeScope {
-        override fun accept(string: String) {
-            strings += string
+        override fun line(sourcedLine: SourcedLine) {
+            sourcedLines += sourcedLine
         }
     }.block()
-    return strings.joinToString("")
+    return SourcedFile(sourcedLines)
 }
 
 interface CodeScope {
-    fun accept(string: String)
-    operator fun String.not() = accept(this)
-    operator fun Iterable<String>.not() = forEach { accept(it) }
-    fun indent(block: CodeScope.() -> Unit) = accept("  " + code(block).replace("""\n(?!$)""".toRegex(), "\n  "))
+    fun line(sourcedLine: SourcedLine)
+    fun line(sourcedFile: SourcedFile) = sourcedFile.sourcedLines.forEach { line(it) }
+    fun indent(block: CodeScope.() -> Unit) = code(block).sourcedLines.forEach { line("  " * nullLocation + it) }
 }
