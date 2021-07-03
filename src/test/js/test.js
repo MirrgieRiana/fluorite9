@@ -14,6 +14,39 @@ function assertEquals(expected, src) {
   }
 }
 
+// 整数
+{
+  assertEquals(0, "     0");
+  assertEquals(1, "     1");
+  assertEquals(10, "   10");
+  assertEquals(10, "  010"); // 先頭が0でも8進数にしない
+  assertEquals(-10, " -10"); // 負号
+  assertEquals(0, "    -0"); // 整数の負の0は正の0と等しい
+  assertEquals(10, "  +10"); // 正号
+  assertEquals(10, " + 10"); // 符号と数値の間にスペースを入れてもよい
+  assertEquals(-10, "- 10"); // 符号と数値の間にスペースを入れてもよい
+}
+
+
+// 文字列
+{
+
+  // 文字列
+  assertEquals('', "             ''                   ");
+  assertEquals('abc', "          'abc'                ");
+  assertEquals('["][\'][n][t]', "'[\"][\\'][\\n][\\t]'"); // エスケープは常に直後の文字を返す
+
+  // 埋め込み文字列
+  assertEquals("", '               ""                   ');
+  assertEquals("abc", '            "abc"                ');
+  assertEquals("['][\"][\n][\t]", '"[\'][\\"][\\n][\\t]"'); // エスケープは直後の文字によって異なる挙動になる
+  assertEquals("TRUE", '           "$TRUE"              '); // 識別子1個しかなくても文字列化はされる
+  assertEquals("[TRUE]", '         "[$TRUE]"            '); // 文字と埋め込みの混在
+  assertEquals("TRUE", '           "$(TRUE)"            '); // ドル括弧による埋め込み
+  assertEquals("3", '              "$(1 + 2)"           '); // 式の埋め込み
+
+}
+
 // 四則演算
 {
 
@@ -23,18 +56,15 @@ function assertEquals(expected, src) {
   assertEquals(1000, "100 * 10");
   assertEquals(10, "  100 / 10");
 
-  // 四則演算の結合優先度
-  assertEquals(142, "106 + 20 * 2 - 8 / 2");
-
-  // 余りの出る除算
-  assertEquals(0.5, "1 / 2");
+  assertEquals(142, "106 + 20 * 2 - 8 / 2"); // 結合優先度
+  assertEquals(0.5, "1 / 2"); // 余りの出る除算
 
   // 文字列連結
   assertEquals("123456", "'123' + '456'");
 
   // 文字列リピート
   assertEquals("123123123123", "'123' *  4 ");
-  assertEquals("123123123123", "'123' * '4'");
+  assertEquals("123123123123", "'123' * '4'"); // 右辺が文字列
 
 }
 
