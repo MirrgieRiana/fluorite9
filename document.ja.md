@@ -64,6 +64,7 @@
     - [丸括弧と文](#%E4%B8%B8%E6%8B%AC%E5%BC%A7%E3%81%A8%E6%96%87)
 - [高度なチュートリアル](#%E9%AB%98%E5%BA%A6%E3%81%AA%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB)
   - [演算子オーバーライド](#%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
+  - [デバッグ](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -784,15 +785,15 @@ Success
 ```
 
 ```
-ERROR["Error!!!"]
+THROW["Error!!!"]
 ```
 ↓
 ```
-Error: Error!!!
+THROW: Error!!!
 ```
 
 ```
-ERROR["Error!!!"] !? "Caught"
+THROW["Error!!!"] !? "Caught"
 ```
 ↓
 ```
@@ -1011,3 +1012,26 @@ four * 25
 演算子オーバーロードではないため、「左辺に数値を、右辺に独自オブジェクトを取るような加算演算子」のような演算子を定義することはできません。
 
 演算子オーバーライドのメソッドは、必ず第一引数に受け手となったオブジェクト、その他の引数に演算子の他の項が渡されます。
+
+## デバッグ
+
+ラムダ式などの「関数を生成する場所」では、関数名および元のソースコード上での位置が付与されています。
+
+例えばこのコードであれば、ソースコード`<EVAL>`内の`1`行目`11`文字目に由来する関数`<LAMBDA>`を経由したことが分かります。
+ソースコード上の位置の表記は1から始まります。
+
+```
+main : () -> THROW["Error!!!"];
+main[]
+```
+
+```
+Error: Error!!!
+    v1 http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:6
+    apply http://【中略】/fluorite9/build/web/release/fl9_runtime.js:108
+    [<LAMBDA> (<EVAL>:1,11)] http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:6
+    apply http://【中略】/fluorite9/build/web/release/fl9_runtime.js:108
+    [<ROOT> (<EVAL>)] http://【中略】/fluorite9/build/web/release/editor.js line 44 > eval:10
+    compile http://【中略】/fluorite9/build/web/release/editor.js:44
+    onclick http://【中略】/fluorite9/build/web/release/editor.html:1
+```

@@ -554,12 +554,13 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_9(closure$codeLeft, closure$id, this$, closure$idArgument, closure$codeRight) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_9(closure$codeLeft, closure$idSymbol, closure$label, this$, closure$id, closure$idArgument, closure$codeRight) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = runtime.apply('), closure$codeLeft.body), this$.not_pdl1vz$(', [function(v' + closure$idArgument + ') {')));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const v' + closure$idSymbol + ' = Symbol(' + JSON.stringify(closure$label) + ');'));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = runtime.apply('), closure$codeLeft.body), this$.not_pdl1vz$(', [{[v' + closure$idSymbol + ']: function(v' + closure$idArgument + ') {')));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$codeRight, this$));
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('}]);'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('}}[v' + closure$idSymbol + ']]);'));
       return Unit;
     };
   }
@@ -575,7 +576,9 @@
       $this.pop();
       var codeRight = result;
       var id = closure$context.nextId();
-      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_9(codeLeft, id, $receiver, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
+      var idSymbol = closure$context.nextId();
+      var label = '<CLOSURE> (<EVAL>:' + $receiver.location.row + ',' + $receiver.location.column + ')';
+      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_9(codeLeft, idSymbol, label, $receiver, id, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda_15(closure$context) {
@@ -1361,7 +1364,7 @@
       var codeRight = result;
       var id = closure$context.nextId();
       var idSymbol = closure$context.nextId();
-      var label = 'ANONYMOUS (EVAL.fl9:' + $receiver.location.row + ',' + $receiver.location.column + ')';
+      var label = '<LAMBDA> (<EVAL>:' + $receiver.location.row + ',' + $receiver.location.column + ')';
       return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23(idSymbol, label, $receiver, id, arguments_0, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
@@ -1525,12 +1528,13 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_28(closure$codeLeft, closure$id, this$, closure$idArgument, closure$codeRight) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_28(closure$codeLeft, closure$idSymbol, closure$label, this$, closure$id, closure$idArgument, closure$codeRight) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = runtime.map('), closure$codeLeft.body), this$.not_pdl1vz$(', function(v' + closure$idArgument + ') {')));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const v' + closure$idSymbol + ' = Symbol(' + JSON.stringify(closure$label) + ');'));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = runtime.map('), closure$codeLeft.body), this$.not_pdl1vz$(', {[v' + closure$idSymbol + ']: function(v' + closure$idArgument + ') {')));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_17(closure$codeRight, this$));
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('});'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('}}[v' + closure$idSymbol + ']);'));
       return Unit;
     };
   }
@@ -1546,7 +1550,9 @@
       $this.pop();
       var codeRight = result;
       var id = closure$context.nextId();
-      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_28(codeLeft, id, $receiver, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
+      var idSymbol = closure$context.nextId();
+      var label = '<PIPE> (<EVAL>:' + $receiver.location.row + ',' + $receiver.location.column + ')';
+      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_28(codeLeft, idSymbol, label, $receiver, id, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument) {
@@ -1872,11 +1878,11 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda(closure$code) {
+  function getStandardCompiler$lambda$lambda(closure$idSymbol, closure$code, closure$label) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(times('(function(runtime) {', nullLocation));
+      $receiver.line_3pad5q$(times('(v' + closure$idSymbol + ' => ({[v' + closure$idSymbol + ']: function(runtime) {', nullLocation));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_68(closure$code));
-      $receiver.line_3pad5q$(times('})', nullLocation));
+      $receiver.line_3pad5q$(times('}})[v' + closure$idSymbol + '])(Symbol(' + JSON.stringify(closure$label) + '))', nullLocation));
       return Unit;
     };
   }
@@ -1956,7 +1962,7 @@
     $receiver_0.invoke_2lqwj7$('NAN', getStandardCompiler$lambda$lambda$lambda_58);
     $receiver_0.invoke_2lqwj7$('INFINITY', getStandardCompiler$lambda$lambda$lambda_59);
     $receiver_0.invoke_2lqwj7$('UNDEFINED', getStandardCompiler$lambda$lambda$lambda_60);
-    $receiver_0.invoke_2lqwj7$('ERROR', getStandardCompiler$lambda$lambda$lambda_61);
+    $receiver_0.invoke_2lqwj7$('THROW', getStandardCompiler$lambda$lambda$lambda_61);
     $receiver_0.invoke_2lqwj7$('OPERATOR_TO_STRING', getStandardCompiler$lambda$lambda$lambda_62);
     $receiver_0.invoke_2lqwj7$('OPERATOR_ADD', getStandardCompiler$lambda$lambda$lambda_63);
     $receiver_0.invoke_2lqwj7$('OPERATOR_SUBTRACT', getStandardCompiler$lambda$lambda$lambda_64);
@@ -1964,7 +1970,9 @@
     $receiver_0.invoke_2lqwj7$('OPERATOR_DIVIDE', getStandardCompiler$lambda$lambda$lambda_66);
     $receiver_0.invoke_2lqwj7$('OPERATOR_STREAM', getStandardCompiler$lambda$lambda$lambda_67);
     var code_0 = mustGet(nodeRoot, context);
-    var sourcedFile = code(getStandardCompiler$lambda$lambda(code_0));
+    var idSymbol = context.nextId();
+    var label = '<ROOT> (<EVAL>)';
+    var sourcedFile = code(getStandardCompiler$lambda$lambda(idSymbol, code_0, label));
     return joinToString(sourcedFile.sourcedLines, '', void 0, void 0, void 0, void 0, getStandardCompiler$lambda$lambda_0);
   }
   function getStandardCompiler() {
