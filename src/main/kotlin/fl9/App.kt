@@ -649,7 +649,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         "NAN" { get { CodeGet(!"NaN") } }
         "INFINITY" { get { CodeGet(!"Infinity") } }
         "UNDEFINED" { get { CodeGet(!"undefined") } }
-        "ERROR" { get { CodeGet(!"(message => { throw new Error(runtime.toString(message)); })") } }
+        "THROW" { get { CodeGet(!"(message => { throw new Error(runtime.toString(message)); })") } }
         "OPERATOR_TO_STRING" { get { CodeGet(!"(runtime.symbolToString)") } }
         "OPERATOR_ADD" { get { CodeGet(!"(runtime.symbolAdd)") } }
         "OPERATOR_SUBTRACT" { get { CodeGet(!"(runtime.symbolSubtract)") } }

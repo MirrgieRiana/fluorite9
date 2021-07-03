@@ -784,15 +784,15 @@ Success
 ```
 
 ```
-ERROR["Error!!!"]
+THROW["Error!!!"]
 ```
 ↓
 ```
-Error: Error!!!
+THROW: Error!!!
 ```
 
 ```
-ERROR["Error!!!"] !? "Caught"
+THROW["Error!!!"] !? "Caught"
 ```
 ↓
 ```
