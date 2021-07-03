@@ -14,24 +14,41 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         number { get { CodeGet(!"(${channel.value})") } }
-        string { get { CodeGet(!JSON.stringify(channel.value)) } }
+        string {
+            get {
+                if (channel.value.isEmpty()) {
+                    CodeGet(!"\"\"")
+                } else {
+                    val id = "v" + compiler.nextId()
+                    CodeGet(code {
+                        line(!"const $id = ${JSON.stringify(channel.value)};")
+                    }, !id)
+                }
+            }
+        }
         join {
             get {
                 if (channel.value.isEmpty()) {
                     CodeGet(!"\"\"")
-                } else if (channel.value.size == 1 && channel.value[0].isType(string)) {
-                    channel.value[0].mustGet(compiler)
                 } else {
-                    val codes = channel.value.map { it.mustGet(compiler) }
-                    val id = compiler.nextId()
+                    class CodeStringInit(val head: SourcedFile, val body: SourcedLine)
+
+                    val codes = channel.value.map { node ->
+                        node.maybe(string) { string ->
+                            return@map CodeStringInit(zeroFile, JSON.stringify(string).let { it.substring(1, it.length - 1) } * node.location)
+                        }
+                        val code = node.mustGet(compiler)
+                        return@map CodeStringInit(code.head, "\${runtime.toString(" * node.location + code.body + ")}" * node.location)
+                    }
+                    val id = "v" + compiler.nextId()
                     CodeGet(code {
                         codes.forEach {
                             line(it.head)
                         }
-                        line(!"const v$id = `" + codes
-                                .map { !"\${runtime.toString(" + it.body + !")}" }
+                        line(!"const $id = `" + codes
+                                .map { it.body }
                                 .reduceOrZero { left, right -> left + right } + !"`;")
-                    }, !"v$id")
+                    }, !id)
                 }
             }
         }
@@ -337,12 +354,12 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             run(binaryConditionOperatorRunner { !"!runtime.toBoolean(" + it + !")" })
         }
         question_colon {
-            get(binaryConditionOperatorGetter { it + !"=== undefined" })
-            run(binaryConditionOperatorRunner { it + !"=== undefined" })
+            get(binaryConditionOperatorGetter { it + !" === undefined" })
+            run(binaryConditionOperatorRunner { it + !" === undefined" })
         }
         exclamation_colon {
-            get(binaryConditionOperatorGetter { it + !"!== undefined" })
-            run(binaryConditionOperatorRunner { it + !"!== undefined" })
+            get(binaryConditionOperatorGetter { it + !" !== undefined" })
+            run(binaryConditionOperatorRunner { it + !" !== undefined" })
         }
 
         ternary_question_colon {
