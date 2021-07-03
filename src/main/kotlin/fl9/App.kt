@@ -458,15 +458,18 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     value.right.mustGet(context)
                 }
                 val id = context.nextId()
+                val idSymbol = context.nextId()
+                val label = "ANONYMOUS (EVAL.fl9:${location.row},${location.column})"
                 CodeGet(code {
-                    line(!"const v$id = function(" + arguments
+                    line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
+                    line(!"const v$id = {[v$idSymbol]: function(" + arguments
                             .map { argument -> argument.code * argument.location }
                             .reduceOrZero { left, right -> left + !", " + right } + !") {")
                     indent {
                         line(codeRight.head)
                         line(!"return " + codeRight.body + !";")
                     }
-                    line(!"};")
+                    line(!"}}[v$idSymbol];")
                 }, !"v$id")
             }
         }
