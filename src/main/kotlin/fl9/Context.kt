@@ -4,11 +4,11 @@ import fl9.token.Token
 
 
 class CodeGet(val head: SourcedFile, val body: SourcedLine) {
-    constructor(body: SourcedLine) : this(SourcedFile(listOf()), body)
+    constructor(body: SourcedLine) : this(zeroFile, body)
 }
 
 class CodeRun(val head: SourcedFile) {
-    constructor() : this(SourcedFile(listOf()))
+    constructor() : this(zeroFile)
 }
 
 class CodeSet(val consumer: (CodeGet) -> CodeRun)
