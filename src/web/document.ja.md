@@ -64,6 +64,7 @@
     - [丸括弧と文](#%E4%B8%B8%E6%8B%AC%E5%BC%A7%E3%81%A8%E6%96%87)
 - [高度なチュートリアル](#%E9%AB%98%E5%BA%A6%E3%81%AA%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB)
   - [演算子オーバーライド](#%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
+  - [デバッグ](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
