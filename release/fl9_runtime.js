@@ -115,7 +115,7 @@
       throw new Error("Illegal Action: getLength(" + value + ")");
     }
     toJson(value) {
-      return JSON.stringify(value, null, " ");
+      return JSON.stringify(value, null, "  ");
     }
     fromJson(value) {
       return JSON.parse(this.toString(value));

@@ -35,6 +35,8 @@
     - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
   - [デリゲートアクセス `object::method`](#%E3%83%87%E3%83%AA%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-objectmethod)
     - [厳密な挙動の説明](#%E5%8E%B3%E5%AF%86%E3%81%AA%E6%8C%99%E5%8B%95%E3%81%AE%E8%AA%AC%E6%98%8E)
+  - [JSONエンコード・デコード演算子 `$&value` `$*json`](#json%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%E6%BC%94%E7%AE%97%E5%AD%90-value-json)
+    - [後置版 `value.$&` `json.$*`](#%E5%BE%8C%E7%BD%AE%E7%89%88-value-json)
   - [四則演算 `left + right` `left - right` `left * right` `left / right`](#%E5%9B%9B%E5%89%87%E6%BC%94%E7%AE%97-left--right-left---right-left--right-left--right)
     - [基本](#%E5%9F%BA%E6%9C%AC)
     - [余りの出る除算 `left / right`](#%E4%BD%99%E3%82%8A%E3%81%AE%E5%87%BA%E3%82%8B%E9%99%A4%E7%AE%97-left--right)
@@ -525,6 +527,72 @@ delegate : () -> object.getValue[object]
 ```
 
 デリゲートアクセス演算子は、オブジェクトのプロパティを参照したうえで、それを関数とみなしてオブジェクト自身を左に部分適用した関数を返します。
+
+## JSONエンコード・デコード演算子 `$&value` `$*json`
+
+`$&`はオブジェクト、配列、数値、文字列などJSON化できるものを整形されたJSON文字列に変換します。
+
+```
+$&[
+  1
+  2
+  [3; 4]
+  5
+  {
+    a = 6
+    b = [7; 8]
+  }
+  "9"
+  TRUE
+  NULL
+]
+```
+↓
+```
+[
+ 1,
+ 2,
+ [
+  3,
+  4
+ ],
+ 5,
+ {
+  "a": 6,
+  "b": [
+   7,
+   8
+  ]
+ },
+ "9",
+ true,
+ null
+]
+```
+
+`$*`はJSON文字列からオブジェクトと配列を構成します。
+
+```
+$*"[1, 2, 3]"
+```
+↓
+```
+1,2,3
+```
+
+どちらの演算子も、配列やオブジェクト以外の値を直接処理することができます。
+
+```
+$&"abc"
+```
+↓
+```
+"abc"
+```
+
+### 後置版 `value.$&` `json.$*`
+
+全く同じ働きをする後置演算子も存在します。
 
 ## 四則演算 `left + right` `left - right` `left * right` `left / right`
 
