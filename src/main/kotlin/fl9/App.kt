@@ -300,6 +300,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         left_question { get(leftUnaryOperatorGetter { !"runtime.toBoolean(" + it + !")" }) }
         left_exclamation { get(leftUnaryOperatorGetter { !"!runtime.toBoolean(" + it + !")" }) }
         left_dollar_number { get(leftUnaryOperatorGetter { !"runtime.getLength(" + it + !")" }) }
+        left_dollar_ampersand { get(leftUnaryOperatorGetter { !"runtime.toJson(" + it + !")" }) }
+        left_dollar_asterisk { get(leftUnaryOperatorGetter { !"runtime.fromJson(" + it + !")" }) }
 
         fun binaryOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.(SourcedLine, SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.() -> CodeGet = {
             val codeLeft = channel.value.left.mustGet(compiler)

@@ -51,6 +51,8 @@ val left_ampersand = Token<LeftUnaryOperatorArgument>("left_ampersand")
 val left_question = Token<LeftUnaryOperatorArgument>("left_question")
 val left_exclamation = Token<LeftUnaryOperatorArgument>("left_exclamation")
 val left_dollar_number = Token<LeftUnaryOperatorArgument>("left_dollar_number")
+val left_dollar_ampersand = Token<LeftUnaryOperatorArgument>("left_dollar_ampersand")
+val left_dollar_asterisk = Token<LeftUnaryOperatorArgument>("left_dollar_asterisk")
 
 val asterisk = Token<BinaryOperatorArgument>("asterisk")
 val slash = Token<BinaryOperatorArgument>("slash")

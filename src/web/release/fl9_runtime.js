@@ -114,6 +114,12 @@
       if (value instanceof Array) return value.length;
       throw new Error("Illegal Action: getLength(" + value + ")");
     }
+    toJson(value) {
+      return JSON.stringify(value, null, " ");
+    }
+    fromJson(value) {
+      return JSON.parse(this.toString(value));
+    }
 
     add(left, right) {
       if (typeof left === "number") return left + this.toNumber(right);
