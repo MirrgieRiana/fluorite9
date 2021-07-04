@@ -193,7 +193,10 @@ Pipe
   ) __)* tail:Assignment { return [tail, ...head.reverse()].reduce((right, left) => left[2](left[0], right)); }
 
 Semicolon
-  = head:(Pipe / Void) tail:(_ ((";" / "\r\n" / "\r" / "\n") { return location(); }) __ (Pipe / Void))+ {
+  = head:(Pipe / Void) tail:(
+    _ ((";" / "\r\n" / "\r" / "\n") { return location(); }) __ (Pipe       )
+  / _ ((";"                       ) { return location(); }) __ (Pipe / Void)
+  )+ {
     return node("semicolon", [head, ...tail.map(item => item[3])], tail[0][1]);
   }
   / Pipe
