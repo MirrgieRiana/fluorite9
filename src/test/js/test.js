@@ -10,6 +10,13 @@ function assertEquals(expected, src) {
     console.error("Assertion Error:");
     console.error(`  expected: ${expected} (${typeof expected})`);
     console.error(`  actual  : ${result} (${typeof result})`);
+    console.error("");
+    console.error("===== Source =====");
+    console.error(src);
+    console.error("");
+    console.error("===== JS Code =====");
+    console.error(code);
+    console.error("");
     throw new Error("Assertion Error");
   }
 }
