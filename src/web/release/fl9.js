@@ -105,7 +105,13 @@ function main() {
     console.log(code);
     return;
   }
-  const result = runtime.toString(eval(code)(runtime));
+  let result;
+  {
+    const exports = {};
+    const module = {exports: {}};
+    eval(code);
+    result = runtime.toString(module.exports.main(runtime));
+  }
   console.log(result);
 }
 main();

@@ -41,7 +41,10 @@ function compile() {
 
   let result;
   try {
-    result = eval(code)(fl9_runtime);
+    const exports = {};
+    const module = {exports: {}};
+    eval(code);
+    result = module.exports.main(fl9_runtime);
   } catch (e) {
     console.error(e);
     document.getElementById("result").value = "" + e;

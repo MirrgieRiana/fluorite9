@@ -46,8 +46,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             line(it.head)
                         }
                         line(!"const $id = `" + codes
-                                .map { it.body }
-                                .reduceOrZero { left, right -> left + right } + !"`;")
+                            .map { it.body }
+                            .reduceOrZero { left, right -> left + right } + !"`;")
                     }, !id)
                 }
             }
@@ -179,9 +179,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         val nodeValue = it.value.unsafeCast<BinaryOperatorArgument>().right
                         if (nodeKey.type == "identifier") {
                             codesMainNamed += Triple(
-                                    nodeKey.value.unsafeCast<String>(),
-                                    compiler.aliases.stack { nodeValue.mustGet(compiler) },
-                                    nodeKey.location
+                                nodeKey.value.unsafeCast<String>(),
+                                compiler.aliases.stack { nodeValue.mustGet(compiler) },
+                                nodeKey.location
                             )
                         } else {
                             throw Exception("Illegal Argument Name: ${nodeKey.type}")
@@ -199,8 +199,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             line(it.head)
                         }
                         line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
-                                .map { it.body }
-                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
+                            .map { it.body }
+                            .reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 } else {
                     val id = compiler.nextId()
@@ -216,9 +216,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             line(!"v$idObject[" + JSON.stringify(it.first) * it.third + !"] = " + it.second.body + !";")
                         }
                         line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
-                                .map { it.body }
-                                .plus(!"v$idObject")
-                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
+                            .map { it.body }
+                            .plus(!"v$idObject")
+                            .reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 }
             }
@@ -498,8 +498,8 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 CodeGet(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = {[v$idSymbol]: function(" + arguments
-                            .map { argument -> argument.code * argument.location }
-                            .reduceOrZero { left, right -> left + !", " + right } + !") {")
+                        .map { argument -> argument.code * argument.location }
+                        .reduceOrZero { left, right -> left + !", " + right } + !") {")
                     indent {
                         line(codeRight.head)
                         line(!"return " + codeRight.body + !";")
@@ -694,13 +694,34 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
     val idSymbol = compiler.nextId()
     val label = "<ROOT> (<EVAL>)"
     val sourcedFile = code {
-        line("(v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
+        line("(function(root, factory) {" * nullLocation)
+        indent {
+            line("if (typeof define === \"function\" && define.amd) {" * nullLocation)
+            indent {
+                line("define([\"exports\"], factory);" * nullLocation)
+            }
+            line("} else if (typeof exports === \"object\") {" * nullLocation)
+            indent {
+                line("factory(module.exports);" * nullLocation)
+            }
+            line("} else {" * nullLocation)
+            indent {
+                line("root.fl9_result = factory(typeof fl9_result === \"undefined\" ? {} : fl9_result);" * nullLocation)
+            }
+            line("}" * nullLocation)
+        }
+        line("}(this, function(result) {" * nullLocation)
         indent {
             line("\"use strict\";" * nullLocation)
-            line(code.head)
-            line("return " * nullLocation + code.body + ";" * nullLocation)
+            line("result.main = (v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
+            indent {
+                line(code.head)
+                line("return " * nullLocation + code.body + ";" * nullLocation)
+            }
+            line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}));" * nullLocation)
+            line("return result;" * nullLocation)
         }
-        line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}))" * nullLocation)
+        line("}));" * nullLocation)
     }
     sourcedFile.sourcedLines.joinToString("") { sourcedLine ->
         sourcedLine.sourcesStrings.joinToString("") { sourcedString ->
