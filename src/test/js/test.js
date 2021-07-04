@@ -294,4 +294,4 @@ function assertEquals(expected, src) {
 
 }
 
-console.log("Test OK");
+console.log("test.js OK");
