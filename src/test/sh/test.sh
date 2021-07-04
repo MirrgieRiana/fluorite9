@@ -17,7 +17,12 @@
 
 # JSコード出力したものをnodeで実行できる
 fl9 '1 + 2 + 3 + 4 + 5' -c > tmp1.js
-[ 15 == "$(  node -e 'console.log(require("./tmp1.js").main(require("fl9_runtime.js")))'  )" ] || exit
+[ 15 == "$(  node -e '
+  const fl9_runtime = require("fl9_runtime.js");
+  const runtime = new fl9_runtime.Runtime();
+  runtime.addLibrary(require("fl9_lib/std.js").main(runtime));
+  console.log(require("./tmp1.js").main(runtime))
+'  )" ] || exit
 
 echo "test.sh OK"
 exit 0
