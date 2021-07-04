@@ -187,6 +187,14 @@ function assertEqualsJson(expected, src) {
   assertEqualsJson([0, 1], "               [0; (); 1             ]"); // 空ストリームを含む配列
   assertEquals("0,NULL,UNDEFINED,1", "    &[0; NULL; UNDEFINED; 1]"); // NULLおよびUNDEFINEDを要素に持つ配列
   assertEqualsJson([0, [1, 2], 3], "       [0; [1; 2]; 3         ]"); // 配列を含む配列
+
+  assertEqualsJson([1, "abc", [2, 3], null], `[
+    1
+    "abc"
+    ()
+    [2; 3]
+    NULL
+  ]`); // 改行によって記述される配列
 }
 
 // デリゲート
