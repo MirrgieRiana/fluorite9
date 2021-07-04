@@ -29,6 +29,33 @@ function assertEquals(expected, src) {
   }
 }
 
+function assertEqualsJson(expected, src) {
+  const node = fl9_parser.parse(src);
+  const code = fl9_compiler.fl9.getStandardCompiler()(node);
+  const runtime = new fl9_runtime.Runtime();
+  runtime.addLibrary(require("fl9_lib/std.js").main(runtime));
+  let result;
+  {
+    const exports = {};
+    const module = {exports: {}};
+    eval(code);
+    result = module.exports.main(runtime);
+  }
+  if (JSON.stringify(result) !== JSON.stringify(expected)) {
+    console.error("Assertion Error:");
+    console.error(`  expected: ${expected} (Json)`);
+    console.error(`  actual  : ${result} (Json)`);
+    console.error("");
+    console.error("===== Source =====");
+    console.error(src);
+    console.error("");
+    console.error("===== JS Code =====");
+    console.error(code);
+    console.error("");
+    throw new Error("Assertion Error");
+  }
+}
+
 // 改行
 {
 
@@ -131,7 +158,6 @@ function assertEquals(expected, src) {
   assertEquals(-10, "- 10"); // 符号と数値の間にスペースを入れてもよい
 }
 
-
 // 文字列
 {
 
@@ -149,6 +175,18 @@ function assertEquals(expected, src) {
   assertEquals("TRUE", '           "$(TRUE)"            '); // ドル括弧による埋め込み
   assertEquals("3", '              "$(1 + 2)"           '); // 式の埋め込み
 
+}
+
+// 配列初期化子
+{
+  assertEqualsJson([], "                   [                     ]"); // 空配列
+  assertEqualsJson([0], "                  [0                    ]"); // 要素数が1個の配列
+  assertEqualsJson([0, 1], "               [0; 1                 ]"); // 要素数が2個の配列
+  assertEqualsJson([0, 1, 2], "            [0 .. 2               ]"); // ストリームを含む配列
+  assertEqualsJson([0, 1, 2, 3], "         [0 .. 2; 3            ]"); // ストリームを含む複数の要素を持つ配列
+  assertEqualsJson([0, 1], "               [0; (); 1             ]"); // 空ストリームを含む配列
+  assertEquals("0,NULL,UNDEFINED,1", "    &[0; NULL; UNDEFINED; 1]"); // NULLおよびUNDEFINEDを要素に持つ配列
+  assertEqualsJson([0, [1, 2], 3], "       [0; [1; 2]; 3         ]"); // 配列を含む配列
 }
 
 // デリゲート
