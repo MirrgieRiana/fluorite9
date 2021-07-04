@@ -10,7 +10,7 @@ function assertEquals(expected, src) {
     const exports = {};
     const module = {exports: {}};
     eval(code);
-    result = runtime.toString(module.exports.main(runtime));
+    result = module.exports.main(runtime);
   }
   if (result !== expected) {
     console.error("Assertion Error:");
