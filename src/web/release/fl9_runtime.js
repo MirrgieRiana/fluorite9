@@ -37,7 +37,7 @@
   }
 
   class Runtime {
-    constructor {
+    constructor() {
       this._libraries = [];
     }
 
