@@ -39,12 +39,15 @@ function compile() {
   document.getElementById("code").value = code;
   console.log(code);
 
+  const runtime = new fl9_runtime.Runtime();
+  runtime.addLibrary(fl9_lib_std.main(runtime));
+
   let result;
   try {
     const exports = {};
     const module = {exports: {}};
     eval(code);
-    result = module.exports.main(fl9_runtime);
+    result = module.exports.main(runtime);
   } catch (e) {
     console.error(e);
     document.getElementById("result").value = "" + e;
@@ -54,7 +57,7 @@ function compile() {
 
   let string;
   try {
-    string = fl9_runtime.toString(result);
+    string = runtime.toString(result);
   } catch (e) {
     console.error(e);
     document.getElementById("result").value = "" + e;
