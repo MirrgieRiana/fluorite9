@@ -50,12 +50,12 @@
     }
     getVoid() {
       return {
-        [symbolToString]: () => throw new Error("Void access"),
-        [symbolAdd]: () => throw new Error("Void access"),
-        [symbolSubtract]: () => throw new Error("Void access"),
-        [symbolMultiply]: () => throw new Error("Void access"),
-        [symbolDivide]: () => throw new Error("Void access"),
-        [symbolStream]: () => throw new Error("Void access"),
+        [symbolToString]: () => { throw new Error("Void access"); },
+        [symbolAdd]: () => { throw new Error("Void access"); },
+        [symbolSubtract]: () => { throw new Error("Void access"); },
+        [symbolMultiply]: () => { throw new Error("Void access"); },
+        [symbolDivide]: () => { throw new Error("Void access"); },
+        [symbolStream]: () => { throw new Error("Void access"); },
       };
     }
 
