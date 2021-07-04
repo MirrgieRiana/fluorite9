@@ -7,6 +7,7 @@ function assertEquals(expected, src) {
   const code = fl9_compiler.fl9.getStandardCompiler()(node);
   const runtime = new fl9_runtime.Runtime();
   runtime.addLibrary(require("fl9_lib/std.js").main(runtime));
+  runtime.addLibrary(require("fl9_lib/console.js").main(runtime));
   let result;
   {
     const exports = {};
