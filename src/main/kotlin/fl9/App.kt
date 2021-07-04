@@ -121,7 +121,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !"v$id")
             }
         }
-        empty_dollar_round { get { CodeGet(!"(runtime.empty)") } }
+        empty_dollar_round { get { CodeGet(!"(runtime.getEmpty())") } }
         dollar_round { get { compiler.aliases.stack { channel.value.main.mustGet(compiler) } } }
 
         period {
