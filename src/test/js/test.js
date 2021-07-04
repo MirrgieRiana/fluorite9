@@ -5,7 +5,13 @@ const runtime = require("fl9_runtime.js");
 function assertEquals(expected, src) {
   const node = parser.parse(src);
   const code = compiler.fl9.getStandardCompiler()(node);
-  const result = eval(code)(runtime);
+  let result;
+  {
+    const exports = {};
+    const module = {exports: {}};
+    eval(code);
+    result = runtime.toString(module.exports.main(runtime));
+  }
   if (result !== expected) {
     console.error("Assertion Error:");
     console.error(`  expected: ${expected} (${typeof expected})`);
