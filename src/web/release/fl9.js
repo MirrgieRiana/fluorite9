@@ -1,7 +1,7 @@
 const fs = require("fs");
-const parser = require("fl9_parser.js");
-const compiler = require("fl9_compiler.js");
-const runtime = require("fl9_runtime.js");
+const fl9_parser = require("fl9_parser.js");
+const fl9_compiler = require("fl9_compiler.js");
+const fl9_runtime = require("fl9_runtime.js");
 
 function usage() {
   console.log("Usage: [-N | -C] [-n | -c] (-f <input_file> | [--] <exec>)");
@@ -85,6 +85,7 @@ if (fileInput === undefined && exec === undefined) usage();
 //
 
 function main() {
+
   let src;
   if (fileInput !== undefined) {
     if (fileInput === "-") {
@@ -95,16 +96,22 @@ function main() {
   } else {
     src = exec;
   }
-  const node = codeInput ? src : nodeInput ? JSON.parse(src) : parser.parse(src);
+
+  const node = codeInput ? src : nodeInput ? JSON.parse(src) : fl9_parser.parse(src);
   if (nodeOutput) {
     console.log(JSON.stringify(node, undefined, "  "));
     return;
   }
-  const code = codeInput ? node : compiler.fl9.getStandardCompiler()(node);
+
+  const code = codeInput ? node : fl9_compiler.fl9.getStandardCompiler()(node);
   if (codeOutput) {
     console.log(code);
     return;
   }
+
+  const runtime = new fl9_runtime.Runtime();
+  runtime.addLibrary(require("fl9_lib/std.js").main(runtime));
+
   let result;
   {
     const exports = {};
@@ -112,6 +119,8 @@ function main() {
     eval(code);
     result = runtime.toString(module.exports.main(runtime));
   }
+
   console.log(result);
+
 }
 main();

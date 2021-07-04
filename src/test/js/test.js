@@ -1,10 +1,12 @@
-const parser = require("fl9_parser.js");
-const compiler = require("fl9_compiler.js");
-const runtime = require("fl9_runtime.js");
+const fl9_parser = require("fl9_parser.js");
+const fl9_compiler = require("fl9_compiler.js");
+const fl9_runtime = require("fl9_runtime.js");
 
 function assertEquals(expected, src) {
-  const node = parser.parse(src);
-  const code = compiler.fl9.getStandardCompiler()(node);
+  const node = fl9_parser.parse(src);
+  const code = fl9_compiler.fl9.getStandardCompiler()(node);
+  const runtime = new fl9_runtime.Runtime();
+  runtime.addLibrary(require("fl9_lib/std.js").main(runtime));
   let result;
   {
     const exports = {};

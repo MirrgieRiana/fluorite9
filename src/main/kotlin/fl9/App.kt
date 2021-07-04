@@ -53,8 +53,24 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         identifier {
-            get { compiler.aliases[channel.value]?.get?.invoke(Context(compiler, location, AliasContext(), GetterContext(domain.givenName))) ?: throw Exception("Unknown Identifier: ${channel.value}") }
-            set { compiler.aliases[channel.value]?.set?.invoke(Context(compiler, location, AliasContext(), Unit)) ?: throw Exception("Unknown Identifier: ${channel.value}") }
+            get {
+                compiler.aliases[channel.value]?.get?.invoke(Context(compiler, location, AliasContext(), GetterContext(domain.givenName))) ?: run {
+                    val id = "v" + compiler.nextId()
+                    CodeGet(code {
+                        line(!"const $id = runtime.get(${JSON.stringify(channel.value)});")
+                    }, !id)
+                }
+            }
+            set {
+                compiler.aliases[channel.value]?.set?.invoke(Context(compiler, location, AliasContext(), Unit)) ?: run {
+                    CodeSet { code ->
+                        CodeRun(code {
+                            line(code.head)
+                            line(!"runtime.set(${JSON.stringify(channel.value)}, " + code.body + !");")
+                        })
+                    }
+                }
+            }
         }
 
         empty_round { get { CodeGet(!"(runtime.empty)") } }
@@ -668,13 +684,6 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
     }
     compiler.aliases.apply {
-        "A" { get { CodeGet(!"([1, 2, 3])") } }
-        "F" { get { CodeGet(!"(a => a * 20)") } }
-        "O" { get { CodeGet(!"({m: a => a * 20})") } }
-        "PI" { get { CodeGet(!"(Math.PI)") } }
-        "SIN" { get { CodeGet(!"(Math.sin)") } }
-        "LOG" { get { CodeGet(!"((a, b) => Math.log(a) / Math.log(b))") } }
-        "MAP" { get { CodeGet(!"(array => code => array.map(item => code(item)))") } }
         "TRUE" { get { CodeGet(!"true") } }
         "FALSE" { get { CodeGet(!"false") } }
         "NULL" { get { CodeGet(!"null") } }
@@ -710,16 +719,16 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
             line("}" * nullLocation)
         }
-        line("}(this, function(result) {" * nullLocation)
+        line("}(this, function(_) {" * nullLocation)
         indent {
             line("\"use strict\";" * nullLocation)
-            line("result.main = (v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
+            line("_.main = (v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
             indent {
                 line(code.head)
                 line("return " * nullLocation + code.body + ";" * nullLocation)
             }
             line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}));" * nullLocation)
-            line("return result;" * nullLocation)
+            line("return _;" * nullLocation)
         }
         line("}));" * nullLocation)
     }

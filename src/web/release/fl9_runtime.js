@@ -6,8 +6,12 @@
   } else {
     root.fl9_runtime = factory(typeof fl9_runtime === 'undefined' ? {} : fl9_runtime);
   }
-}(this, function(runtime) {
+}(this, function(_) {
   "use strict";
+  function Runtime() {
+    this._libraries = [];
+  }
+  const runtime = Runtime.prototype;
   runtime.symbolToString = Symbol("fl9ToString");
   runtime.symbolAdd = Symbol("fl9Add");
   runtime.symbolSubtract = Symbol("fl9Subtract");
@@ -42,6 +46,19 @@
     [runtime.symbolStream]() {
       throw new Error("Void access");
     }
+  };
+  runtime.addLibrary = function(library) {
+    this._libraries.unshift(library);
+  };
+  runtime.get = function(name) {
+    for (let library of this._libraries) {
+      const value = library[name];
+      if (value !== undefined) return value;
+    }
+    throw Error(`Unknown Variable: ${name}`)
+  };
+  runtime.set = function(name, value) {
+    throw Error(`Unknown Variable: ${name}`)
   };
   runtime.toNumber = function(value) {
     if (typeof value === "number") return value;
@@ -145,5 +162,6 @@
       }
     });
   };
-  return runtime;
+  _.Runtime = Runtime;
+  return _;
 }));
