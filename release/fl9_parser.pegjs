@@ -26,7 +26,7 @@ _
   / Spaces
 
 __
-  = BrSpaces
+  = BrSpaces ("\\" BrSpaces)*
 
 Void
   = "" { return node("void", undefined, location()); }
