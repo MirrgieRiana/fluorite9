@@ -185,7 +185,7 @@
     map(stream, func) {
       stream = this.toStream(stream);
       return new this.Fl9Stream(this, function*() {
-        for (item of stream[symbolStream]()) {
+        for (let item of stream[symbolStream]()) {
           yield func(item);
         }
       });
