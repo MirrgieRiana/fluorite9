@@ -70,11 +70,19 @@
       throw Error(`Unknown Variable: ${name}`)
     }
 
+    isStream(value) {
+      if (value === null) return false;
+      if (value === undefined) return false;
+      return value[symbolStream] !== undefined;
+    }
     toStream(value) {
       if (value[symbolStream] !== undefined) return value;
       return new this.Fl9Stream(this, function*() {
         yield value;
       });
+    }
+    streamToIterable(value) {
+      return value[symbolStream]();
     }
 
     toNumber(value) {
@@ -105,6 +113,12 @@
       if (typeof value === "string") return value.length;
       if (value instanceof Array) return value.length;
       throw new Error("Illegal Action: getLength(" + value + ")");
+    }
+    toJson(value) {
+      return JSON.stringify(value, null, " ");
+    }
+    fromJson(value) {
+      return JSON.parse(this.toString(value));
     }
 
     add(left, right) {

@@ -42,7 +42,7 @@
   AliasRegistry.prototype = Object.create(FramedRegistry.prototype);
   AliasRegistry.prototype.constructor = AliasRegistry;
   function getStandardCompiler$lambda$lambda$lambda$lambda($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.void)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.getVoid())'));
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_0($receiver) {
     return CodeRun_init();
@@ -219,7 +219,7 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_8($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.empty)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.getEmpty())'));
   }
   function getStandardCompiler$lambda$lambda$lambda_4($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_8);
@@ -268,17 +268,41 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_1(this$, closure$id, this$_0) {
-    return function (code) {
-      this$.line_3pe74m$(code.head);
-      this$.line_3pad5q$(plus_1(plus_1(this$_0.not_pdl1vz$('v' + closure$id + '[v' + closure$id + '.length] = '), code.body), this$_0.not_pdl1vz$(';')));
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$id, closure$idItem, this$) {
+    return function ($receiver) {
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('v' + closure$id + '[v' + closure$id + '.length] = ' + closure$idItem + ';'));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_4(closure$id, this$, closure$codeMain) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idItem, this$, closure$code, closure$id) {
+    return function ($receiver) {
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('for (let ' + closure$idItem + ' of runtime.streamToIterable('), closure$code.body), this$.not_pdl1vz$(')) {')));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$id, closure$idItem, this$));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('}'));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$id, this$, closure$code) {
+    return function ($receiver) {
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('v' + closure$id + '[v' + closure$id + '.length] = '), closure$code.body), this$.not_pdl1vz$(';')));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_1(this$, this$_0, closure$idItem, closure$id) {
+    return function (code) {
+      this$.line_3pe74m$(code.head);
+      this$.line_3pad5q$(plus_1(plus_1(this$_0.not_pdl1vz$('if (runtime.isStream('), code.body), this$_0.not_pdl1vz$(')) {')));
+      this$.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idItem, this$_0, code, closure$id));
+      this$.line_3pad5q$(this$_0.not_pdl1vz$('} else {'));
+      this$.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$id, this$_0, code));
+      this$.line_3pad5q$(this$_0.not_pdl1vz$('}'));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_4(closure$id, this$, closure$codeMain, closure$idItem) {
     return function ($receiver) {
       $receiver.line_3pad5q$(this$.not_pdl1vz$('const v' + closure$id + ' = [];'));
-      closure$codeMain.generator(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_1($receiver, closure$id, this$));
+      closure$codeMain.generator(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_1($receiver, this$, closure$idItem, closure$id));
       return Unit;
     };
   }
@@ -286,7 +310,8 @@
     return function ($receiver) {
       var codeMain = mustArrayInit($receiver.channel.value.main, closure$compiler);
       var id = closure$compiler.nextId();
-      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_4(id, $receiver, codeMain)), $receiver.not_pdl1vz$('v' + id));
+      var idItem = 'v' + toString(closure$compiler.nextId());
+      return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_4(id, $receiver, codeMain, idItem)), $receiver.not_pdl1vz$('v' + id));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda_7(closure$compiler) {
@@ -342,7 +367,7 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_15($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.empty)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.getEmpty())'));
   }
   function getStandardCompiler$lambda$lambda$lambda_10($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_15);
@@ -363,7 +388,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$codeLeft, closure$id, this$, closure$name) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$codeLeft, closure$id, this$, closure$name) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
       $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = '), closure$codeLeft.body), this$.not_pdl1vz$('[')), times(JSON.stringify(closure$name), this$.channel.value.right.location)), this$.not_pdl1vz$('];')));
@@ -380,7 +405,7 @@
           var name = $receiver_0.value;
           var codeLeft = mustGet($receiver.channel.value.left, closure$compiler_0);
           var id = closure$compiler_0.nextId();
-          block$result = new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$('v' + id));
+          block$result = new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$('v' + id));
           break block$break;
         }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + '.' + $receiver.channel.value.right.type);
       }
@@ -394,7 +419,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$codeLeft, closure$id, this$, closure$name) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$codeLeft, closure$id, this$, closure$name) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
       $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.createDelegate('), closure$codeLeft.body), this$.not_pdl1vz$(', ')), times(JSON.stringify(closure$name), this$.channel.value.right.location)), this$.not_pdl1vz$(');')));
@@ -411,7 +436,7 @@
           var name = $receiver_0.value;
           var codeLeft = mustGet($receiver.channel.value.left, closure$compiler_0);
           var id = 'v' + toString(closure$compiler_0.nextId());
-          block$result = new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$(id));
+          block$result = new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$(id));
           break block$break;
         }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + '::' + $receiver.channel.value.right.type);
       }
@@ -599,7 +624,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$idArgument) {
     return function ($receiver) {
       return CodeGet_init($receiver.not_pdl1vz$('v' + closure$idArgument));
     };
@@ -611,20 +636,20 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$idArgument, this$) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idArgument, this$) {
     return function (code_0) {
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(code_0, closure$idArgument, this$)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument) {
     return function ($receiver) {
-      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$idArgument, $receiver));
+      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idArgument, $receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$idArgument) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$idArgument));
-      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$idArgument));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$idArgument));
+      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument));
       return Unit;
     };
   }
@@ -741,6 +766,24 @@
       return Unit;
     };
   }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_28($receiver, it) {
+    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.toJson('), it), $receiver.not_pdl1vz$(')'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_23(closure$leftUnaryOperatorGetter) {
+    return function ($receiver) {
+      $receiver.get.invoke_ru8m1r$(closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_28));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_29($receiver, it) {
+    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.fromJson('), it), $receiver.not_pdl1vz$(')'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_24(closure$leftUnaryOperatorGetter) {
+    return function ($receiver) {
+      $receiver.get.invoke_ru8m1r$(closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_29));
+      return Unit;
+    };
+  }
   function getStandardCompiler$lambda$lambda$binaryOperatorGetter$lambda$lambda(closure$codeLeft, closure$codeRight, closure$id, this$, closure$function) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
@@ -762,26 +805,8 @@
       return getStandardCompiler$lambda$lambda$binaryOperatorGetter$lambda(closure$compiler, function_0);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_28($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.multiply('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda_23(closure$binaryOperatorGetter) {
-    return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_28));
-      return Unit;
-    };
-  }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_29($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.divide('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda_24(closure$binaryOperatorGetter) {
-    return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_29));
-      return Unit;
-    };
-  }
   function getStandardCompiler$lambda$lambda$lambda$lambda_30($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.add('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.multiply('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda_25(closure$binaryOperatorGetter) {
     return function ($receiver) {
@@ -790,7 +815,7 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_31($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.subtract('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.divide('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda_26(closure$binaryOperatorGetter) {
     return function ($receiver) {
@@ -799,7 +824,7 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_32($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.rangeClosed('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.add('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda_27(closure$binaryOperatorGetter) {
     return function ($receiver) {
@@ -808,7 +833,7 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_33($receiver, left, right) {
-    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.rangeOpened('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.subtract('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda_28(closure$binaryOperatorGetter) {
     return function ($receiver) {
@@ -816,7 +841,25 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idVarResult, this$, closure$idLabel) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_34($receiver, left, right) {
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.rangeClosed('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_29(closure$binaryOperatorGetter) {
+    return function ($receiver) {
+      $receiver.get.invoke_ru8m1r$(closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_34));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_35($receiver, left, right) {
+    return plus_1(plus_1(plus_1(plus_1($receiver.not_pdl1vz$('runtime.rangeOpened('), left), $receiver.not_pdl1vz$(', ')), right), $receiver.not_pdl1vz$(')'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_30(closure$binaryOperatorGetter) {
+    return function ($receiver) {
+      $receiver.get.invoke_ru8m1r$(closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_35));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$idVarResult, this$, closure$idLabel) {
     return function ($receiver) {
       $receiver.line_3pad5q$(this$.not_pdl1vz$(closure$idVarResult + ' = false;'));
       $receiver.line_3pad5q$(this$.not_pdl1vz$('break ' + closure$idLabel + ';'));
@@ -841,7 +884,7 @@
         $receiver.line_3pe74m$(closure$codesTerm_0.get_za3lpa$(element + 1 | 0).head);
         $receiver.line_3pad5q$(plus_1(plus_1(this$_0.not_pdl1vz$('const ' + closure$idVars_0.get_za3lpa$(element + 1 | 0) + ' = '), closure$codesTerm_0.get_za3lpa$(element + 1 | 0).body), this$_0.not_pdl1vz$(';')));
         $receiver.line_3pad5q$(plus_1(plus_1(this$_0.not_pdl1vz$('if (!('), closure$codesOperator_0.get_za3lpa$(element).comparator(this$_0.not_pdl1vz$(closure$idVars_0.get_za3lpa$(element)), this$_0.not_pdl1vz$(closure$idVars_0.get_za3lpa$(element + 1 | 0)))), this$_0.not_pdl1vz$(')) {')));
-        $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idVarResult_0, this$_0, closure$idLabel_0));
+        $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$idVarResult_0, this$_0, closure$idLabel_0));
         $receiver.line_3pad5q$(this$_0.not_pdl1vz$('}'));
       }
       $receiver.line_3pad5q$(this$.not_pdl1vz$(closure$idVarResult + ' = true;'));
@@ -858,7 +901,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_34(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_36(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = get_indices($receiver.channel.value.nodes);
       var destination = ArrayList_init(collectionSizeOrDefault($receiver_0, 10));
@@ -893,9 +936,9 @@
       return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_11(idVarResult, $receiver, idLabel, codesTerm, idVars, codesOperator)), $receiver.not_pdl1vz$(idVarResult));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_29(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_31(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_34(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_36(closure$compiler));
       return Unit;
     };
   }
@@ -904,11 +947,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' == ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_35($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_37($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_12($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_30($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_35);
+  function getStandardCompiler$lambda$lambda$lambda_32($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_37);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_13(this$) {
@@ -916,11 +959,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' != ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_36($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_38($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_13($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_31($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_36);
+  function getStandardCompiler$lambda$lambda$lambda_33($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_38);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_14(this$) {
@@ -928,11 +971,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' === ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_37($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_39($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_14($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_32($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_37);
+  function getStandardCompiler$lambda$lambda$lambda_34($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_39);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_15(this$) {
@@ -940,11 +983,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' !== ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_38($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_40($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_15($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_33($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_38);
+  function getStandardCompiler$lambda$lambda$lambda_35($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_40);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_16(this$) {
@@ -952,11 +995,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' > ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_39($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_41($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_16($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_34($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_39);
+  function getStandardCompiler$lambda$lambda$lambda_36($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_41);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_17(this$) {
@@ -964,11 +1007,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' < ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_40($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_42($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_17($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_35($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_40);
+  function getStandardCompiler$lambda$lambda$lambda_37($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_42);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_18(this$) {
@@ -976,11 +1019,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' >= ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_41($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_43($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_18($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_36($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_41);
+  function getStandardCompiler$lambda$lambda$lambda_38($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_43);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_19(this$) {
@@ -988,11 +1031,11 @@
       return plus_1(plus_1(left, this$.not_pdl1vz$(' <= ')), right);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_42($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_44($receiver) {
     return new CodeCompare(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_19($receiver));
   }
-  function getStandardCompiler$lambda$lambda$lambda_37($receiver) {
-    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_42);
+  function getStandardCompiler$lambda$lambda$lambda_39($receiver) {
+    $receiver.compare.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_44);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$binaryConditionOperatorGetter$lambda$lambda$lambda(closure$codeRight, closure$id, this$) {
@@ -1068,26 +1111,13 @@
       return getStandardCompiler$lambda$lambda$binaryConditionOperatorRunner$lambda(closure$compiler, function_0);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_43($receiver, it) {
-    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_44($receiver, it) {
-    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda_38(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
-    return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_43));
-      $receiver.run.invoke_ru8m1r$(closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_44));
-      return Unit;
-    };
-  }
   function getStandardCompiler$lambda$lambda$lambda$lambda_45($receiver, it) {
-    return plus_1(plus_1($receiver.not_pdl1vz$('!runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_46($receiver, it) {
-    return plus_1(plus_1($receiver.not_pdl1vz$('!runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
+    return plus_1(plus_1($receiver.not_pdl1vz$('runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
   }
-  function getStandardCompiler$lambda$lambda$lambda_39(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
+  function getStandardCompiler$lambda$lambda$lambda_40(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
       $receiver.get.invoke_ru8m1r$(closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_45));
       $receiver.run.invoke_ru8m1r$(closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_46));
@@ -1095,12 +1125,12 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_47($receiver, it) {
-    return plus_1(it, $receiver.not_pdl1vz$(' === undefined'));
+    return plus_1(plus_1($receiver.not_pdl1vz$('!runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_48($receiver, it) {
-    return plus_1(it, $receiver.not_pdl1vz$(' === undefined'));
+    return plus_1(plus_1($receiver.not_pdl1vz$('!runtime.toBoolean('), it), $receiver.not_pdl1vz$(')'));
   }
-  function getStandardCompiler$lambda$lambda$lambda_40(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
+  function getStandardCompiler$lambda$lambda$lambda_41(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
       $receiver.get.invoke_ru8m1r$(closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_47));
       $receiver.run.invoke_ru8m1r$(closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_48));
@@ -1108,15 +1138,28 @@
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_49($receiver, it) {
-    return plus_1(it, $receiver.not_pdl1vz$(' !== undefined'));
+    return plus_1(it, $receiver.not_pdl1vz$(' === undefined'));
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_50($receiver, it) {
-    return plus_1(it, $receiver.not_pdl1vz$(' !== undefined'));
+    return plus_1(it, $receiver.not_pdl1vz$(' === undefined'));
   }
-  function getStandardCompiler$lambda$lambda$lambda_41(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
+  function getStandardCompiler$lambda$lambda$lambda_42(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
       $receiver.get.invoke_ru8m1r$(closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_49));
       $receiver.run.invoke_ru8m1r$(closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_50));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_51($receiver, it) {
+    return plus_1(it, $receiver.not_pdl1vz$(' !== undefined'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_52($receiver, it) {
+    return plus_1(it, $receiver.not_pdl1vz$(' !== undefined'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_43(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
+    return function ($receiver) {
+      $receiver.get.invoke_ru8m1r$(closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_51));
+      $receiver.run.invoke_ru8m1r$(closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_52));
       return Unit;
     };
   }
@@ -1146,7 +1189,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_51(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustGet($receiver.channel.value.left, closure$compiler);
       var $this = closure$compiler.aliases;
@@ -1186,7 +1229,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_52(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustGet($receiver.channel.value.left, closure$compiler);
       var $this = closure$compiler.aliases;
@@ -1202,10 +1245,10 @@
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_21(codeLeft, $receiver, codeCenter, codeRight)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_42(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_44(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_51(closure$compiler));
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_52(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler));
       return Unit;
     };
   }
@@ -1234,7 +1277,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustGet($receiver.channel.value.left, closure$compiler);
       var $this = closure$compiler.aliases;
@@ -1268,7 +1311,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustRun($receiver.channel.value.left, closure$compiler);
       var $this = closure$compiler.aliases;
@@ -1279,10 +1322,10 @@
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_23($receiver, codeLeft, codeRight)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_43(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_45(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler));
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler));
       return Unit;
     };
   }
@@ -1292,7 +1335,7 @@
     this.location = location;
   }
   getStandardCompiler$lambda$lambda$lambda$lambda$Argument.$metadata$ = {kind: Kind_CLASS, simpleName: 'Argument', interfaces: []};
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$argument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$argument) {
     return function ($receiver) {
       return CodeGet_init($receiver.not_pdl1vz$(closure$argument.code));
     };
@@ -1309,15 +1352,15 @@
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(code_0, closure$argument, this$)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$argument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$argument) {
     return function ($receiver) {
       return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$argument, $receiver));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$argument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$argument) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$argument));
-      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$argument));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$argument));
+      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$argument));
       return Unit;
     };
   }
@@ -1363,7 +1406,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler) {
     return function ($receiver) {
       var tmp$;
       var node = $receiver.channel.value.left;
@@ -1439,7 +1482,7 @@
       tmp$_6 = arguments_0.iterator();
       while (tmp$_6.hasNext()) {
         var element_0 = tmp$_6.next();
-        closure$compiler_1.aliases.set_yuqcw7$(element_0.name, Alias_init_0(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(element_0)));
+        closure$compiler_1.aliases.set_yuqcw7$(element_0.name, Alias_init_0(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(element_0)));
       }
       var result = mustGet($receiver.channel.value.right, closure$compiler_1);
       $this.pop();
@@ -1450,9 +1493,9 @@
       return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_24(idSymbol, label, $receiver, id, arguments_0, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_44(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_46(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler));
       return Unit;
     };
   }
@@ -1461,21 +1504,21 @@
       return CodeGet_init($receiver.not_pdl1vz$('v' + closure$id + '$' + closure$internalName));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$code, closure$id, closure$internalName, this$) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$code, closure$id, closure$internalName, this$) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$code.head);
       $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('v' + closure$id + '$' + closure$internalName + ' = '), closure$code.body), this$.not_pdl1vz$(';')));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$id, closure$internalName, this$) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$id, closure$internalName, this$) {
     return function (code_0) {
-      return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(code_0, closure$id, closure$internalName, this$)));
+      return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(code_0, closure$id, closure$internalName, this$)));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_16(closure$id, closure$internalName) {
     return function ($receiver) {
-      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$id, closure$internalName, $receiver));
+      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$id, closure$internalName, $receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_25(closure$id, closure$internalName) {
@@ -1493,7 +1536,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler) {
     return function ($receiver) {
       if (equals($receiver.channel.value.left.type, 'identifier')) {
         var name = $receiver.channel.value.left.value;
@@ -1507,9 +1550,9 @@
       }
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_45(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_47(closure$compiler) {
     return function ($receiver) {
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler));
       return Unit;
     };
   }
@@ -1521,7 +1564,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler) {
     return function ($receiver) {
       var id = closure$compiler.nextId();
       var codeRight = mustGet($receiver.channel.value.right, closure$compiler);
@@ -1529,7 +1572,7 @@
       return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_27(codeRight, id, $receiver, codeLeft)), $receiver.not_pdl1vz$('v' + id));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler) {
     return function ($receiver) {
       return mustSet($receiver.channel.value.left, closure$compiler).consumer(mustGet($receiver.channel.value.right, closure$compiler));
     };
@@ -1546,7 +1589,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = $receiver.channel.value.left;
       var token = identifier;
@@ -1566,15 +1609,15 @@
       }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + ' = ' + $receiver.channel.value.right.type);
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_46(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_48(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler));
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler));
-      $receiver.objectInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler));
+      $receiver.objectInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument) {
     return function ($receiver) {
       return CodeGet_init($receiver.not_pdl1vz$('v' + closure$idArgument));
     };
@@ -1586,20 +1629,20 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$idArgument, this$) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument, this$) {
     return function (code_0) {
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(code_0, closure$idArgument, this$)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_9(closure$idArgument) {
     return function ($receiver) {
-      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$idArgument, $receiver));
+      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument, $receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_18(closure$idArgument) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument));
-      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument));
+      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_9(closure$idArgument));
       return Unit;
     };
   }
@@ -1620,7 +1663,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustGet($receiver.channel.value.left, closure$compiler);
       var idArgument = closure$compiler.nextId();
@@ -1637,7 +1680,7 @@
       return new CodeGet(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_29(codeLeft, idSymbol, label, $receiver, id, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_10(closure$idArgument) {
     return function ($receiver) {
       return CodeGet_init($receiver.not_pdl1vz$('v' + closure$idArgument));
     };
@@ -1649,20 +1692,20 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument, this$) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument, this$) {
     return function (code_0) {
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(code_0, closure$idArgument, this$)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_9(closure$idArgument) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_11(closure$idArgument) {
     return function ($receiver) {
-      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument, $receiver));
+      return new CodeSet(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument, $receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_20(closure$idArgument) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument));
-      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_9(closure$idArgument));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_10(closure$idArgument));
+      $receiver.set.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_11(closure$idArgument));
       return Unit;
     };
   }
@@ -1682,7 +1725,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler) {
     return function ($receiver) {
       var codeLeft = mustGet($receiver.channel.value.left, closure$compiler);
       var idArgument = closure$compiler.nextId();
@@ -1697,10 +1740,10 @@
       return new CodeRun(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_30(codeLeft, idArgument2, $receiver, idArgument, codeRight)));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_47(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_49(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler));
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler));
       return Unit;
     };
   }
@@ -1716,7 +1759,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = slice($receiver.channel.value, new IntRange(0, $receiver.channel.value.length - 2 | 0));
       var destination = ArrayList_init(collectionSizeOrDefault($receiver_0, 10));
@@ -1742,7 +1785,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = $receiver.channel.value;
       var destination = ArrayList_init($receiver_0.length);
@@ -1766,7 +1809,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_66(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = $receiver.channel.value;
       var destination = ArrayList_init($receiver_0.length);
@@ -1790,7 +1833,7 @@
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_67(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = $receiver.channel.value;
       var destination = ArrayList_init($receiver_0.length);
@@ -1803,140 +1846,140 @@
       return new CodeObjectInit(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_34(codes));
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_48(closure$compiler) {
+  function getStandardCompiler$lambda$lambda$lambda_50(closure$compiler) {
     return function ($receiver) {
-      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler));
-      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler));
-      $receiver.arrayInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler));
-      $receiver.objectInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler));
+      $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler));
+      $receiver.run.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler));
+      $receiver.arrayInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_66(closure$compiler));
+      $receiver.objectInit.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_67(closure$compiler));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_66($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('true'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda_49($receiver) {
-    $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_66);
-    return Unit;
-  }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_67($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('false'));
-  }
-  function getStandardCompiler$lambda$lambda$lambda_50($receiver) {
-    $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_67);
-    return Unit;
-  }
   function getStandardCompiler$lambda$lambda$lambda$lambda_68($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('null'));
+    return CodeGet_init($receiver.not_pdl1vz$('true'));
   }
   function getStandardCompiler$lambda$lambda$lambda_51($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_68);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_69($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('NaN'));
+    return CodeGet_init($receiver.not_pdl1vz$('false'));
   }
   function getStandardCompiler$lambda$lambda$lambda_52($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_69);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_70($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('Infinity'));
+    return CodeGet_init($receiver.not_pdl1vz$('null'));
   }
   function getStandardCompiler$lambda$lambda$lambda_53($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_70);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_71($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('undefined'));
+    return CodeGet_init($receiver.not_pdl1vz$('NaN'));
   }
   function getStandardCompiler$lambda$lambda$lambda_54($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_71);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_72($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(message => { throw new Error(runtime.toString(message)); })'));
+    return CodeGet_init($receiver.not_pdl1vz$('Infinity'));
   }
   function getStandardCompiler$lambda$lambda$lambda_55($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_72);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_73($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolToString)'));
+    return CodeGet_init($receiver.not_pdl1vz$('undefined'));
   }
   function getStandardCompiler$lambda$lambda$lambda_56($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_73);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_74($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolAdd)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(message => { throw new Error(runtime.toString(message)); })'));
   }
   function getStandardCompiler$lambda$lambda$lambda_57($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_74);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_75($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolSubtract)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolToString)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_58($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_75);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_76($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolMultiply)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolAdd)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_59($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_76);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_77($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolDivide)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolSubtract)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_60($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_77);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_78($receiver) {
-    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolStream)'));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolMultiply)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_61($receiver) {
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_78);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_79($receiver) {
-    $receiver.line_3pad5q$(times('define(["exports"], factory);', nullLocation));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolDivide)'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_62($receiver) {
+    $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_79);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_80($receiver) {
-    $receiver.line_3pad5q$(times('factory(module.exports);', nullLocation));
+    return CodeGet_init($receiver.not_pdl1vz$('(runtime.symbolStream)'));
+  }
+  function getStandardCompiler$lambda$lambda$lambda_63($receiver) {
+    $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_80);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_81($receiver) {
+    $receiver.line_3pad5q$(times('define(["exports"], factory);', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_82($receiver) {
+    $receiver.line_3pad5q$(times('factory(module.exports);', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_83($receiver) {
     $receiver.line_3pad5q$(times('root.fl9_result = factory(typeof fl9_result === "undefined" ? {} : fl9_result);', nullLocation));
     return Unit;
   }
-  function getStandardCompiler$lambda$lambda$lambda_62($receiver) {
+  function getStandardCompiler$lambda$lambda$lambda_64($receiver) {
     $receiver.line_3pad5q$(times('if (typeof define === "function" && define.amd) {', nullLocation));
-    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_79);
-    $receiver.line_3pad5q$(times('} else if (typeof exports === "object") {', nullLocation));
-    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_80);
-    $receiver.line_3pad5q$(times('} else {', nullLocation));
     $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_81);
+    $receiver.line_3pad5q$(times('} else if (typeof exports === "object") {', nullLocation));
+    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_82);
+    $receiver.line_3pad5q$(times('} else {', nullLocation));
+    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_83);
     $receiver.line_3pad5q$(times('}', nullLocation));
     return Unit;
   }
-  function getStandardCompiler$lambda$lambda$lambda$lambda_82(closure$code) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_84(closure$code) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$code.head);
       $receiver.line_3pad5q$(plus_1(plus_1(times('return ', nullLocation), closure$code.body), times(';', nullLocation)));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_63(closure$idSymbol, closure$code, closure$label) {
+  function getStandardCompiler$lambda$lambda$lambda_65(closure$idSymbol, closure$code, closure$label) {
     return function ($receiver) {
       $receiver.line_3pad5q$(times('"use strict";', nullLocation));
       $receiver.line_3pad5q$(times('_.main = (v' + closure$idSymbol + ' => ({[v' + closure$idSymbol + ']: function(runtime) {', nullLocation));
-      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_82(closure$code));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_84(closure$code));
       $receiver.line_3pad5q$(times('}})[v' + closure$idSymbol + '])(Symbol(' + JSON.stringify(closure$label) + '));', nullLocation));
       $receiver.line_3pad5q$(times('return _;', nullLocation));
       return Unit;
@@ -1945,18 +1988,18 @@
   function getStandardCompiler$lambda$lambda(closure$idSymbol, closure$code, closure$label) {
     return function ($receiver) {
       $receiver.line_3pad5q$(times('(function(root, factory) {', nullLocation));
-      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_62);
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_64);
       $receiver.line_3pad5q$(times('}(this, function(_) {', nullLocation));
-      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_63(closure$idSymbol, closure$code, closure$label));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_65(closure$idSymbol, closure$code, closure$label));
       $receiver.line_3pad5q$(times('}));', nullLocation));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_64(sourcedString) {
+  function getStandardCompiler$lambda$lambda$lambda_66(sourcedString) {
     return sourcedString.string;
   }
   function getStandardCompiler$lambda$lambda_0(sourcedLine) {
-    return joinToString(sourcedLine.sourcesStrings, '', void 0, void 0, void 0, void 0, getStandardCompiler$lambda$lambda$lambda_64) + '\n';
+    return joinToString(sourcedLine.sourcesStrings, '', void 0, void 0, void 0, void 0, getStandardCompiler$lambda$lambda$lambda_66) + '\n';
   }
   function getStandardCompiler$lambda(nodeRoot) {
     var compiler = new Compiler();
@@ -1986,49 +2029,51 @@
     $receiver.invoke_rm9vxy$(left_question, getStandardCompiler$lambda$lambda$lambda_20(leftUnaryOperatorGetter));
     $receiver.invoke_rm9vxy$(left_exclamation, getStandardCompiler$lambda$lambda$lambda_21(leftUnaryOperatorGetter));
     $receiver.invoke_rm9vxy$(left_dollar_number, getStandardCompiler$lambda$lambda$lambda_22(leftUnaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(left_dollar_ampersand, getStandardCompiler$lambda$lambda$lambda_23(leftUnaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(left_dollar_asterisk, getStandardCompiler$lambda$lambda$lambda_24(leftUnaryOperatorGetter));
     var binaryOperatorGetter = getStandardCompiler$lambda$lambda$binaryOperatorGetter(compiler);
-    $receiver.invoke_rm9vxy$(asterisk, getStandardCompiler$lambda$lambda$lambda_23(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(slash, getStandardCompiler$lambda$lambda$lambda_24(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(plus_2, getStandardCompiler$lambda$lambda$lambda_25(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(minus, getStandardCompiler$lambda$lambda$lambda_26(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(period_period, getStandardCompiler$lambda$lambda$lambda_27(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(tilde, getStandardCompiler$lambda$lambda$lambda_28(binaryOperatorGetter));
-    $receiver.invoke_rm9vxy$(comparison, getStandardCompiler$lambda$lambda$lambda_29(compiler));
-    $receiver.invoke_rm9vxy$(equal_equal, getStandardCompiler$lambda$lambda$lambda_30);
-    $receiver.invoke_rm9vxy$(exclamation_equal, getStandardCompiler$lambda$lambda$lambda_31);
-    $receiver.invoke_rm9vxy$(equal_equal_equal, getStandardCompiler$lambda$lambda$lambda_32);
-    $receiver.invoke_rm9vxy$(exclamation_equal_equal, getStandardCompiler$lambda$lambda$lambda_33);
-    $receiver.invoke_rm9vxy$(greater, getStandardCompiler$lambda$lambda$lambda_34);
-    $receiver.invoke_rm9vxy$(less, getStandardCompiler$lambda$lambda$lambda_35);
-    $receiver.invoke_rm9vxy$(greater_equal, getStandardCompiler$lambda$lambda$lambda_36);
-    $receiver.invoke_rm9vxy$(less_equal, getStandardCompiler$lambda$lambda$lambda_37);
+    $receiver.invoke_rm9vxy$(asterisk, getStandardCompiler$lambda$lambda$lambda_25(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(slash, getStandardCompiler$lambda$lambda$lambda_26(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(plus_2, getStandardCompiler$lambda$lambda$lambda_27(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(minus, getStandardCompiler$lambda$lambda$lambda_28(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(period_period, getStandardCompiler$lambda$lambda$lambda_29(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(tilde, getStandardCompiler$lambda$lambda$lambda_30(binaryOperatorGetter));
+    $receiver.invoke_rm9vxy$(comparison, getStandardCompiler$lambda$lambda$lambda_31(compiler));
+    $receiver.invoke_rm9vxy$(equal_equal, getStandardCompiler$lambda$lambda$lambda_32);
+    $receiver.invoke_rm9vxy$(exclamation_equal, getStandardCompiler$lambda$lambda$lambda_33);
+    $receiver.invoke_rm9vxy$(equal_equal_equal, getStandardCompiler$lambda$lambda$lambda_34);
+    $receiver.invoke_rm9vxy$(exclamation_equal_equal, getStandardCompiler$lambda$lambda$lambda_35);
+    $receiver.invoke_rm9vxy$(greater, getStandardCompiler$lambda$lambda$lambda_36);
+    $receiver.invoke_rm9vxy$(less, getStandardCompiler$lambda$lambda$lambda_37);
+    $receiver.invoke_rm9vxy$(greater_equal, getStandardCompiler$lambda$lambda$lambda_38);
+    $receiver.invoke_rm9vxy$(less_equal, getStandardCompiler$lambda$lambda$lambda_39);
     var binaryConditionOperatorGetter = getStandardCompiler$lambda$lambda$binaryConditionOperatorGetter(compiler);
     var binaryConditionOperatorRunner = getStandardCompiler$lambda$lambda$binaryConditionOperatorRunner(compiler);
-    $receiver.invoke_rm9vxy$(ampersand_ampersand, getStandardCompiler$lambda$lambda$lambda_38(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_rm9vxy$(pipe_pipe, getStandardCompiler$lambda$lambda$lambda_39(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_rm9vxy$(question_colon, getStandardCompiler$lambda$lambda$lambda_40(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_rm9vxy$(exclamation_colon, getStandardCompiler$lambda$lambda$lambda_41(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_rm9vxy$(ternary_question_colon, getStandardCompiler$lambda$lambda$lambda_42(compiler));
-    $receiver.invoke_rm9vxy$(exclamation_question, getStandardCompiler$lambda$lambda$lambda_43(compiler));
-    $receiver.invoke_rm9vxy$(minus_greater, getStandardCompiler$lambda$lambda$lambda_44(compiler));
-    $receiver.invoke_rm9vxy$(colon, getStandardCompiler$lambda$lambda$lambda_45(compiler));
-    $receiver.invoke_rm9vxy$(equal, getStandardCompiler$lambda$lambda$lambda_46(compiler));
-    $receiver.invoke_rm9vxy$(pipe, getStandardCompiler$lambda$lambda$lambda_47(compiler));
-    $receiver.invoke_rm9vxy$(semicolon, getStandardCompiler$lambda$lambda$lambda_48(compiler));
+    $receiver.invoke_rm9vxy$(ampersand_ampersand, getStandardCompiler$lambda$lambda$lambda_40(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_rm9vxy$(pipe_pipe, getStandardCompiler$lambda$lambda$lambda_41(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_rm9vxy$(question_colon, getStandardCompiler$lambda$lambda$lambda_42(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_rm9vxy$(exclamation_colon, getStandardCompiler$lambda$lambda$lambda_43(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_rm9vxy$(ternary_question_colon, getStandardCompiler$lambda$lambda$lambda_44(compiler));
+    $receiver.invoke_rm9vxy$(exclamation_question, getStandardCompiler$lambda$lambda$lambda_45(compiler));
+    $receiver.invoke_rm9vxy$(minus_greater, getStandardCompiler$lambda$lambda$lambda_46(compiler));
+    $receiver.invoke_rm9vxy$(colon, getStandardCompiler$lambda$lambda$lambda_47(compiler));
+    $receiver.invoke_rm9vxy$(equal, getStandardCompiler$lambda$lambda$lambda_48(compiler));
+    $receiver.invoke_rm9vxy$(pipe, getStandardCompiler$lambda$lambda$lambda_49(compiler));
+    $receiver.invoke_rm9vxy$(semicolon, getStandardCompiler$lambda$lambda$lambda_50(compiler));
     var $receiver_0 = compiler.aliases;
-    $receiver_0.invoke_2lqwj7$('TRUE', getStandardCompiler$lambda$lambda$lambda_49);
-    $receiver_0.invoke_2lqwj7$('FALSE', getStandardCompiler$lambda$lambda$lambda_50);
-    $receiver_0.invoke_2lqwj7$('NULL', getStandardCompiler$lambda$lambda$lambda_51);
-    $receiver_0.invoke_2lqwj7$('NAN', getStandardCompiler$lambda$lambda$lambda_52);
-    $receiver_0.invoke_2lqwj7$('INFINITY', getStandardCompiler$lambda$lambda$lambda_53);
-    $receiver_0.invoke_2lqwj7$('UNDEFINED', getStandardCompiler$lambda$lambda$lambda_54);
-    $receiver_0.invoke_2lqwj7$('THROW', getStandardCompiler$lambda$lambda$lambda_55);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_TO_STRING', getStandardCompiler$lambda$lambda$lambda_56);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_ADD', getStandardCompiler$lambda$lambda$lambda_57);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_SUBTRACT', getStandardCompiler$lambda$lambda$lambda_58);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_MULTIPLY', getStandardCompiler$lambda$lambda$lambda_59);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_DIVIDE', getStandardCompiler$lambda$lambda$lambda_60);
-    $receiver_0.invoke_2lqwj7$('OPERATOR_STREAM', getStandardCompiler$lambda$lambda$lambda_61);
+    $receiver_0.invoke_2lqwj7$('TRUE', getStandardCompiler$lambda$lambda$lambda_51);
+    $receiver_0.invoke_2lqwj7$('FALSE', getStandardCompiler$lambda$lambda$lambda_52);
+    $receiver_0.invoke_2lqwj7$('NULL', getStandardCompiler$lambda$lambda$lambda_53);
+    $receiver_0.invoke_2lqwj7$('NAN', getStandardCompiler$lambda$lambda$lambda_54);
+    $receiver_0.invoke_2lqwj7$('INFINITY', getStandardCompiler$lambda$lambda$lambda_55);
+    $receiver_0.invoke_2lqwj7$('UNDEFINED', getStandardCompiler$lambda$lambda$lambda_56);
+    $receiver_0.invoke_2lqwj7$('THROW', getStandardCompiler$lambda$lambda$lambda_57);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_TO_STRING', getStandardCompiler$lambda$lambda$lambda_58);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_ADD', getStandardCompiler$lambda$lambda$lambda_59);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_SUBTRACT', getStandardCompiler$lambda$lambda$lambda_60);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_MULTIPLY', getStandardCompiler$lambda$lambda$lambda_61);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_DIVIDE', getStandardCompiler$lambda$lambda$lambda_62);
+    $receiver_0.invoke_2lqwj7$('OPERATOR_STREAM', getStandardCompiler$lambda$lambda$lambda_63);
     var code_0 = mustGet(nodeRoot, compiler);
     var idSymbol = compiler.nextId();
     var label = '<ROOT> (<EVAL>)';
@@ -2522,6 +2567,8 @@
   var left_question;
   var left_exclamation;
   var left_dollar_number;
+  var left_dollar_ampersand;
+  var left_dollar_asterisk;
   var asterisk;
   var slash;
   var plus_2;
@@ -2715,6 +2762,12 @@
   Object.defineProperty(package$token, 'left_dollar_number', {get: function () {
     return left_dollar_number;
   }});
+  Object.defineProperty(package$token, 'left_dollar_ampersand', {get: function () {
+    return left_dollar_ampersand;
+  }});
+  Object.defineProperty(package$token, 'left_dollar_asterisk', {get: function () {
+    return left_dollar_asterisk;
+  }});
   Object.defineProperty(package$token, 'asterisk', {get: function () {
     return asterisk;
   }});
@@ -2835,6 +2888,8 @@
   left_question = new Token('left_question');
   left_exclamation = new Token('left_exclamation');
   left_dollar_number = new Token('left_dollar_number');
+  left_dollar_ampersand = new Token('left_dollar_ampersand');
+  left_dollar_asterisk = new Token('left_dollar_asterisk');
   asterisk = new Token('asterisk');
   slash = new Token('slash');
   plus_2 = new Token('plus');

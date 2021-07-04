@@ -89,32 +89,36 @@ DollarFactor
 
 Right
   = head:Factor tail:(
-    _  op:("("   { return location(); }) __                    ")" { return left  => node("right_empty_round" , {left       }, op); }
-  / _  op:("("   { return location(); }) __ main:Expression __ ")" { return left  => node(      "right_round" , {left, main }, op); }
-  / _  op:("["   { return location(); }) __                    "]" { return left  => node("right_empty_square", {left       }, op); }
-  / _  op:("["   { return location(); }) __ main:Expression __ "]" { return left  => node(      "right_square", {left, main }, op); }
-  / _  op:("{"   { return location(); }) __                    "}" { return left  => node("right_empty_curly" , {left       }, op); }
-  / _  op:("{"   { return location(); }) __ main:Expression __ "}" { return left  => node(      "right_curly" , {left, main }, op); }
-  / __ op:("."   { return location(); }) __ right:Factor            { return left  => node("period"            , {left, right}, op); }
-  / __ op:("::"  { return location(); }) __ right:Factor            { return left  => node("colon_colon"       , {left, right}, op); }
-  / __ op:(".+"  { return location(); })                           { return right => node("left_plus"         , {      right}, op); }
-  / __ op:(".-"  { return location(); })                           { return right => node("left_minus"        , {      right}, op); }
-  / __ op:(".&"  { return location(); })                           { return right => node("left_ampersand"    , {      right}, op); }
-  / __ op:(".?"  { return location(); })                           { return right => node("left_question"     , {      right}, op); }
-  / __ op:(".!"  { return location(); })                           { return right => node("left_exclamation"  , {      right}, op); }
-  / __ op:(".*"  { return location(); })                           { return right => node("left_asterisk"     , {      right}, op); }
-  / __ op:(".$#" { return location(); })                           { return right => node("left_dollar_number", {      right}, op); }
+    _  op:("("   { return location(); }) __                    ")" { return left  => node("right_empty_round"    , {left       }, op); }
+  / _  op:("("   { return location(); }) __ main:Expression __ ")" { return left  => node(      "right_round"    , {left, main }, op); }
+  / _  op:("["   { return location(); }) __                    "]" { return left  => node("right_empty_square"   , {left       }, op); }
+  / _  op:("["   { return location(); }) __ main:Expression __ "]" { return left  => node(      "right_square"   , {left, main }, op); }
+  / _  op:("{"   { return location(); }) __                    "}" { return left  => node("right_empty_curly"    , {left       }, op); }
+  / _  op:("{"   { return location(); }) __ main:Expression __ "}" { return left  => node(      "right_curly"    , {left, main }, op); }
+  / __ op:("."   { return location(); }) __ right:Factor           { return left  => node("period"               , {left, right}, op); }
+  / __ op:("::"  { return location(); }) __ right:Factor           { return left  => node("colon_colon"          , {left, right}, op); }
+  / __ op:(".+"  { return location(); })                           { return right => node("left_plus"            , {      right}, op); }
+  / __ op:(".-"  { return location(); })                           { return right => node("left_minus"           , {      right}, op); }
+  / __ op:(".&"  { return location(); })                           { return right => node("left_ampersand"       , {      right}, op); }
+  / __ op:(".?"  { return location(); })                           { return right => node("left_question"        , {      right}, op); }
+  / __ op:(".!"  { return location(); })                           { return right => node("left_exclamation"     , {      right}, op); }
+  / __ op:(".*"  { return location(); })                           { return right => node("left_asterisk"        , {      right}, op); }
+  / __ op:(".$#" { return location(); })                           { return right => node("left_dollar_number"   , {      right}, op); }
+  / __ op:(".$&" { return location(); })                           { return right => node("left_dollar_ampersand", {      right}, op); }
+  / __ op:(".$*" { return location(); })                           { return right => node("left_dollar_asterisk" , {      right}, op); }
   )* { return [head, ...tail].reduce((left, right) => right(left)); }
 
 Left
   = head:((
-    "+"  { return (location => right => node("left_plus"         , {right}, location))(location()); }
-  / "-"  { return (location => right => node("left_minus"        , {right}, location))(location()); }
-  / "&"  { return (location => right => node("left_ampersand"    , {right}, location))(location()); }
-  / "?"  { return (location => right => node("left_question"     , {right}, location))(location()); }
-  / "!"  { return (location => right => node("left_exclamation"  , {right}, location))(location()); }
-  / "*"  { return (location => right => node("left_asterisk"     , {right}, location))(location()); }
-  / "$#" { return (location => right => node("left_dollar_number", {right}, location))(location()); }
+    "+"  { return (location => right => node("left_plus"            , {right}, location))(location()); }
+  / "-"  { return (location => right => node("left_minus"           , {right}, location))(location()); }
+  / "&"  { return (location => right => node("left_ampersand"       , {right}, location))(location()); }
+  / "?"  { return (location => right => node("left_question"        , {right}, location))(location()); }
+  / "!"  { return (location => right => node("left_exclamation"     , {right}, location))(location()); }
+  / "*"  { return (location => right => node("left_asterisk"        , {right}, location))(location()); }
+  / "$#" { return (location => right => node("left_dollar_number"   , {right}, location))(location()); }
+  / "$&" { return (location => right => node("left_dollar_ampersand", {right}, location))(location()); }
+  / "$*" { return (location => right => node("left_dollar_asterisk" , {right}, location))(location()); }
   ) _)* tail:Right { return [tail, ...head.reverse()].reduce((right, left) => left[0](right)); }
 
 Mul
