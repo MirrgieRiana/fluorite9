@@ -59,6 +59,13 @@ function assertEquals(expected, src) {
     + 3
   `);
 
+  // 後置括弧演算子の直前では改行できない
+  assertEquals(3, `
+    100
+    (20)
+    (3)
+  `);
+
   // \ は改行を無効化する
   assertEquals(3, `
     1000 \\
