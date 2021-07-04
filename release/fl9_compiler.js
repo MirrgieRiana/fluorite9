@@ -1933,27 +1933,60 @@
     $receiver.get.invoke_ru8m1r$(getStandardCompiler$lambda$lambda$lambda$lambda_85);
     return Unit;
   }
-  function getStandardCompiler$lambda$lambda$lambda_69(closure$code) {
+  function getStandardCompiler$lambda$lambda$lambda$lambda_86($receiver) {
+    $receiver.line_3pad5q$(times('define(["exports"], factory);', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_87($receiver) {
+    $receiver.line_3pad5q$(times('factory(module.exports);', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_88($receiver) {
+    $receiver.line_3pad5q$(times('root.fl9_result = factory(typeof fl9_result === "undefined" ? {} : fl9_result);', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda_69($receiver) {
+    $receiver.line_3pad5q$(times('if (typeof define === "function" && define.amd) {', nullLocation));
+    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_86);
+    $receiver.line_3pad5q$(times('} else if (typeof exports === "object") {', nullLocation));
+    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_87);
+    $receiver.line_3pad5q$(times('} else {', nullLocation));
+    $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_88);
+    $receiver.line_3pad5q$(times('}', nullLocation));
+    return Unit;
+  }
+  function getStandardCompiler$lambda$lambda$lambda$lambda_89(closure$code) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(times('"use strict";', nullLocation));
       $receiver.line_3pe74m$(closure$code.head);
       $receiver.line_3pad5q$(plus_1(plus_1(times('return ', nullLocation), closure$code.body), times(';', nullLocation)));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda(closure$idSymbol, closure$code, closure$label) {
+  function getStandardCompiler$lambda$lambda$lambda_70(closure$idSymbol, closure$code, closure$label) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(times('(v' + closure$idSymbol + ' => ({[v' + closure$idSymbol + ']: function(runtime) {', nullLocation));
-      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_69(closure$code));
-      $receiver.line_3pad5q$(times('}})[v' + closure$idSymbol + '])(Symbol(' + JSON.stringify(closure$label) + '))', nullLocation));
+      $receiver.line_3pad5q$(times('"use strict";', nullLocation));
+      $receiver.line_3pad5q$(times('result.main = (v' + closure$idSymbol + ' => ({[v' + closure$idSymbol + ']: function(runtime) {', nullLocation));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda_89(closure$code));
+      $receiver.line_3pad5q$(times('}})[v' + closure$idSymbol + '])(Symbol(' + JSON.stringify(closure$label) + '));', nullLocation));
+      $receiver.line_3pad5q$(times('return result;', nullLocation));
       return Unit;
     };
   }
-  function getStandardCompiler$lambda$lambda$lambda_70(sourcedString) {
+  function getStandardCompiler$lambda$lambda(closure$idSymbol, closure$code, closure$label) {
+    return function ($receiver) {
+      $receiver.line_3pad5q$(times('(function(root, factory) {', nullLocation));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_69);
+      $receiver.line_3pad5q$(times('}(this, function(result) {', nullLocation));
+      $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda_70(closure$idSymbol, closure$code, closure$label));
+      $receiver.line_3pad5q$(times('}));', nullLocation));
+      return Unit;
+    };
+  }
+  function getStandardCompiler$lambda$lambda$lambda_71(sourcedString) {
     return sourcedString.string;
   }
   function getStandardCompiler$lambda$lambda_0(sourcedLine) {
-    return joinToString(sourcedLine.sourcesStrings, '', void 0, void 0, void 0, void 0, getStandardCompiler$lambda$lambda$lambda_70) + '\n';
+    return joinToString(sourcedLine.sourcesStrings, '', void 0, void 0, void 0, void 0, getStandardCompiler$lambda$lambda$lambda_71) + '\n';
   }
   function getStandardCompiler$lambda(nodeRoot) {
     var compiler = new Compiler();
