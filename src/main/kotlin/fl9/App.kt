@@ -7,7 +7,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
     compiler.operators.apply {
 
         void {
-            get { CodeGet(!"(runtime.void)") }
+            get { CodeGet(!"(runtime.getVoid())") }
             run { CodeRun() }
             arrayInit { CodeArrayInit { } }
             objectInit { CodeObjectInit { } }
@@ -73,7 +73,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
 
-        empty_round { get { CodeGet(!"(runtime.empty)") } }
+        empty_round { get { CodeGet(!"(runtime.getEmpty())") } }
         round {
             get { compiler.aliases.stack { channel.value.main.mustGet(compiler) } }
             run { compiler.aliases.stack { channel.value.main.mustRun(compiler) } }
