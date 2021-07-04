@@ -101,6 +101,13 @@ function assertEquals(expected, src) {
         \\: 7
   `);
 
+  // \ を無駄に大量に書いてもよい
+  assertEquals("abcdefghi", `
+    "abc"\\
+    \\\\ \\ + \\\\"def"\\
+      \\+ \\"ghi"\\
+  `);
+
 }
 
 // 整数
