@@ -35,6 +35,8 @@
     - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
   - [デリゲートアクセス `object::method`](#%E3%83%87%E3%83%AA%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-objectmethod)
     - [厳密な挙動の説明](#%E5%8E%B3%E5%AF%86%E3%81%AA%E6%8C%99%E5%8B%95%E3%81%AE%E8%AA%AC%E6%98%8E)
+  - [JSONエンコード・デコード演算子 `$&value` `$*json`](#json%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%E6%BC%94%E7%AE%97%E5%AD%90-value-json)
+    - [後置版 `value.$&` `json.$*`](#%E5%BE%8C%E7%BD%AE%E7%89%88-value-json)
   - [四則演算 `left + right` `left - right` `left * right` `left / right`](#%E5%9B%9B%E5%89%87%E6%BC%94%E7%AE%97-left--right-left---right-left--right-left--right)
     - [基本](#%E5%9F%BA%E6%9C%AC)
     - [余りの出る除算 `left / right`](#%E4%BD%99%E3%82%8A%E3%81%AE%E5%87%BA%E3%82%8B%E9%99%A4%E7%AE%97-left--right)
