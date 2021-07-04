@@ -209,7 +209,7 @@ function assertEqualsJson(expected, src) {
   assertEquals('1', '$&1'); // 数値のJSON化
   assertEquals('"a"', '$&"a"'); // 文字列のJSON化
   assertEquals('"a\\nb"', '$&"a\\nb"'); // エスケープが必要な文字を含む文字列のJSON化
-  assertEquals('"true"', '$&TRUE'); // 論理値のJSON化
+  assertEquals('true', '$&TRUE'); // 論理値のJSON化
   assertEquals('"[\n  1,\n  2,\n  [\n    3,\n    4\n  ],\n  5\n]"', '$&[1 .. 2; [3; 4]; 5]'); // 配列のJSON化
   assertEquals('"{\n  "a": 1,\n  "b": [\n    2,\n    \n  ]\n}"', '$&{a = 1; b = [2; 3]}'); // オブジェクトのJSON化
 
