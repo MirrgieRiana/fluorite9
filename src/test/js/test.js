@@ -74,7 +74,7 @@ function assertEquals(expected, src) {
   `);
 
   // \ は改行を無効化する
-  assertEquals(3, `
+  assertEquals(1234, `
     1000 \\
     + 200 \\
     \\+ 30
@@ -82,7 +82,7 @@ function assertEquals(expected, src) {
   `);
 
   // \ の効果は複数行に渡る
-  assertEquals(3, `
+  assertEquals(123, `
     100 \\
 
     + 20
