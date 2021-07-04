@@ -70,11 +70,19 @@
       throw Error(`Unknown Variable: ${name}`)
     }
 
+    isStream(value) {
+      if (value === null) return false;
+      if (value === undefined) return false;
+      return value[symbolStream] !== undefined;
+    }
     toStream(value) {
       if (value[symbolStream] !== undefined) return value;
       return new this.Fl9Stream(this, function*() {
         yield value;
       });
+    }
+    streamToIterable(value) {
+      return value[symbolStream]();
     }
 
     toNumber(value) {

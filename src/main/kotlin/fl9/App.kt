@@ -90,11 +90,24 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             get {
                 val codeMain = channel.value.main.mustArrayInit(compiler)
                 val id = compiler.nextId()
+                val idItem = "v" + compiler.nextId()
                 CodeGet(code {
                     line(!"const v$id = [];")
                     codeMain.generator { code ->
                         line(code.head)
-                        line(!"v$id[v$id.length] = " + code.body + !";")
+                        line(!"if (runtime.isStream(" + code.body + !")) {")
+                        indent {
+                            line(!"for (let $idItem of runtime.streamToIterable(" + code.body + !")) {")
+                            indent {
+                                line(!"v$id[v$id.length] = $idItem;")
+                            }
+                            line(!"}")
+                        }
+                        line(!"} else {")
+                        indent {
+                            line(!"v$id[v$id.length] = " + code.body + !";")
+                        }
+                        line(!"}")
                     }
                 }, !"v$id")
             }
