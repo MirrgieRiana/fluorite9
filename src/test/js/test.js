@@ -206,7 +206,7 @@ function assertEqualsJson(expected, src) {
 
 // JSONエンコード・デコード
 {
-  assertEquals('"1"', '$&1'); // 数値のJSON化
+  assertEquals('1', '$&1'); // 数値のJSON化
   assertEquals('"a"', '$&"a"'); // 文字列のJSON化
   assertEquals('"a\\nb"', '$&"a\\nb"'); // エスケープが必要な文字を含む文字列のJSON化
   assertEquals('"true"', '$&TRUE'); // 論理値のJSON化
