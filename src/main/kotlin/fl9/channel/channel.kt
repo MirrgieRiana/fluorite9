@@ -10,7 +10,6 @@ abstract class Channel<S> {
 }
 
 
-// TODO rename
 val operators = object : Channel<OperatorChannel>() {
     override fun createChannel() = OperatorChannel()
 }
@@ -26,7 +25,6 @@ class OperatorChannel : Registry<DomainBundle<OperatorContext<out Any>>>() {
 class OperatorContext<V>(val value: V)
 
 
-// TODO rename
 val aliases = object : Channel<AliasChannel>() {
     override fun createChannel() = AliasChannel()
 }
@@ -34,8 +32,8 @@ val aliases = object : Channel<AliasChannel>() {
 class AliasChannel : FramedRegistry<DomainBundle<AliasContext>>() {
     operator fun String.invoke(block: DomainBundle<AliasContext>.() -> Unit) {
         val alias = DomainBundle<AliasContext>()
-        this@AliasChannel[this] = alias
         alias.block()
+        this@AliasChannel[this] = alias
     }
 }
 
