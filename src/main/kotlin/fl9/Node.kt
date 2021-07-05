@@ -19,27 +19,8 @@ fun <I, O> Node.tryCompile(compiler: Compiler, domainType: DomainType<I, O>, ini
     return run {
         val domainContext = domainType.createDomainContext()
         domainContext.initializeDomainContext()
-        val operator = compiler.operators[type]?.unsafeCast<Operator<Any>>() ?: return@run null
+        val operator = compiler.operators[type]?.unsafeCast<DomainBundle<OperatorContext<Any>>>() ?: return@run null
         val handler = operator[domainType] ?: return@run null
         return@run Context(compiler, location, OperatorContext(value), domainContext).handler()
     } ?: domainType.getDefault(this, compiler)
 }
-
-// TODO
-@Deprecated("", ReplaceWith("compile(compiler, getter)"))
-fun Node.mustGet(compiler: Compiler, initializeDomainContext: GetterContext.() -> Unit = {}) = compile(compiler, getter, initializeDomainContext)
-
-@Deprecated("", ReplaceWith("compile(compiler, runner)"))
-fun Node.mustRun(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, runner, initializeDomainContext)
-
-@Deprecated("", ReplaceWith("compile(compiler, setter)"))
-fun Node.mustSet(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, setter, initializeDomainContext)
-
-@Deprecated("", ReplaceWith("compile(compiler, arrayInitializer)"))
-fun Node.mustArrayInit(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, arrayInitializer, initializeDomainContext)
-
-@Deprecated("", ReplaceWith("compile(compiler, objectInitializer)"))
-fun Node.mustObjectInit(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, objectInitializer, initializeDomainContext)
-
-@Deprecated("", ReplaceWith("compile(compiler, comparator)"))
-fun Node.mustCompare(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, comparator, initializeDomainContext)

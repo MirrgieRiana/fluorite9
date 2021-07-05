@@ -11,27 +11,27 @@ class Context<C, DI>(val compiler: Compiler, val location: Location, val channel
     }
 }
 
-
-class OperatorContext<V>(val value: V)
-
-class Operator<V> {
+class DomainBundle<I> {
     constructor()
-    constructor(block: Operator<V>.() -> Unit) {
+    constructor(block: DomainBundle<I>.() -> Unit) {
         block()
     }
 
     private val registry = mutableMapOf<DomainType<*, *>, Any>()
-    operator fun <I, O> DomainType<I, O>.invoke(handler: Context<OperatorContext<V>, I>.() -> O) {
+    operator fun <DI, O> DomainType<DI, O>.invoke(handler: Context<I, DI>.() -> O) {
         registry[this] = handler
     }
 
-    operator fun <I, O> get(domainType: DomainType<I, O>) = registry[domainType]?.unsafeCast<Context<OperatorContext<V>, I>.() -> O>() // TODO 型安全
+    operator fun <DI, O> get(domainType: DomainType<DI, O>) = registry[domainType]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
 }
 
-class OperatorRegistry : Registry<Operator<out Any>>() {
-    operator fun <V> Token<V>.invoke(block: Operator<V>.() -> Unit) {
-        val operator = Operator<V>()
-        this@OperatorRegistry[type] = operator.unsafeCast<Operator<out Any>>() // TODO 型安全
+
+class OperatorContext<V>(val value: V)
+
+class OperatorRegistry : Registry<DomainBundle<OperatorContext<out Any>>>() {
+    operator fun <V> Token<V>.invoke(block: DomainBundle<OperatorContext<V>>.() -> Unit) {
+        val operator = DomainBundle<OperatorContext<V>>()
+        this@OperatorRegistry[type] = operator.unsafeCast<DomainBundle<OperatorContext<out Any>>>() // TODO 型安全
         operator.block()
     }
 }
@@ -39,23 +39,9 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 
 class AliasContext
 
-class Alias {
-    constructor()
-    constructor(block: Alias.() -> Unit) {
-        block()
-    }
-
-    private val registry = mutableMapOf<DomainType<*, *>, Any>()
-    operator fun <I, O> DomainType<I, O>.invoke(handler: Context<AliasContext, I>.() -> O) {
-        registry[this] = handler
-    }
-
-    operator fun <I, O> get(domainType: DomainType<I, O>) = registry[domainType]?.unsafeCast<Context<AliasContext, I>.() -> O>() // TODO 型安全
-}
-
-class AliasRegistry : FramedRegistry<Alias>() {
-    operator fun String.invoke(block: Alias.() -> Unit) {
-        val alias = Alias()
+class AliasRegistry : FramedRegistry<DomainBundle<AliasContext>>() {
+    operator fun String.invoke(block: DomainBundle<AliasContext>.() -> Unit) {
+        val alias = DomainBundle<AliasContext>()
         this@AliasRegistry[this] = alias
         alias.block()
     }
