@@ -2144,8 +2144,8 @@
   }
   OperatorRegistry.prototype.invoke_8gbew0$ = function ($receiver, block) {
     var operator = DomainBundle_init();
-    this.set_yuqcw7$($receiver.type, operator);
     block(operator);
+    this.set_yuqcw7$($receiver.type, operator);
   };
   OperatorRegistry.$metadata$ = {kind: Kind_CLASS, simpleName: 'OperatorRegistry', interfaces: [Registry]};
   function AliasContext() {
