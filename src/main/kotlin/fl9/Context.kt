@@ -31,8 +31,8 @@ class OperatorContext<V>(val value: V)
 class OperatorRegistry : Registry<DomainBundle<OperatorContext<out Any>>>() {
     operator fun <V> Operator<V>.invoke(block: DomainBundle<OperatorContext<V>>.() -> Unit) {
         val operator = DomainBundle<OperatorContext<V>>()
-        this@OperatorRegistry[type] = operator.unsafeCast<DomainBundle<OperatorContext<out Any>>>() // TODO 型安全
         operator.block()
+        this@OperatorRegistry[type] = operator.unsafeCast<DomainBundle<OperatorContext<out Any>>>() // TODO 型安全
     }
 }
 
