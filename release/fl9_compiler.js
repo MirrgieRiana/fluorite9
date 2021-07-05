@@ -41,17 +41,17 @@
   OperatorRegistry.prototype.constructor = OperatorRegistry;
   AliasRegistry.prototype = Object.create(FramedRegistry.prototype);
   AliasRegistry.prototype.constructor = AliasRegistry;
-  getter$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  getter$ObjectLiteral.prototype = Object.create(Domain.prototype);
   getter$ObjectLiteral.prototype.constructor = getter$ObjectLiteral;
-  runner$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  runner$ObjectLiteral.prototype = Object.create(Domain.prototype);
   runner$ObjectLiteral.prototype.constructor = runner$ObjectLiteral;
-  setter$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  setter$ObjectLiteral.prototype = Object.create(Domain.prototype);
   setter$ObjectLiteral.prototype.constructor = setter$ObjectLiteral;
-  arrayInitializer$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  arrayInitializer$ObjectLiteral.prototype = Object.create(Domain.prototype);
   arrayInitializer$ObjectLiteral.prototype.constructor = arrayInitializer$ObjectLiteral;
-  objectInitializer$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  objectInitializer$ObjectLiteral.prototype = Object.create(Domain.prototype);
   objectInitializer$ObjectLiteral.prototype.constructor = objectInitializer$ObjectLiteral;
-  comparator$ObjectLiteral.prototype = Object.create(DomainType.prototype);
+  comparator$ObjectLiteral.prototype = Object.create(Domain.prototype);
   comparator$ObjectLiteral.prototype.constructor = comparator$ObjectLiteral;
   function getStandardCompiler$lambda$lambda$lambda$lambda($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.getVoid())'));
@@ -72,17 +72,17 @@
     return new ObjectInitializerCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_0);
   }
   function getStandardCompiler$lambda$lambda$lambda($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda);
-    $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_0);
-    $receiver.invoke_p6c134$(arrayInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_1);
-    $receiver.invoke_p6c134$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_2);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda);
+    $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_0);
+    $receiver.invoke_8b97tm$(arrayInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_1);
+    $receiver.invoke_8b97tm$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_2);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_3($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(' + $receiver.channel.value + ')'));
   }
   function getStandardCompiler$lambda$lambda$lambda_0($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_3);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_3);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_1(closure$id, this$) {
@@ -103,7 +103,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_1(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_4(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_4(closure$compiler));
       return Unit;
     };
   }
@@ -182,7 +182,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_2(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_5(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_5(closure$compiler));
       return Unit;
     };
   }
@@ -196,7 +196,7 @@
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
       var tmp$_2;
-      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.aliases.get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_pprckv$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), $receiver.domainContext)) : null) != null)
+      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.aliases.get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), $receiver.domainContext)) : null) != null)
         tmp$_2 = tmp$_1;
       else {
         var id = 'v' + toString(closure$compiler.nextId());
@@ -220,13 +220,13 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda_7(closure$compiler) {
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
-      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.aliases.get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_pprckv$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
+      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.aliases.get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda_3(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_6(closure$compiler));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda_7(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_6(closure$compiler));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda_7(closure$compiler));
       return Unit;
     };
   }
@@ -234,7 +234,7 @@
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.getEmpty())'));
   }
   function getStandardCompiler$lambda$lambda$lambda_4($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_8);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_8);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_9(closure$compiler) {
@@ -257,8 +257,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_5(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_9(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_10(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_9(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_10(closure$compiler));
       return Unit;
     };
   }
@@ -276,7 +276,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_6(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_11(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_11(closure$compiler));
       return Unit;
     };
   }
@@ -328,7 +328,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_7(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_12(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_12(closure$compiler));
       return Unit;
     };
   }
@@ -346,7 +346,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_8(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_13(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_13(closure$compiler));
       return Unit;
     };
   }
@@ -374,7 +374,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_9(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_14(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_14(closure$compiler));
       return Unit;
     };
   }
@@ -382,7 +382,7 @@
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.getEmpty())'));
   }
   function getStandardCompiler$lambda$lambda$lambda_10($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_15);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_15);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_16(closure$compiler) {
@@ -396,7 +396,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_11(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_16(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_16(closure$compiler));
       return Unit;
     };
   }
@@ -427,7 +427,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_12(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_17(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_17(closure$compiler));
       return Unit;
     };
   }
@@ -458,7 +458,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_13(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_18(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_18(closure$compiler));
       return Unit;
     };
   }
@@ -478,7 +478,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_14(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_19(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_19(closure$compiler));
       return Unit;
     };
   }
@@ -632,7 +632,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_15(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_20(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_20(closure$compiler));
       return Unit;
     };
   }
@@ -660,8 +660,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(closure$idArgument) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idArgument));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$idArgument));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$idArgument));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$idArgument));
       return Unit;
     };
   }
@@ -701,7 +701,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_16(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_21(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_21(closure$compiler));
       return Unit;
     };
   }
@@ -729,7 +729,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_17(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_22));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_22));
       return Unit;
     };
   }
@@ -738,7 +738,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_18(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_23));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_23));
       return Unit;
     };
   }
@@ -747,7 +747,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_19(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_24));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_24));
       return Unit;
     };
   }
@@ -756,7 +756,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_20(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_25));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_25));
       return Unit;
     };
   }
@@ -765,7 +765,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_21(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_26));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_26));
       return Unit;
     };
   }
@@ -774,7 +774,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_22(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_27));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_27));
       return Unit;
     };
   }
@@ -783,7 +783,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_23(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_28));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_28));
       return Unit;
     };
   }
@@ -792,7 +792,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_24(closure$leftUnaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_29));
+      $receiver.invoke_8b97tm$(getter, closure$leftUnaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_29));
       return Unit;
     };
   }
@@ -822,7 +822,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_25(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_30));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_30));
       return Unit;
     };
   }
@@ -831,7 +831,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_26(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_31));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_31));
       return Unit;
     };
   }
@@ -840,7 +840,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_27(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_32));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_32));
       return Unit;
     };
   }
@@ -849,7 +849,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_28(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_33));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_33));
       return Unit;
     };
   }
@@ -858,7 +858,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_29(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_34));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_34));
       return Unit;
     };
   }
@@ -867,7 +867,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_30(closure$binaryOperatorGetter) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_35));
+      $receiver.invoke_8b97tm$(getter, closure$binaryOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_35));
       return Unit;
     };
   }
@@ -950,7 +950,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_31(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_36(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_36(closure$compiler));
       return Unit;
     };
   }
@@ -963,7 +963,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_12($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_32($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_37);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_37);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_13(this$) {
@@ -975,7 +975,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_13($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_33($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_38);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_38);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_14(this$) {
@@ -987,7 +987,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_14($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_34($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_39);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_39);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_15(this$) {
@@ -999,7 +999,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_15($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_35($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_40);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_40);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_16(this$) {
@@ -1011,7 +1011,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_16($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_36($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_41);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_41);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_17(this$) {
@@ -1023,7 +1023,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_17($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_37($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_42);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_42);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_18(this$) {
@@ -1035,7 +1035,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_18($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_38($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_43);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_43);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_19(this$) {
@@ -1047,7 +1047,7 @@
     return new ComparatorCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda_19($receiver));
   }
   function getStandardCompiler$lambda$lambda$lambda_39($receiver) {
-    $receiver.invoke_p6c134$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_44);
+    $receiver.invoke_8b97tm$(comparator, getStandardCompiler$lambda$lambda$lambda$lambda_44);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$binaryConditionOperatorGetter$lambda$lambda$lambda(closure$codeRight, closure$id, this$) {
@@ -1131,8 +1131,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_40(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_45));
-      $receiver.invoke_p6c134$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_46));
+      $receiver.invoke_8b97tm$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_45));
+      $receiver.invoke_8b97tm$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_46));
       return Unit;
     };
   }
@@ -1144,8 +1144,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_41(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_47));
-      $receiver.invoke_p6c134$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_48));
+      $receiver.invoke_8b97tm$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_47));
+      $receiver.invoke_8b97tm$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_48));
       return Unit;
     };
   }
@@ -1157,8 +1157,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_42(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_49));
-      $receiver.invoke_p6c134$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_50));
+      $receiver.invoke_8b97tm$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_49));
+      $receiver.invoke_8b97tm$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_50));
       return Unit;
     };
   }
@@ -1170,8 +1170,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_43(closure$binaryConditionOperatorGetter, closure$binaryConditionOperatorRunner) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_51));
-      $receiver.invoke_p6c134$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_52));
+      $receiver.invoke_8b97tm$(getter, closure$binaryConditionOperatorGetter(getStandardCompiler$lambda$lambda$lambda$lambda_51));
+      $receiver.invoke_8b97tm$(runner, closure$binaryConditionOperatorRunner(getStandardCompiler$lambda$lambda$lambda$lambda_52));
       return Unit;
     };
   }
@@ -1259,8 +1259,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_44(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_53(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_54(closure$compiler));
       return Unit;
     };
   }
@@ -1336,8 +1336,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_45(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_55(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_56(closure$compiler));
       return Unit;
     };
   }
@@ -1371,8 +1371,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$argument) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$argument));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$argument));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0(closure$argument));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$argument));
       return Unit;
     };
   }
@@ -1507,7 +1507,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_46(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_57(closure$compiler));
       return Unit;
     };
   }
@@ -1535,8 +1535,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_14(closure$id, closure$internalName) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$id, closure$internalName));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$id, closure$internalName));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$id, closure$internalName));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$id, closure$internalName));
       return Unit;
     };
   }
@@ -1570,7 +1570,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_47(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_58(closure$compiler));
       return Unit;
     };
   }
@@ -1610,8 +1610,8 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler) {
     return function ($receiver) {
       var $receiver_0 = $receiver.channel.value.left;
-      var token = identifier;
-      if (isType($receiver_0, token)) {
+      var operator = identifier;
+      if (isType($receiver_0, operator)) {
         var closure$compiler_0 = closure$compiler;
         var key = $receiver_0.value;
         var codeRight = compile($receiver.channel.value.right, closure$compiler_0, getter);
@@ -1629,9 +1629,9 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_48(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler));
-      $receiver.invoke_p6c134$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_59(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_60(closure$compiler));
+      $receiver.invoke_8b97tm$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_61(closure$compiler));
       return Unit;
     };
   }
@@ -1659,8 +1659,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_6(closure$idArgument));
       return Unit;
     };
   }
@@ -1722,8 +1722,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument));
-      $receiver.invoke_p6c134$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument));
+      $receiver.invoke_8b97tm$(setter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(closure$idArgument));
       return Unit;
     };
   }
@@ -1760,8 +1760,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_49(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_62(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_63(closure$compiler));
       return Unit;
     };
   }
@@ -1866,10 +1866,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda_50(closure$compiler) {
     return function ($receiver) {
-      $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler));
-      $receiver.invoke_p6c134$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler));
-      $receiver.invoke_p6c134$(arrayInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_66(closure$compiler));
-      $receiver.invoke_p6c134$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_67(closure$compiler));
+      $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_64(closure$compiler));
+      $receiver.invoke_8b97tm$(runner, getStandardCompiler$lambda$lambda$lambda$lambda_65(closure$compiler));
+      $receiver.invoke_8b97tm$(arrayInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_66(closure$compiler));
+      $receiver.invoke_8b97tm$(objectInitializer, getStandardCompiler$lambda$lambda$lambda$lambda_67(closure$compiler));
       return Unit;
     };
   }
@@ -1877,91 +1877,91 @@
     return GetterCode_init($receiver.not_pdl1vz$('true'));
   }
   function getStandardCompiler$lambda$lambda$lambda_51($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_68);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_68);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_69($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('false'));
   }
   function getStandardCompiler$lambda$lambda$lambda_52($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_69);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_69);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_70($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('null'));
   }
   function getStandardCompiler$lambda$lambda$lambda_53($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_70);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_70);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_71($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('NaN'));
   }
   function getStandardCompiler$lambda$lambda$lambda_54($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_71);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_71);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_72($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('Infinity'));
   }
   function getStandardCompiler$lambda$lambda$lambda_55($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_72);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_72);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_73($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('undefined'));
   }
   function getStandardCompiler$lambda$lambda$lambda_56($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_73);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_73);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_74($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(message => { throw new Error(runtime.toString(message)); })'));
   }
   function getStandardCompiler$lambda$lambda$lambda_57($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_74);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_74);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_75($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolToString)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_58($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_75);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_75);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_76($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolAdd)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_59($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_76);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_76);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_77($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolSubtract)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_60($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_77);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_77);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_78($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolMultiply)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_61($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_78);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_78);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_79($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolDivide)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_62($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_79);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_79);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_80($receiver) {
     return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolStream)'));
   }
   function getStandardCompiler$lambda$lambda$lambda_63($receiver) {
-    $receiver.invoke_p6c134$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_80);
+    $receiver.invoke_8b97tm$(getter, getStandardCompiler$lambda$lambda$lambda$lambda_80);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_81($receiver) {
@@ -2022,62 +2022,62 @@
   function getStandardCompiler$lambda(nodeRoot) {
     var compiler = new Compiler();
     var $receiver = compiler.operators;
-    $receiver.invoke_k5siuu$(void_0, getStandardCompiler$lambda$lambda$lambda);
-    $receiver.invoke_k5siuu$(number, getStandardCompiler$lambda$lambda$lambda_0);
-    $receiver.invoke_k5siuu$(string, getStandardCompiler$lambda$lambda$lambda_1(compiler));
-    $receiver.invoke_k5siuu$(join, getStandardCompiler$lambda$lambda$lambda_2(compiler));
-    $receiver.invoke_k5siuu$(identifier, getStandardCompiler$lambda$lambda$lambda_3(compiler));
-    $receiver.invoke_k5siuu$(empty_round, getStandardCompiler$lambda$lambda$lambda_4);
-    $receiver.invoke_k5siuu$(round, getStandardCompiler$lambda$lambda$lambda_5(compiler));
-    $receiver.invoke_k5siuu$(empty_square, getStandardCompiler$lambda$lambda$lambda_6(compiler));
-    $receiver.invoke_k5siuu$(square, getStandardCompiler$lambda$lambda$lambda_7(compiler));
-    $receiver.invoke_k5siuu$(empty_curly, getStandardCompiler$lambda$lambda$lambda_8(compiler));
-    $receiver.invoke_k5siuu$(curly, getStandardCompiler$lambda$lambda$lambda_9(compiler));
-    $receiver.invoke_k5siuu$(empty_dollar_round, getStandardCompiler$lambda$lambda$lambda_10);
-    $receiver.invoke_k5siuu$(dollar_round, getStandardCompiler$lambda$lambda$lambda_11(compiler));
-    $receiver.invoke_k5siuu$(period, getStandardCompiler$lambda$lambda$lambda_12(compiler));
-    $receiver.invoke_k5siuu$(colon_colon, getStandardCompiler$lambda$lambda$lambda_13(compiler));
-    $receiver.invoke_k5siuu$(right_empty_square, getStandardCompiler$lambda$lambda$lambda_14(compiler));
-    $receiver.invoke_k5siuu$(right_square, getStandardCompiler$lambda$lambda$lambda_15(compiler));
-    $receiver.invoke_k5siuu$(right_round, getStandardCompiler$lambda$lambda$lambda_16(compiler));
+    $receiver.invoke_8gbew0$(void_0, getStandardCompiler$lambda$lambda$lambda);
+    $receiver.invoke_8gbew0$(number, getStandardCompiler$lambda$lambda$lambda_0);
+    $receiver.invoke_8gbew0$(string, getStandardCompiler$lambda$lambda$lambda_1(compiler));
+    $receiver.invoke_8gbew0$(join, getStandardCompiler$lambda$lambda$lambda_2(compiler));
+    $receiver.invoke_8gbew0$(identifier, getStandardCompiler$lambda$lambda$lambda_3(compiler));
+    $receiver.invoke_8gbew0$(empty_round, getStandardCompiler$lambda$lambda$lambda_4);
+    $receiver.invoke_8gbew0$(round, getStandardCompiler$lambda$lambda$lambda_5(compiler));
+    $receiver.invoke_8gbew0$(empty_square, getStandardCompiler$lambda$lambda$lambda_6(compiler));
+    $receiver.invoke_8gbew0$(square, getStandardCompiler$lambda$lambda$lambda_7(compiler));
+    $receiver.invoke_8gbew0$(empty_curly, getStandardCompiler$lambda$lambda$lambda_8(compiler));
+    $receiver.invoke_8gbew0$(curly, getStandardCompiler$lambda$lambda$lambda_9(compiler));
+    $receiver.invoke_8gbew0$(empty_dollar_round, getStandardCompiler$lambda$lambda$lambda_10);
+    $receiver.invoke_8gbew0$(dollar_round, getStandardCompiler$lambda$lambda$lambda_11(compiler));
+    $receiver.invoke_8gbew0$(period, getStandardCompiler$lambda$lambda$lambda_12(compiler));
+    $receiver.invoke_8gbew0$(colon_colon, getStandardCompiler$lambda$lambda$lambda_13(compiler));
+    $receiver.invoke_8gbew0$(right_empty_square, getStandardCompiler$lambda$lambda$lambda_14(compiler));
+    $receiver.invoke_8gbew0$(right_square, getStandardCompiler$lambda$lambda$lambda_15(compiler));
+    $receiver.invoke_8gbew0$(right_round, getStandardCompiler$lambda$lambda$lambda_16(compiler));
     var leftUnaryOperatorGetter = getStandardCompiler$lambda$lambda$leftUnaryOperatorGetter(compiler);
-    $receiver.invoke_k5siuu$(left_plus, getStandardCompiler$lambda$lambda$lambda_17(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_minus, getStandardCompiler$lambda$lambda$lambda_18(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_ampersand, getStandardCompiler$lambda$lambda$lambda_19(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_question, getStandardCompiler$lambda$lambda$lambda_20(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_exclamation, getStandardCompiler$lambda$lambda$lambda_21(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_dollar_number, getStandardCompiler$lambda$lambda$lambda_22(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_dollar_ampersand, getStandardCompiler$lambda$lambda$lambda_23(leftUnaryOperatorGetter));
-    $receiver.invoke_k5siuu$(left_dollar_asterisk, getStandardCompiler$lambda$lambda$lambda_24(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_plus, getStandardCompiler$lambda$lambda$lambda_17(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_minus, getStandardCompiler$lambda$lambda$lambda_18(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_ampersand, getStandardCompiler$lambda$lambda$lambda_19(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_question, getStandardCompiler$lambda$lambda$lambda_20(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_exclamation, getStandardCompiler$lambda$lambda$lambda_21(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_dollar_number, getStandardCompiler$lambda$lambda$lambda_22(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_dollar_ampersand, getStandardCompiler$lambda$lambda$lambda_23(leftUnaryOperatorGetter));
+    $receiver.invoke_8gbew0$(left_dollar_asterisk, getStandardCompiler$lambda$lambda$lambda_24(leftUnaryOperatorGetter));
     var binaryOperatorGetter = getStandardCompiler$lambda$lambda$binaryOperatorGetter(compiler);
-    $receiver.invoke_k5siuu$(asterisk, getStandardCompiler$lambda$lambda$lambda_25(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(slash, getStandardCompiler$lambda$lambda$lambda_26(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(plus_2, getStandardCompiler$lambda$lambda$lambda_27(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(minus, getStandardCompiler$lambda$lambda$lambda_28(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(period_period, getStandardCompiler$lambda$lambda$lambda_29(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(tilde, getStandardCompiler$lambda$lambda$lambda_30(binaryOperatorGetter));
-    $receiver.invoke_k5siuu$(comparison, getStandardCompiler$lambda$lambda$lambda_31(compiler));
-    $receiver.invoke_k5siuu$(equal_equal, getStandardCompiler$lambda$lambda$lambda_32);
-    $receiver.invoke_k5siuu$(exclamation_equal, getStandardCompiler$lambda$lambda$lambda_33);
-    $receiver.invoke_k5siuu$(equal_equal_equal, getStandardCompiler$lambda$lambda$lambda_34);
-    $receiver.invoke_k5siuu$(exclamation_equal_equal, getStandardCompiler$lambda$lambda$lambda_35);
-    $receiver.invoke_k5siuu$(greater, getStandardCompiler$lambda$lambda$lambda_36);
-    $receiver.invoke_k5siuu$(less, getStandardCompiler$lambda$lambda$lambda_37);
-    $receiver.invoke_k5siuu$(greater_equal, getStandardCompiler$lambda$lambda$lambda_38);
-    $receiver.invoke_k5siuu$(less_equal, getStandardCompiler$lambda$lambda$lambda_39);
+    $receiver.invoke_8gbew0$(asterisk, getStandardCompiler$lambda$lambda$lambda_25(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(slash, getStandardCompiler$lambda$lambda$lambda_26(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(plus_2, getStandardCompiler$lambda$lambda$lambda_27(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(minus, getStandardCompiler$lambda$lambda$lambda_28(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(period_period, getStandardCompiler$lambda$lambda$lambda_29(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(tilde, getStandardCompiler$lambda$lambda$lambda_30(binaryOperatorGetter));
+    $receiver.invoke_8gbew0$(comparison, getStandardCompiler$lambda$lambda$lambda_31(compiler));
+    $receiver.invoke_8gbew0$(equal_equal, getStandardCompiler$lambda$lambda$lambda_32);
+    $receiver.invoke_8gbew0$(exclamation_equal, getStandardCompiler$lambda$lambda$lambda_33);
+    $receiver.invoke_8gbew0$(equal_equal_equal, getStandardCompiler$lambda$lambda$lambda_34);
+    $receiver.invoke_8gbew0$(exclamation_equal_equal, getStandardCompiler$lambda$lambda$lambda_35);
+    $receiver.invoke_8gbew0$(greater, getStandardCompiler$lambda$lambda$lambda_36);
+    $receiver.invoke_8gbew0$(less, getStandardCompiler$lambda$lambda$lambda_37);
+    $receiver.invoke_8gbew0$(greater_equal, getStandardCompiler$lambda$lambda$lambda_38);
+    $receiver.invoke_8gbew0$(less_equal, getStandardCompiler$lambda$lambda$lambda_39);
     var binaryConditionOperatorGetter = getStandardCompiler$lambda$lambda$binaryConditionOperatorGetter(compiler);
     var binaryConditionOperatorRunner = getStandardCompiler$lambda$lambda$binaryConditionOperatorRunner(compiler);
-    $receiver.invoke_k5siuu$(ampersand_ampersand, getStandardCompiler$lambda$lambda$lambda_40(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_k5siuu$(pipe_pipe, getStandardCompiler$lambda$lambda$lambda_41(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_k5siuu$(question_colon, getStandardCompiler$lambda$lambda$lambda_42(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_k5siuu$(exclamation_colon, getStandardCompiler$lambda$lambda$lambda_43(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
-    $receiver.invoke_k5siuu$(ternary_question_colon, getStandardCompiler$lambda$lambda$lambda_44(compiler));
-    $receiver.invoke_k5siuu$(exclamation_question, getStandardCompiler$lambda$lambda$lambda_45(compiler));
-    $receiver.invoke_k5siuu$(minus_greater, getStandardCompiler$lambda$lambda$lambda_46(compiler));
-    $receiver.invoke_k5siuu$(colon, getStandardCompiler$lambda$lambda$lambda_47(compiler));
-    $receiver.invoke_k5siuu$(equal, getStandardCompiler$lambda$lambda$lambda_48(compiler));
-    $receiver.invoke_k5siuu$(pipe, getStandardCompiler$lambda$lambda$lambda_49(compiler));
-    $receiver.invoke_k5siuu$(semicolon, getStandardCompiler$lambda$lambda$lambda_50(compiler));
+    $receiver.invoke_8gbew0$(ampersand_ampersand, getStandardCompiler$lambda$lambda$lambda_40(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_8gbew0$(pipe_pipe, getStandardCompiler$lambda$lambda$lambda_41(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_8gbew0$(question_colon, getStandardCompiler$lambda$lambda$lambda_42(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_8gbew0$(exclamation_colon, getStandardCompiler$lambda$lambda$lambda_43(binaryConditionOperatorGetter, binaryConditionOperatorRunner));
+    $receiver.invoke_8gbew0$(ternary_question_colon, getStandardCompiler$lambda$lambda$lambda_44(compiler));
+    $receiver.invoke_8gbew0$(exclamation_question, getStandardCompiler$lambda$lambda$lambda_45(compiler));
+    $receiver.invoke_8gbew0$(minus_greater, getStandardCompiler$lambda$lambda$lambda_46(compiler));
+    $receiver.invoke_8gbew0$(colon, getStandardCompiler$lambda$lambda$lambda_47(compiler));
+    $receiver.invoke_8gbew0$(equal, getStandardCompiler$lambda$lambda$lambda_48(compiler));
+    $receiver.invoke_8gbew0$(pipe, getStandardCompiler$lambda$lambda$lambda_49(compiler));
+    $receiver.invoke_8gbew0$(semicolon, getStandardCompiler$lambda$lambda$lambda_50(compiler));
     var $receiver_0 = compiler.aliases;
     $receiver_0.invoke_7qcpx9$('TRUE', getStandardCompiler$lambda$lambda$lambda_51);
     $receiver_0.invoke_7qcpx9$('FALSE', getStandardCompiler$lambda$lambda$lambda_52);
@@ -2116,12 +2116,12 @@
   function DomainBundle() {
     this.registry_0 = LinkedHashMap_init();
   }
-  DomainBundle.prototype.invoke_p6c134$ = function ($receiver, handler) {
+  DomainBundle.prototype.invoke_8b97tm$ = function ($receiver, handler) {
     this.registry_0.put_xwzc9p$($receiver, handler);
   };
-  DomainBundle.prototype.get_pprckv$ = function (domainType) {
+  DomainBundle.prototype.get_b45ijv$ = function (domain) {
     var tmp$;
-    return (tmp$ = this.registry_0.get_11rb$(domainType)) != null ? tmp$ : null;
+    return (tmp$ = this.registry_0.get_11rb$(domain)) != null ? tmp$ : null;
   };
   DomainBundle.$metadata$ = {kind: Kind_CLASS, simpleName: 'DomainBundle', interfaces: []};
   function DomainBundle_init($this) {
@@ -2142,7 +2142,7 @@
   function OperatorRegistry() {
     Registry.call(this);
   }
-  OperatorRegistry.prototype.invoke_k5siuu$ = function ($receiver, block) {
+  OperatorRegistry.prototype.invoke_8gbew0$ = function ($receiver, block) {
     var operator = DomainBundle_init();
     this.set_yuqcw7$($receiver.type, operator);
     block(operator);
@@ -2202,46 +2202,46 @@
   Node.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.type, other.type) && Kotlin.equals(this.value, other.value) && Kotlin.equals(this.location, other.location)))));
   };
-  function isType($receiver, token) {
-    return equals($receiver.type, token.type);
+  function isType($receiver, operator) {
+    return equals($receiver.type, operator.type);
   }
-  var maybe = defineInlineFunction('fl9_compiler.fl9.maybe_v3bpf4$', wrapFunction(function () {
-    var isType = _.fl9.isType_8kgrp5$;
-    return function ($receiver, token, block) {
-      if (isType($receiver, token)) {
+  var maybe = defineInlineFunction('fl9_compiler.fl9.maybe_7ofzdy$', wrapFunction(function () {
+    var isType = _.fl9.isType_52kwm5$;
+    return function ($receiver, operator, block) {
+      if (isType($receiver, operator)) {
         block($receiver.value);
       }};
   }));
   function compile$lambda($receiver) {
     return Unit;
   }
-  function compile($receiver, compiler, domainType, initializeDomainContext) {
+  function compile($receiver, compiler, domain, initializeDomainContext) {
     if (initializeDomainContext === void 0)
       initializeDomainContext = compile$lambda;
     var tmp$;
-    tmp$ = tryCompile($receiver, compiler, domainType, initializeDomainContext);
+    tmp$ = tryCompile($receiver, compiler, domain, initializeDomainContext);
     if (tmp$ == null) {
-      throw Exception_init('Unknown Operator: ' + $receiver.type + '/' + domainType.name);
+      throw Exception_init('Unknown Operator: ' + $receiver.type + '/' + domain.name);
     }return tmp$;
   }
   function tryCompile$lambda($receiver) {
     return Unit;
   }
-  function tryCompile($receiver, compiler, domainType, initializeDomainContext) {
+  function tryCompile($receiver, compiler, domain, initializeDomainContext) {
     if (initializeDomainContext === void 0)
       initializeDomainContext = tryCompile$lambda;
     var tmp$;
     var block$result;
     block$break: do {
       var tmp$_0, tmp$_1, tmp$_2;
-      var domainContext = domainType.createDomainContext();
+      var domainContext = domain.createDomainContext();
       initializeDomainContext(domainContext);
       tmp$_1 = (tmp$_0 = compiler.operators.get_61zpoe$($receiver.type)) != null ? tmp$_0 : null;
       if (tmp$_1 == null) {
         block$result = null;
         break block$break;
       }var operator = tmp$_1;
-      tmp$_2 = operator.get_pprckv$(domainType);
+      tmp$_2 = operator.get_b45ijv$(domain);
       if (tmp$_2 == null) {
         block$result = null;
         break block$break;
@@ -2249,7 +2249,7 @@
       block$result = handler(new Context(compiler, $receiver.location, new OperatorContext($receiver.value), domainContext));
     }
      while (false);
-    return (tmp$ = block$result) != null ? tmp$ : domainType.getDefault_geodwp$($receiver, compiler);
+    return (tmp$ = block$result) != null ? tmp$ : domain.getDefault_geodwp$($receiver, compiler);
   }
   function Registry() {
     this.map_y0wces$_0 = LinkedHashMap_init();
@@ -2400,20 +2400,20 @@
     }
   };
   CodeScope.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'CodeScope', interfaces: []};
-  function DomainType(name) {
+  function Domain(name) {
     this.name = name;
   }
-  DomainType.prototype.getDefault_geodwp$ = function (node, compiler) {
+  Domain.prototype.getDefault_geodwp$ = function (node, compiler) {
     return null;
   };
-  DomainType.$metadata$ = {kind: Kind_CLASS, simpleName: 'DomainType', interfaces: []};
+  Domain.$metadata$ = {kind: Kind_CLASS, simpleName: 'Domain', interfaces: []};
   function getter$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   getter$ObjectLiteral.prototype.createDomainContext = function () {
     return new GetterContext();
   };
-  getter$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  getter$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var getter;
   function GetterContext() {
     this.givenName = null;
@@ -2430,7 +2430,7 @@
     return $this;
   }
   function runner$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   runner$ObjectLiteral.prototype.createDomainContext = function () {
   };
@@ -2444,7 +2444,7 @@
     var tmp$;
     return (tmp$ = tryCompile(node, compiler, getter)) != null ? new RunnerCode(code(runner$ObjectLiteral$getDefault$lambda$lambda(tmp$))) : null;
   };
-  runner$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  runner$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var runner;
   function RunnerCode(head) {
     this.head = head;
@@ -2456,18 +2456,18 @@
     return $this;
   }
   function setter$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   setter$ObjectLiteral.prototype.createDomainContext = function () {
   };
-  setter$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  setter$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var setter;
   function SetterCode(consumer) {
     this.consumer = consumer;
   }
   SetterCode.$metadata$ = {kind: Kind_CLASS, simpleName: 'SetterCode', interfaces: []};
   function arrayInitializer$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   arrayInitializer$ObjectLiteral.prototype.createDomainContext = function () {
   };
@@ -2481,38 +2481,38 @@
     var tmp$;
     return (tmp$ = tryCompile(node, compiler, getter)) != null ? new ArrayInitializerCode(arrayInitializer$ObjectLiteral$getDefault$lambda$lambda(tmp$)) : null;
   };
-  arrayInitializer$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  arrayInitializer$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var arrayInitializer;
   function ArrayInitializerCode(generator) {
     this.generator = generator;
   }
   ArrayInitializerCode.$metadata$ = {kind: Kind_CLASS, simpleName: 'ArrayInitializerCode', interfaces: []};
   function objectInitializer$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   objectInitializer$ObjectLiteral.prototype.createDomainContext = function () {
   };
-  objectInitializer$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  objectInitializer$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var objectInitializer;
   function ObjectInitializerCode(generator) {
     this.generator = generator;
   }
   ObjectInitializerCode.$metadata$ = {kind: Kind_CLASS, simpleName: 'ObjectInitializerCode', interfaces: []};
   function comparator$ObjectLiteral(name) {
-    DomainType.call(this, name);
+    Domain.call(this, name);
   }
   comparator$ObjectLiteral.prototype.createDomainContext = function () {
   };
-  comparator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DomainType]};
+  comparator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Domain]};
   var comparator;
   function ComparatorCode(comparator) {
     this.comparator = comparator;
   }
   ComparatorCode.$metadata$ = {kind: Kind_CLASS, simpleName: 'ComparatorCode', interfaces: []};
-  function Token(type) {
+  function Operator(type) {
     this.type = type;
   }
-  Token.$metadata$ = {kind: Kind_CLASS, simpleName: 'Token', interfaces: []};
+  Operator.$metadata$ = {kind: Kind_CLASS, simpleName: 'Operator', interfaces: []};
   function EmptyBracketsArgument() {
   }
   EmptyBracketsArgument.$metadata$ = {kind: Kind_CLASS, simpleName: 'EmptyBracketsArgument', interfaces: []};
@@ -2623,10 +2623,10 @@
   package$fl9.AliasRegistry = AliasRegistry;
   package$fl9.Compiler = Compiler;
   package$fl9.Node = Node;
-  package$fl9.isType_8kgrp5$ = isType;
-  package$fl9.maybe_v3bpf4$ = maybe;
-  package$fl9.compile_llwrty$ = compile;
-  package$fl9.tryCompile_llwrty$ = tryCompile;
+  package$fl9.isType_52kwm5$ = isType;
+  package$fl9.maybe_7ofzdy$ = maybe;
+  package$fl9.compile_7ghr9o$ = compile;
+  package$fl9.tryCompile_7ghr9o$ = tryCompile;
   package$fl9.Registry = Registry;
   package$fl9.Frame_init_q3lmfv$ = Frame_init;
   package$fl9.Frame_init_s0w92s$ = Frame_init_0;
@@ -2651,7 +2651,7 @@
   package$fl9.code_3vmjfp$ = code;
   package$fl9.CodeScope = CodeScope;
   var package$domain = package$fl9.domain || (package$fl9.domain = {});
-  package$domain.DomainType = DomainType;
+  package$domain.Domain = Domain;
   Object.defineProperty(package$domain, 'getter', {get: function () {
     return getter;
   }});
@@ -2679,197 +2679,197 @@
     return comparator;
   }});
   package$domain.ComparatorCode = ComparatorCode;
-  var package$token = package$fl9.token || (package$fl9.token = {});
-  package$token.Token = Token;
-  package$token.EmptyBracketsArgument = EmptyBracketsArgument;
-  package$token.BracketsArgument = BracketsArgument;
-  package$token.RightEmptyBracketsArgument = RightEmptyBracketsArgument;
-  package$token.RightBracketsArgument = RightBracketsArgument;
-  package$token.LeftUnaryOperatorArgument = LeftUnaryOperatorArgument;
-  package$token.BinaryOperatorArgument = BinaryOperatorArgument;
-  package$token.TernaryOperatorArgument = TernaryOperatorArgument;
-  package$token.ComparisonArgument = ComparisonArgument;
-  Object.defineProperty(package$token, 'void', {get: function () {
+  var package$operator = package$fl9.operator || (package$fl9.operator = {});
+  package$operator.Operator = Operator;
+  package$operator.EmptyBracketsArgument = EmptyBracketsArgument;
+  package$operator.BracketsArgument = BracketsArgument;
+  package$operator.RightEmptyBracketsArgument = RightEmptyBracketsArgument;
+  package$operator.RightBracketsArgument = RightBracketsArgument;
+  package$operator.LeftUnaryOperatorArgument = LeftUnaryOperatorArgument;
+  package$operator.BinaryOperatorArgument = BinaryOperatorArgument;
+  package$operator.TernaryOperatorArgument = TernaryOperatorArgument;
+  package$operator.ComparisonArgument = ComparisonArgument;
+  Object.defineProperty(package$operator, 'void', {get: function () {
     return void_0;
   }});
-  Object.defineProperty(package$token, 'number', {get: function () {
+  Object.defineProperty(package$operator, 'number', {get: function () {
     return number;
   }});
-  Object.defineProperty(package$token, 'string', {get: function () {
+  Object.defineProperty(package$operator, 'string', {get: function () {
     return string;
   }});
-  Object.defineProperty(package$token, 'join', {get: function () {
+  Object.defineProperty(package$operator, 'join', {get: function () {
     return join;
   }});
-  Object.defineProperty(package$token, 'identifier', {get: function () {
+  Object.defineProperty(package$operator, 'identifier', {get: function () {
     return identifier;
   }});
-  Object.defineProperty(package$token, 'empty_round', {get: function () {
+  Object.defineProperty(package$operator, 'empty_round', {get: function () {
     return empty_round;
   }});
-  Object.defineProperty(package$token, 'round', {get: function () {
+  Object.defineProperty(package$operator, 'round', {get: function () {
     return round;
   }});
-  Object.defineProperty(package$token, 'empty_square', {get: function () {
+  Object.defineProperty(package$operator, 'empty_square', {get: function () {
     return empty_square;
   }});
-  Object.defineProperty(package$token, 'square', {get: function () {
+  Object.defineProperty(package$operator, 'square', {get: function () {
     return square;
   }});
-  Object.defineProperty(package$token, 'empty_curly', {get: function () {
+  Object.defineProperty(package$operator, 'empty_curly', {get: function () {
     return empty_curly;
   }});
-  Object.defineProperty(package$token, 'curly', {get: function () {
+  Object.defineProperty(package$operator, 'curly', {get: function () {
     return curly;
   }});
-  Object.defineProperty(package$token, 'empty_dollar_round', {get: function () {
+  Object.defineProperty(package$operator, 'empty_dollar_round', {get: function () {
     return empty_dollar_round;
   }});
-  Object.defineProperty(package$token, 'dollar_round', {get: function () {
+  Object.defineProperty(package$operator, 'dollar_round', {get: function () {
     return dollar_round;
   }});
-  Object.defineProperty(package$token, 'empty_dollar_square', {get: function () {
+  Object.defineProperty(package$operator, 'empty_dollar_square', {get: function () {
     return empty_dollar_square;
   }});
-  Object.defineProperty(package$token, 'dollar_square', {get: function () {
+  Object.defineProperty(package$operator, 'dollar_square', {get: function () {
     return dollar_square;
   }});
-  Object.defineProperty(package$token, 'empty_dollar_curly', {get: function () {
+  Object.defineProperty(package$operator, 'empty_dollar_curly', {get: function () {
     return empty_dollar_curly;
   }});
-  Object.defineProperty(package$token, 'dollar_curly', {get: function () {
+  Object.defineProperty(package$operator, 'dollar_curly', {get: function () {
     return dollar_curly;
   }});
-  Object.defineProperty(package$token, 'period', {get: function () {
+  Object.defineProperty(package$operator, 'period', {get: function () {
     return period;
   }});
-  Object.defineProperty(package$token, 'colon_colon', {get: function () {
+  Object.defineProperty(package$operator, 'colon_colon', {get: function () {
     return colon_colon;
   }});
-  Object.defineProperty(package$token, 'right_empty_round', {get: function () {
+  Object.defineProperty(package$operator, 'right_empty_round', {get: function () {
     return right_empty_round;
   }});
-  Object.defineProperty(package$token, 'right_round', {get: function () {
+  Object.defineProperty(package$operator, 'right_round', {get: function () {
     return right_round;
   }});
-  Object.defineProperty(package$token, 'right_empty_square', {get: function () {
+  Object.defineProperty(package$operator, 'right_empty_square', {get: function () {
     return right_empty_square;
   }});
-  Object.defineProperty(package$token, 'right_square', {get: function () {
+  Object.defineProperty(package$operator, 'right_square', {get: function () {
     return right_square;
   }});
-  Object.defineProperty(package$token, 'right_empty_curly', {get: function () {
+  Object.defineProperty(package$operator, 'right_empty_curly', {get: function () {
     return right_empty_curly;
   }});
-  Object.defineProperty(package$token, 'right_curly', {get: function () {
+  Object.defineProperty(package$operator, 'right_curly', {get: function () {
     return right_curly;
   }});
-  Object.defineProperty(package$token, 'left_plus', {get: function () {
+  Object.defineProperty(package$operator, 'left_plus', {get: function () {
     return left_plus;
   }});
-  Object.defineProperty(package$token, 'left_minus', {get: function () {
+  Object.defineProperty(package$operator, 'left_minus', {get: function () {
     return left_minus;
   }});
-  Object.defineProperty(package$token, 'left_ampersand', {get: function () {
+  Object.defineProperty(package$operator, 'left_ampersand', {get: function () {
     return left_ampersand;
   }});
-  Object.defineProperty(package$token, 'left_question', {get: function () {
+  Object.defineProperty(package$operator, 'left_question', {get: function () {
     return left_question;
   }});
-  Object.defineProperty(package$token, 'left_exclamation', {get: function () {
+  Object.defineProperty(package$operator, 'left_exclamation', {get: function () {
     return left_exclamation;
   }});
-  Object.defineProperty(package$token, 'left_dollar_number', {get: function () {
+  Object.defineProperty(package$operator, 'left_dollar_number', {get: function () {
     return left_dollar_number;
   }});
-  Object.defineProperty(package$token, 'left_dollar_ampersand', {get: function () {
+  Object.defineProperty(package$operator, 'left_dollar_ampersand', {get: function () {
     return left_dollar_ampersand;
   }});
-  Object.defineProperty(package$token, 'left_dollar_asterisk', {get: function () {
+  Object.defineProperty(package$operator, 'left_dollar_asterisk', {get: function () {
     return left_dollar_asterisk;
   }});
-  Object.defineProperty(package$token, 'asterisk', {get: function () {
+  Object.defineProperty(package$operator, 'asterisk', {get: function () {
     return asterisk;
   }});
-  Object.defineProperty(package$token, 'slash', {get: function () {
+  Object.defineProperty(package$operator, 'slash', {get: function () {
     return slash;
   }});
-  Object.defineProperty(package$token, 'plus', {get: function () {
+  Object.defineProperty(package$operator, 'plus', {get: function () {
     return plus_2;
   }});
-  Object.defineProperty(package$token, 'minus', {get: function () {
+  Object.defineProperty(package$operator, 'minus', {get: function () {
     return minus;
   }});
-  Object.defineProperty(package$token, 'period_period', {get: function () {
+  Object.defineProperty(package$operator, 'period_period', {get: function () {
     return period_period;
   }});
-  Object.defineProperty(package$token, 'tilde', {get: function () {
+  Object.defineProperty(package$operator, 'tilde', {get: function () {
     return tilde;
   }});
-  Object.defineProperty(package$token, 'comparison', {get: function () {
+  Object.defineProperty(package$operator, 'comparison', {get: function () {
     return comparison;
   }});
-  Object.defineProperty(package$token, 'equal_equal_equal', {get: function () {
+  Object.defineProperty(package$operator, 'equal_equal_equal', {get: function () {
     return equal_equal_equal;
   }});
-  Object.defineProperty(package$token, 'exclamation_equal_equal', {get: function () {
+  Object.defineProperty(package$operator, 'exclamation_equal_equal', {get: function () {
     return exclamation_equal_equal;
   }});
-  Object.defineProperty(package$token, 'equal_equal', {get: function () {
+  Object.defineProperty(package$operator, 'equal_equal', {get: function () {
     return equal_equal;
   }});
-  Object.defineProperty(package$token, 'exclamation_equal', {get: function () {
+  Object.defineProperty(package$operator, 'exclamation_equal', {get: function () {
     return exclamation_equal;
   }});
-  Object.defineProperty(package$token, 'greater_equal', {get: function () {
+  Object.defineProperty(package$operator, 'greater_equal', {get: function () {
     return greater_equal;
   }});
-  Object.defineProperty(package$token, 'less_equal', {get: function () {
+  Object.defineProperty(package$operator, 'less_equal', {get: function () {
     return less_equal;
   }});
-  Object.defineProperty(package$token, 'greater', {get: function () {
+  Object.defineProperty(package$operator, 'greater', {get: function () {
     return greater;
   }});
-  Object.defineProperty(package$token, 'less', {get: function () {
+  Object.defineProperty(package$operator, 'less', {get: function () {
     return less;
   }});
-  Object.defineProperty(package$token, 'ampersand_ampersand', {get: function () {
+  Object.defineProperty(package$operator, 'ampersand_ampersand', {get: function () {
     return ampersand_ampersand;
   }});
-  Object.defineProperty(package$token, 'pipe_pipe', {get: function () {
+  Object.defineProperty(package$operator, 'pipe_pipe', {get: function () {
     return pipe_pipe;
   }});
-  Object.defineProperty(package$token, 'ternary_question_colon', {get: function () {
+  Object.defineProperty(package$operator, 'ternary_question_colon', {get: function () {
     return ternary_question_colon;
   }});
-  Object.defineProperty(package$token, 'question_colon', {get: function () {
+  Object.defineProperty(package$operator, 'question_colon', {get: function () {
     return question_colon;
   }});
-  Object.defineProperty(package$token, 'exclamation_colon', {get: function () {
+  Object.defineProperty(package$operator, 'exclamation_colon', {get: function () {
     return exclamation_colon;
   }});
-  Object.defineProperty(package$token, 'exclamation_question', {get: function () {
+  Object.defineProperty(package$operator, 'exclamation_question', {get: function () {
     return exclamation_question;
   }});
-  Object.defineProperty(package$token, 'comma', {get: function () {
+  Object.defineProperty(package$operator, 'comma', {get: function () {
     return comma;
   }});
-  Object.defineProperty(package$token, 'minus_greater', {get: function () {
+  Object.defineProperty(package$operator, 'minus_greater', {get: function () {
     return minus_greater;
   }});
-  Object.defineProperty(package$token, 'equal_greater', {get: function () {
+  Object.defineProperty(package$operator, 'equal_greater', {get: function () {
     return equal_greater;
   }});
-  Object.defineProperty(package$token, 'colon', {get: function () {
+  Object.defineProperty(package$operator, 'colon', {get: function () {
     return colon;
   }});
-  Object.defineProperty(package$token, 'equal', {get: function () {
+  Object.defineProperty(package$operator, 'equal', {get: function () {
     return equal;
   }});
-  Object.defineProperty(package$token, 'pipe', {get: function () {
+  Object.defineProperty(package$operator, 'pipe', {get: function () {
     return pipe;
   }});
-  Object.defineProperty(package$token, 'semicolon', {get: function () {
+  Object.defineProperty(package$operator, 'semicolon', {get: function () {
     return semicolon;
   }});
   code$ObjectLiteral.prototype.line_3pe74m$ = CodeScope.prototype.line_3pe74m$;
@@ -2883,67 +2883,67 @@
   arrayInitializer = new arrayInitializer$ObjectLiteral('arrayInitializer');
   objectInitializer = new objectInitializer$ObjectLiteral('objectInitializer');
   comparator = new comparator$ObjectLiteral('comparator');
-  void_0 = new Token('void');
-  number = new Token('number');
-  string = new Token('string');
-  join = new Token('join');
-  identifier = new Token('identifier');
-  empty_round = new Token('empty_round');
-  round = new Token('round');
-  empty_square = new Token('empty_square');
-  square = new Token('square');
-  empty_curly = new Token('empty_curly');
-  curly = new Token('curly');
-  empty_dollar_round = new Token('empty_dollar_round');
-  dollar_round = new Token('dollar_round');
-  empty_dollar_square = new Token('empty_dollar_square');
-  dollar_square = new Token('dollar_square');
-  empty_dollar_curly = new Token('empty_dollar_curly');
-  dollar_curly = new Token('dollar_curly');
-  period = new Token('period');
-  colon_colon = new Token('colon_colon');
-  right_empty_round = new Token('right_empty_round');
-  right_round = new Token('right_round');
-  right_empty_square = new Token('right_empty_square');
-  right_square = new Token('right_square');
-  right_empty_curly = new Token('right_empty_curly');
-  right_curly = new Token('right_curly');
-  left_plus = new Token('left_plus');
-  left_minus = new Token('left_minus');
-  left_ampersand = new Token('left_ampersand');
-  left_question = new Token('left_question');
-  left_exclamation = new Token('left_exclamation');
-  left_dollar_number = new Token('left_dollar_number');
-  left_dollar_ampersand = new Token('left_dollar_ampersand');
-  left_dollar_asterisk = new Token('left_dollar_asterisk');
-  asterisk = new Token('asterisk');
-  slash = new Token('slash');
-  plus_2 = new Token('plus');
-  minus = new Token('minus');
-  period_period = new Token('period_period');
-  tilde = new Token('tilde');
-  comparison = new Token('comparison');
-  equal_equal_equal = new Token('equal_equal_equal');
-  exclamation_equal_equal = new Token('exclamation_equal_equal');
-  equal_equal = new Token('equal_equal');
-  exclamation_equal = new Token('exclamation_equal');
-  greater_equal = new Token('greater_equal');
-  less_equal = new Token('less_equal');
-  greater = new Token('greater');
-  less = new Token('less');
-  ampersand_ampersand = new Token('ampersand_ampersand');
-  pipe_pipe = new Token('pipe_pipe');
-  ternary_question_colon = new Token('ternary_question_colon');
-  question_colon = new Token('question_colon');
-  exclamation_colon = new Token('exclamation_colon');
-  exclamation_question = new Token('exclamation_question');
-  comma = new Token('comma');
-  minus_greater = new Token('minus_greater');
-  equal_greater = new Token('equal_greater');
-  colon = new Token('colon');
-  equal = new Token('equal');
-  pipe = new Token('pipe');
-  semicolon = new Token('semicolon');
+  void_0 = new Operator('void');
+  number = new Operator('number');
+  string = new Operator('string');
+  join = new Operator('join');
+  identifier = new Operator('identifier');
+  empty_round = new Operator('empty_round');
+  round = new Operator('round');
+  empty_square = new Operator('empty_square');
+  square = new Operator('square');
+  empty_curly = new Operator('empty_curly');
+  curly = new Operator('curly');
+  empty_dollar_round = new Operator('empty_dollar_round');
+  dollar_round = new Operator('dollar_round');
+  empty_dollar_square = new Operator('empty_dollar_square');
+  dollar_square = new Operator('dollar_square');
+  empty_dollar_curly = new Operator('empty_dollar_curly');
+  dollar_curly = new Operator('dollar_curly');
+  period = new Operator('period');
+  colon_colon = new Operator('colon_colon');
+  right_empty_round = new Operator('right_empty_round');
+  right_round = new Operator('right_round');
+  right_empty_square = new Operator('right_empty_square');
+  right_square = new Operator('right_square');
+  right_empty_curly = new Operator('right_empty_curly');
+  right_curly = new Operator('right_curly');
+  left_plus = new Operator('left_plus');
+  left_minus = new Operator('left_minus');
+  left_ampersand = new Operator('left_ampersand');
+  left_question = new Operator('left_question');
+  left_exclamation = new Operator('left_exclamation');
+  left_dollar_number = new Operator('left_dollar_number');
+  left_dollar_ampersand = new Operator('left_dollar_ampersand');
+  left_dollar_asterisk = new Operator('left_dollar_asterisk');
+  asterisk = new Operator('asterisk');
+  slash = new Operator('slash');
+  plus_2 = new Operator('plus');
+  minus = new Operator('minus');
+  period_period = new Operator('period_period');
+  tilde = new Operator('tilde');
+  comparison = new Operator('comparison');
+  equal_equal_equal = new Operator('equal_equal_equal');
+  exclamation_equal_equal = new Operator('exclamation_equal_equal');
+  equal_equal = new Operator('equal_equal');
+  exclamation_equal = new Operator('exclamation_equal');
+  greater_equal = new Operator('greater_equal');
+  less_equal = new Operator('less_equal');
+  greater = new Operator('greater');
+  less = new Operator('less');
+  ampersand_ampersand = new Operator('ampersand_ampersand');
+  pipe_pipe = new Operator('pipe_pipe');
+  ternary_question_colon = new Operator('ternary_question_colon');
+  question_colon = new Operator('question_colon');
+  exclamation_colon = new Operator('exclamation_colon');
+  exclamation_question = new Operator('exclamation_question');
+  comma = new Operator('comma');
+  minus_greater = new Operator('minus_greater');
+  equal_greater = new Operator('equal_greater');
+  colon = new Operator('colon');
+  equal = new Operator('equal');
+  pipe = new Operator('pipe');
+  semicolon = new Operator('semicolon');
   return _;
 }));
 
