@@ -39,12 +39,8 @@
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   operators$ObjectLiteral.prototype = Object.create(Channel.prototype);
   operators$ObjectLiteral.prototype.constructor = operators$ObjectLiteral;
-  OperatorChannel.prototype = Object.create(Registry.prototype);
-  OperatorChannel.prototype.constructor = OperatorChannel;
   aliases$ObjectLiteral.prototype = Object.create(Channel.prototype);
   aliases$ObjectLiteral.prototype.constructor = aliases$ObjectLiteral;
-  AliasChannel.prototype = Object.create(FramedRegistry.prototype);
-  AliasChannel.prototype.constructor = AliasChannel;
   getter$ObjectLiteral.prototype = Object.create(Domain.prototype);
   getter$ObjectLiteral.prototype.constructor = getter$ObjectLiteral;
   runner$ObjectLiteral.prototype = Object.create(Domain.prototype);
@@ -200,7 +196,7 @@
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
       var tmp$_2;
-      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_q626hr$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), $receiver.domainContext)) : null) != null)
+      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_q626hr$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, $receiver.domainContext)) : null) != null)
         tmp$_2 = tmp$_1;
       else {
         var id = 'v' + toString(closure$compiler.nextId());
@@ -224,7 +220,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_7(closure$compiler) {
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
-      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_q626hr$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, new AliasContext(), Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
+      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_q626hr$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_b45ijv$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_3(closure$compiler) {
@@ -693,7 +689,7 @@
       var $this = closure$compiler.get_q626hr$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
-      closure$compiler_0.get_q626hr$(aliases).invoke_6knn88$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(idArgument));
+      closure$compiler_0.get_q626hr$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(idArgument));
       var result = compile($receiver.channel.value.main, closure$compiler_0, getter);
       $this.pop();
       var codeRight = result;
@@ -1498,7 +1494,7 @@
       tmp$_6 = arguments_0.iterator();
       while (tmp$_6.hasNext()) {
         var element_0 = tmp$_6.next();
-        closure$compiler_1.get_q626hr$(aliases).invoke_6knn88$(element_0.name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(element_0));
+        closure$compiler_1.get_q626hr$(aliases).invoke_myna1y$(element_0.name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(element_0));
       }
       var result = compile($receiver.channel.value.right, closure$compiler_1, getter);
       $this.pop();
@@ -1564,7 +1560,7 @@
         var name = $receiver.channel.value.left.value;
         var internalName = Regex_init('[^a-zA-Z0-9_]').replace_x2uqeu$(name, '');
         var id = closure$compiler.nextId();
-        closure$compiler.get_q626hr$(aliases).invoke_6knn88$(name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_14(id, internalName));
+        closure$compiler.get_q626hr$(aliases).invoke_myna1y$(name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_14(id, internalName));
         var codeRight = compile($receiver.channel.value.right, closure$compiler, getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_25(name));
         return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_26(id, internalName, $receiver, codeRight)));
       } else {
@@ -1692,7 +1688,7 @@
       var $this = closure$compiler.get_q626hr$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
-      closure$compiler_0.get_q626hr$(aliases).invoke_6knn88$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(idArgument));
+      closure$compiler_0.get_q626hr$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(idArgument));
       var result = compile($receiver.channel.value.right, closure$compiler_0, getter);
       $this.pop();
       var codeRight = result;
@@ -1755,7 +1751,7 @@
       var $this = closure$compiler.get_q626hr$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
-      closure$compiler_0.get_q626hr$(aliases).invoke_6knn88$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(idArgument));
+      closure$compiler_0.get_q626hr$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(idArgument));
       var result = compile($receiver.channel.value.right, closure$compiler_0, runner);
       $this.pop();
       var codeRight = result;
@@ -2030,19 +2026,19 @@
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda_0($receiver) {
-    $receiver.invoke_6knn88$('TRUE', getStandardCompiler$lambda$lambda$lambda$lambda_51);
-    $receiver.invoke_6knn88$('FALSE', getStandardCompiler$lambda$lambda$lambda$lambda_52);
-    $receiver.invoke_6knn88$('NULL', getStandardCompiler$lambda$lambda$lambda$lambda_53);
-    $receiver.invoke_6knn88$('NAN', getStandardCompiler$lambda$lambda$lambda$lambda_54);
-    $receiver.invoke_6knn88$('INFINITY', getStandardCompiler$lambda$lambda$lambda$lambda_55);
-    $receiver.invoke_6knn88$('UNDEFINED', getStandardCompiler$lambda$lambda$lambda$lambda_56);
-    $receiver.invoke_6knn88$('THROW', getStandardCompiler$lambda$lambda$lambda$lambda_57);
-    $receiver.invoke_6knn88$('OPERATOR_TO_STRING', getStandardCompiler$lambda$lambda$lambda$lambda_58);
-    $receiver.invoke_6knn88$('OPERATOR_ADD', getStandardCompiler$lambda$lambda$lambda$lambda_59);
-    $receiver.invoke_6knn88$('OPERATOR_SUBTRACT', getStandardCompiler$lambda$lambda$lambda$lambda_60);
-    $receiver.invoke_6knn88$('OPERATOR_MULTIPLY', getStandardCompiler$lambda$lambda$lambda$lambda_61);
-    $receiver.invoke_6knn88$('OPERATOR_DIVIDE', getStandardCompiler$lambda$lambda$lambda$lambda_62);
-    $receiver.invoke_6knn88$('OPERATOR_STREAM', getStandardCompiler$lambda$lambda$lambda$lambda_63);
+    $receiver.invoke_myna1y$('TRUE', getStandardCompiler$lambda$lambda$lambda$lambda_51);
+    $receiver.invoke_myna1y$('FALSE', getStandardCompiler$lambda$lambda$lambda$lambda_52);
+    $receiver.invoke_myna1y$('NULL', getStandardCompiler$lambda$lambda$lambda$lambda_53);
+    $receiver.invoke_myna1y$('NAN', getStandardCompiler$lambda$lambda$lambda$lambda_54);
+    $receiver.invoke_myna1y$('INFINITY', getStandardCompiler$lambda$lambda$lambda$lambda_55);
+    $receiver.invoke_myna1y$('UNDEFINED', getStandardCompiler$lambda$lambda$lambda$lambda_56);
+    $receiver.invoke_myna1y$('THROW', getStandardCompiler$lambda$lambda$lambda$lambda_57);
+    $receiver.invoke_myna1y$('OPERATOR_TO_STRING', getStandardCompiler$lambda$lambda$lambda$lambda_58);
+    $receiver.invoke_myna1y$('OPERATOR_ADD', getStandardCompiler$lambda$lambda$lambda$lambda_59);
+    $receiver.invoke_myna1y$('OPERATOR_SUBTRACT', getStandardCompiler$lambda$lambda$lambda$lambda_60);
+    $receiver.invoke_myna1y$('OPERATOR_MULTIPLY', getStandardCompiler$lambda$lambda$lambda$lambda_61);
+    $receiver.invoke_myna1y$('OPERATOR_DIVIDE', getStandardCompiler$lambda$lambda$lambda$lambda_62);
+    $receiver.invoke_myna1y$('OPERATOR_STREAM', getStandardCompiler$lambda$lambda$lambda$lambda_63);
     return Unit;
   }
   function getStandardCompiler$lambda$lambda(closure$compiler) {
@@ -2132,14 +2128,14 @@
   };
   Context.$metadata$ = {kind: Kind_CLASS, simpleName: 'Context', interfaces: []};
   function DomainBundle() {
-    this.registry_0 = LinkedHashMap_init();
+    this.map_0 = LinkedHashMap_init();
   }
   DomainBundle.prototype.invoke_8b97tm$ = function ($receiver, handler) {
-    this.registry_0.put_xwzc9p$($receiver, handler);
+    this.map_0.put_xwzc9p$($receiver, handler);
   };
   DomainBundle.prototype.get_b45ijv$ = function (domain) {
     var tmp$;
-    return (tmp$ = this.registry_0.get_11rb$(domain)) != null ? tmp$ : null;
+    return (tmp$ = this.map_0.get_11rb$(domain)) != null ? tmp$ : null;
   };
   DomainBundle.$metadata$ = {kind: Kind_CLASS, simpleName: 'DomainBundle', interfaces: []};
   function DomainBundle_init($this) {
@@ -2154,7 +2150,7 @@
     return $this;
   }
   function Compiler() {
-    this.registry_0 = LinkedHashMap_init();
+    this.map_0 = LinkedHashMap_init();
     this.nextId_0 = 0;
   }
   Compiler.prototype.invoke_ts5k8t$ = function (block) {
@@ -2164,7 +2160,7 @@
     block(this.get_q626hr$($receiver));
   };
   Compiler.prototype.get_q626hr$ = function (channel) {
-    var $receiver = this.registry_0;
+    var $receiver = this.map_0;
     var tmp$;
     var value = $receiver.get_11rb$(channel);
     if (value == null) {
@@ -2262,66 +2258,6 @@
      while (false);
     return (tmp$ = block$result) != null ? tmp$ : domain.getDefault_geodwp$($receiver, compiler);
   }
-  function Registry() {
-    this.map_y0wces$_0 = LinkedHashMap_init();
-  }
-  Registry.prototype.get_61zpoe$ = function (key) {
-    return this.map_y0wces$_0.get_11rb$(key);
-  };
-  Registry.prototype.set_yuqcw7$ = function (key, value) {
-    this.map_y0wces$_0.put_xwzc9p$(key, value);
-  };
-  Registry.$metadata$ = {kind: Kind_CLASS, simpleName: 'Registry', interfaces: []};
-  function Frame() {
-    this.parent = null;
-    this.map_0 = LinkedHashMap_init();
-  }
-  Frame.prototype.get_11rb$ = function (key) {
-    var tmp$, tmp$_0;
-    return (tmp$_0 = this.map_0.get_11rb$(key)) != null ? tmp$_0 : (tmp$ = this.parent) != null ? tmp$.get_11rb$(key) : null;
-  };
-  Frame.prototype.set_xwzc9p$ = function (key, value) {
-    this.map_0.put_xwzc9p$(key, value);
-  };
-  Frame.$metadata$ = {kind: Kind_CLASS, simpleName: 'Frame', interfaces: []};
-  function Frame_init($this) {
-    $this = $this || Object.create(Frame.prototype);
-    Frame.call($this);
-    $this.parent = null;
-    return $this;
-  }
-  function Frame_init_0(parent, $this) {
-    $this = $this || Object.create(Frame.prototype);
-    Frame.call($this);
-    $this.parent = parent;
-    return $this;
-  }
-  function FramedRegistry() {
-    this.frame_haar5g$_0 = Frame_init();
-  }
-  FramedRegistry.prototype.get_61zpoe$ = function (key) {
-    return this.frame_haar5g$_0.get_11rb$(key);
-  };
-  FramedRegistry.prototype.set_yuqcw7$ = function (key, value) {
-    this.frame_haar5g$_0.set_xwzc9p$(key, value);
-  };
-  FramedRegistry.prototype.push = function () {
-    this.frame_haar5g$_0 = Frame_init_0(this.frame_haar5g$_0);
-  };
-  FramedRegistry.prototype.pop = function () {
-    var tmp$;
-    tmp$ = this.frame_haar5g$_0.parent;
-    if (tmp$ == null) {
-      throw Error_init('Null parent access');
-    }this.frame_haar5g$_0 = tmp$;
-  };
-  FramedRegistry.prototype.stack_klfg04$ = defineInlineFunction('fl9_compiler.fl9.FramedRegistry.stack_klfg04$', function (block) {
-    this.push();
-    var result = block();
-    this.pop();
-    return result;
-  });
-  FramedRegistry.$metadata$ = {kind: Kind_CLASS, simpleName: 'FramedRegistry', interfaces: []};
   function Channel() {
   }
   Channel.$metadata$ = {kind: Kind_CLASS, simpleName: 'Channel', interfaces: []};
@@ -2334,14 +2270,20 @@
   operators$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Channel]};
   var operators;
   function OperatorChannel() {
-    Registry.call(this);
+    this.map_0 = LinkedHashMap_init();
   }
-  OperatorChannel.prototype.invoke_ed25u3$ = function ($receiver, block) {
-    var operator = DomainBundle_init();
-    block(operator);
-    this.set_yuqcw7$($receiver.type, operator);
+  OperatorChannel.prototype.get_61zpoe$ = function (key) {
+    var tmp$;
+    return (tmp$ = this.map_0.get_11rb$(key)) != null ? tmp$ : null;
   };
-  OperatorChannel.$metadata$ = {kind: Kind_CLASS, simpleName: 'OperatorChannel', interfaces: [Registry]};
+  OperatorChannel.prototype.invoke_ed25u3$ = function ($receiver, block) {
+    var domainBundle = DomainBundle_init();
+    block(domainBundle);
+    var $receiver_0 = this.map_0;
+    var key = $receiver.type;
+    $receiver_0.put_xwzc9p$(key, domainBundle);
+  };
+  OperatorChannel.$metadata$ = {kind: Kind_CLASS, simpleName: 'OperatorChannel', interfaces: []};
   function OperatorContext(value) {
     this.value = value;
   }
@@ -2355,17 +2297,45 @@
   aliases$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Channel]};
   var aliases;
   function AliasChannel() {
-    FramedRegistry.call(this);
+    this.frame_0 = new AliasChannel$Frame(null);
   }
-  AliasChannel.prototype.invoke_6knn88$ = function ($receiver, block) {
-    var alias = DomainBundle_init();
-    this.set_yuqcw7$($receiver, alias);
-    block(alias);
+  function AliasChannel$Frame(parent) {
+    this.parent = parent;
+    this.map_0 = LinkedHashMap_init();
+  }
+  AliasChannel$Frame.prototype.get_61zpoe$ = function (key) {
+    var tmp$, tmp$_0;
+    return (tmp$_0 = this.map_0.get_11rb$(key)) != null ? tmp$_0 : (tmp$ = this.parent) != null ? tmp$.get_61zpoe$(key) : null;
   };
-  AliasChannel.$metadata$ = {kind: Kind_CLASS, simpleName: 'AliasChannel', interfaces: [FramedRegistry]};
-  function AliasContext() {
-  }
-  AliasContext.$metadata$ = {kind: Kind_CLASS, simpleName: 'AliasContext', interfaces: []};
+  AliasChannel$Frame.prototype.set_z04kca$ = function (key, value) {
+    this.map_0.put_xwzc9p$(key, value);
+  };
+  AliasChannel$Frame.$metadata$ = {kind: Kind_CLASS, simpleName: 'Frame', interfaces: []};
+  AliasChannel.prototype.get_61zpoe$ = function (key) {
+    return this.frame_0.get_61zpoe$(key);
+  };
+  AliasChannel.prototype.invoke_myna1y$ = function ($receiver, block) {
+    var domainBundle = DomainBundle_init();
+    block(domainBundle);
+    this.frame_0.set_z04kca$($receiver, domainBundle);
+  };
+  AliasChannel.prototype.push = function () {
+    this.frame_0 = new AliasChannel$Frame(this.frame_0);
+  };
+  AliasChannel.prototype.pop = function () {
+    var tmp$;
+    tmp$ = this.frame_0.parent;
+    if (tmp$ == null) {
+      throw Error_init('Null parent access');
+    }this.frame_0 = tmp$;
+  };
+  AliasChannel.prototype.stack_klfg04$ = defineInlineFunction('fl9_compiler.fl9.channel.AliasChannel.stack_klfg04$', function (block) {
+    this.push();
+    var result = block();
+    this.pop();
+    return result;
+  });
+  AliasChannel.$metadata$ = {kind: Kind_CLASS, simpleName: 'AliasChannel', interfaces: []};
   function Location(row, column) {
     this.row = row;
     this.column = column;
@@ -2678,11 +2648,6 @@
   package$fl9.maybe_7ofzdy$ = maybe;
   package$fl9.compile_7ghr9o$ = compile;
   package$fl9.tryCompile_7ghr9o$ = tryCompile;
-  package$fl9.Registry = Registry;
-  package$fl9.Frame_init_q3lmfv$ = Frame_init;
-  package$fl9.Frame_init_s0w92s$ = Frame_init_0;
-  package$fl9.Frame = Frame;
-  package$fl9.FramedRegistry = FramedRegistry;
   var package$channel = package$fl9.channel || (package$fl9.channel = {});
   package$channel.Channel = Channel;
   Object.defineProperty(package$channel, 'operators', {get: function () {
@@ -2693,8 +2658,8 @@
   Object.defineProperty(package$channel, 'aliases', {get: function () {
     return aliases;
   }});
+  AliasChannel.Frame = AliasChannel$Frame;
   package$channel.AliasChannel = AliasChannel;
-  package$channel.AliasContext = AliasContext;
   package$fl9.Location = Location;
   Object.defineProperty(package$fl9, 'nullLocation', {get: function () {
     return nullLocation;
