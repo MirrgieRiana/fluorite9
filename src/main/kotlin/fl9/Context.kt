@@ -3,18 +3,18 @@ package fl9
 import fl9.token.Token
 
 
-class CodeGet(val head: SourcedFile, val body: SourcedLine) {
+class GetterCode(val head: SourcedFile, val body: SourcedLine) {
     constructor(body: SourcedLine) : this(zeroFile, body)
 }
 
-class CodeRun(val head: SourcedFile) {
+class RunnerCode(val head: SourcedFile) {
     constructor() : this(zeroFile)
 }
 
-class CodeSet(val consumer: (CodeGet) -> CodeRun)
-class CodeArrayInit(val generator: ((CodeGet) -> Unit) -> Unit)
-class CodeObjectInit(val generator: ((CodeGet, CodeGet) -> Unit) -> Unit)
-class CodeCompare(val comparator: (SourcedLine, SourcedLine) -> SourcedLine)
+class SetterCode(val consumer: (GetterCode) -> RunnerCode)
+class ArrayInitializerCode(val generator: ((GetterCode) -> Unit) -> Unit)
+class ObjectInitializerCode(val generator: ((GetterCode, GetterCode) -> Unit) -> Unit)
+class ComparatorCode(val comparator: (SourcedLine, SourcedLine) -> SourcedLine)
 
 class GetterContext(val givenName: String? = null)
 
@@ -40,12 +40,12 @@ class Context<C, D>(val compiler: Compiler, val location: Location, val channel:
 class OperatorContext<V>(val value: V)
 
 class Operator<V> {
-    val get = DomainSlot<Context<OperatorContext<V>, GetterContext>, CodeGet>()
-    val run = DomainSlot<Context<OperatorContext<V>, Unit>, CodeRun>()
-    val set = DomainSlot<Context<OperatorContext<V>, Unit>, CodeSet>()
-    val arrayInit = DomainSlot<Context<OperatorContext<V>, Unit>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<OperatorContext<V>, Unit>, CodeObjectInit>()
-    val compare = DomainSlot<Context<OperatorContext<V>, Unit>, CodeCompare>()
+    val getter = DomainSlot<Context<OperatorContext<V>, GetterContext>, GetterCode>()
+    val runner = DomainSlot<Context<OperatorContext<V>, Unit>, RunnerCode>()
+    val setter = DomainSlot<Context<OperatorContext<V>, Unit>, SetterCode>()
+    val arrayInitializer = DomainSlot<Context<OperatorContext<V>, Unit>, ArrayInitializerCode>()
+    val objectInitializer = DomainSlot<Context<OperatorContext<V>, Unit>, ObjectInitializerCode>()
+    val comparator = DomainSlot<Context<OperatorContext<V>, Unit>, ComparatorCode>()
 
     constructor()
 
@@ -66,12 +66,12 @@ class OperatorRegistry : Registry<Operator<out Any>>() {
 class AliasContext
 
 class Alias {
-    val get = DomainSlot<Context<AliasContext, GetterContext>, CodeGet>()
-    val run = DomainSlot<Context<AliasContext, Unit>, CodeRun>()
-    val set = DomainSlot<Context<AliasContext, Unit>, CodeSet>()
-    val arrayInit = DomainSlot<Context<AliasContext, Unit>, CodeArrayInit>()
-    val objectInit = DomainSlot<Context<AliasContext, Unit>, CodeObjectInit>()
-    val compare = DomainSlot<Context<AliasContext, Unit>, CodeCompare>()
+    val getter = DomainSlot<Context<AliasContext, GetterContext>, GetterCode>()
+    val runner = DomainSlot<Context<AliasContext, Unit>, RunnerCode>()
+    val setter = DomainSlot<Context<AliasContext, Unit>, SetterCode>()
+    val arrayInitializer = DomainSlot<Context<AliasContext, Unit>, ArrayInitializerCode>()
+    val objectInitializer = DomainSlot<Context<AliasContext, Unit>, ObjectInitializerCode>()
+    val comparator = DomainSlot<Context<AliasContext, Unit>, ComparatorCode>()
 
     constructor()
 

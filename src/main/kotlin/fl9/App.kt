@@ -7,29 +7,29 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
     compiler.operators.apply {
 
         void {
-            get { CodeGet(!"(runtime.getVoid())") }
-            run { CodeRun() }
-            arrayInit { CodeArrayInit { } }
-            objectInit { CodeObjectInit { } }
+            getter { GetterCode(!"(runtime.getVoid())") }
+            runner { RunnerCode() }
+            arrayInitializer { ArrayInitializerCode { } }
+            objectInitializer { ObjectInitializerCode { } }
         }
 
-        number { get { CodeGet(!"(${channel.value})") } }
+        number { getter { GetterCode(!"(${channel.value})") } }
         string {
-            get {
+            getter {
                 if (channel.value.isEmpty()) {
-                    CodeGet(!"\"\"")
+                    GetterCode(!"\"\"")
                 } else {
                     val id = "v" + compiler.nextId()
-                    CodeGet(code {
+                    GetterCode(code {
                         line(!"const $id = ${JSON.stringify(channel.value)};")
                     }, !id)
                 }
             }
         }
         join {
-            get {
+            getter {
                 if (channel.value.isEmpty()) {
-                    CodeGet(!"\"\"")
+                    GetterCode(!"\"\"")
                 } else {
                     class CodeStringInit(val head: SourcedFile, val body: SourcedLine)
 
@@ -41,7 +41,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         return@map CodeStringInit(code.head, "\${runtime.toString(" * node.location + code.body + ")}" * node.location)
                     }
                     val id = "v" + compiler.nextId()
-                    CodeGet(code {
+                    GetterCode(code {
                         codes.forEach {
                             line(it.head)
                         }
@@ -53,18 +53,18 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         identifier {
-            get {
-                compiler.aliases[channel.value]?.get?.invoke(Context(compiler, location, AliasContext(), GetterContext(domain.givenName))) ?: run {
+            getter {
+                compiler.aliases[channel.value]?.getter?.invoke(Context(compiler, location, AliasContext(), GetterContext(domain.givenName))) ?: run {
                     val id = "v" + compiler.nextId()
-                    CodeGet(code {
+                    GetterCode(code {
                         line(!"const $id = runtime.get(${JSON.stringify(channel.value)});")
                     }, !id)
                 }
             }
-            set {
-                compiler.aliases[channel.value]?.set?.invoke(Context(compiler, location, AliasContext(), Unit)) ?: run {
-                    CodeSet { code ->
-                        CodeRun(code {
+            setter {
+                compiler.aliases[channel.value]?.setter?.invoke(Context(compiler, location, AliasContext(), Unit)) ?: run {
+                    SetterCode { code ->
+                        RunnerCode(code {
                             line(code.head)
                             line(!"runtime.set(${JSON.stringify(channel.value)}, " + code.body + !");")
                         })
@@ -73,25 +73,25 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
 
-        empty_round { get { CodeGet(!"(runtime.getEmpty())") } }
+        empty_round { getter { GetterCode(!"(runtime.getEmpty())") } }
         round {
-            get { compiler.aliases.stack { channel.value.main.mustGet(compiler) } }
-            run { compiler.aliases.stack { channel.value.main.mustRun(compiler) } }
+            getter { compiler.aliases.stack { channel.value.main.mustGet(compiler) } }
+            runner { compiler.aliases.stack { channel.value.main.mustRun(compiler) } }
         }
         empty_square {
-            get {
+            getter {
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(!"const v$id = [];")
                 }, !"v$id")
             }
         }
         square {
-            get {
+            getter {
                 val codeMain = channel.value.main.mustArrayInit(compiler)
                 val id = compiler.nextId()
                 val idItem = "v" + compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(!"const v$id = [];")
                     codeMain.generator { code ->
                         line(code.head)
@@ -113,18 +113,18 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         empty_curly {
-            get {
+            getter {
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(!"const v$id = {};")
                 }, !"v$id")
             }
         }
         curly {
-            get {
+            getter {
                 val codeMain = channel.value.main.mustObjectInit(compiler)
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(!"const v$id = {};")
                     codeMain.generator { key, code ->
                         line(key.head)
@@ -134,16 +134,16 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !"v$id")
             }
         }
-        empty_dollar_round { get { CodeGet(!"(runtime.getEmpty())") } }
-        dollar_round { get { compiler.aliases.stack { channel.value.main.mustGet(compiler) } } }
+        empty_dollar_round { getter { GetterCode(!"(runtime.getEmpty())") } }
+        dollar_round { getter { compiler.aliases.stack { channel.value.main.mustGet(compiler) } } }
 
         period {
-            get {
+            getter {
                 let {
                     channel.value.right.maybe(identifier) { name ->
                         val codeLeft = channel.value.left.mustGet(compiler)
                         val id = compiler.nextId()
-                        return@let CodeGet(code {
+                        return@let GetterCode(code {
                             line(codeLeft.head)
                             line(!"const v$id = " + codeLeft.body + !"[" + JSON.stringify(name) * channel.value.right.location + !"];")
                         }, !"v$id")
@@ -153,12 +153,12 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         colon_colon {
-            get {
+            getter {
                 let {
                     channel.value.right.maybe(identifier) { name ->
                         val codeLeft = channel.value.left.mustGet(compiler)
                         val id = "v" + compiler.nextId()
-                        return@let CodeGet(code {
+                        return@let GetterCode(code {
                             line(codeLeft.head)
                             line(!"const $id = runtime.createDelegate(" + codeLeft.body + !", " + JSON.stringify(name) * channel.value.right.location + !");")
                         }, !id)
@@ -169,17 +169,17 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         right_empty_square {
-            get {
+            getter {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(codeLeft.head)
                     line(!"const v$id = runtime.apply(" + codeLeft.body + !", []);")
                 }, !"v$id")
             }
         }
         right_square {
-            get {
+            getter {
 
                 // 関数
                 val codeLeft = channel.value.left.mustGet(compiler)
@@ -193,13 +193,13 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
 
                 // 引数列void解体
-                val codesMain = mutableListOf<CodeGet>()
-                val codesMainNamed = mutableListOf<Triple<String, CodeGet, Location>>()
+                val codesMain = mutableListOf<GetterCode>()
+                val codesMainNamed = mutableListOf<Triple<String, GetterCode, Location>>()
                 var namedMode = false
                 nodesMain.forEach {
                     if (it.type == "void") {
                         if (!namedMode) {
-                            codesMain += CodeGet("undefined" * location)
+                            codesMain += GetterCode("undefined" * location)
                         }
                         // 名前付き引数モードになった場合はvoidは単に無視する
                     } else if (it.type == "colon") {
@@ -222,7 +222,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
 
                 if (codesMainNamed.isEmpty()) {
                     val id = compiler.nextId()
-                    CodeGet(code {
+                    GetterCode(code {
                         line(codeLeft.head)
                         codesMain.forEach {
                             line(it.head)
@@ -234,7 +234,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 } else {
                     val id = compiler.nextId()
                     val idObject = compiler.nextId()
-                    CodeGet(code {
+                    GetterCode(code {
                         line(codeLeft.head)
                         codesMain.forEach {
                             line(it.head)
@@ -253,15 +253,15 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         right_round {
-            get {
+            getter {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val idArgument = compiler.nextId()
                 val codeRight = compiler.aliases.stack {
                     compiler.aliases["_"] = Alias {
-                        get { CodeGet(!"v$idArgument") }
-                        set {
-                            CodeSet { code ->
-                                CodeRun(code {
+                        getter { GetterCode(!"v$idArgument") }
+                        setter {
+                            SetterCode { code ->
+                                RunnerCode(code {
                                     line(code.head)
                                     line(!"v$idArgument = " + code.body + !";")
                                 })
@@ -273,7 +273,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 val id = compiler.nextId()
                 val idSymbol = compiler.nextId()
                 val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
-                CodeGet(code {
+                GetterCode(code {
                     line(codeLeft.head)
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = runtime.apply(" + codeLeft.body + !", [{[v$idSymbol]: function(v$idArgument) {")
@@ -286,48 +286,48 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
 
-        fun leftUnaryOperatorGetter(function: Context<OperatorContext<LeftUnaryOperatorArgument>, GetterContext>.(SourcedLine) -> SourcedLine): Context<OperatorContext<LeftUnaryOperatorArgument>, GetterContext>.() -> CodeGet = {
+        fun leftUnaryOperatorGetter(function: Context<OperatorContext<LeftUnaryOperatorArgument>, GetterContext>.(SourcedLine) -> SourcedLine): Context<OperatorContext<LeftUnaryOperatorArgument>, GetterContext>.() -> GetterCode = {
             val codeRight = channel.value.right.mustGet(compiler)
             val id = compiler.nextId()
-            CodeGet(code {
+            GetterCode(code {
                 line(codeRight.head)
                 line(!"const v$id = " + function(codeRight.body) + !";")
             }, !"v$id")
         }
-        left_plus { get(leftUnaryOperatorGetter { !"runtime.toNumber(" + it + !")" }) }
-        left_minus { get(leftUnaryOperatorGetter { !"-runtime.toNumber(" + it + !")" }) }
-        left_ampersand { get(leftUnaryOperatorGetter { !"runtime.toString(" + it + !")" }) }
-        left_question { get(leftUnaryOperatorGetter { !"runtime.toBoolean(" + it + !")" }) }
-        left_exclamation { get(leftUnaryOperatorGetter { !"!runtime.toBoolean(" + it + !")" }) }
-        left_dollar_number { get(leftUnaryOperatorGetter { !"runtime.getLength(" + it + !")" }) }
-        left_dollar_ampersand { get(leftUnaryOperatorGetter { !"runtime.toJson(" + it + !")" }) }
-        left_dollar_asterisk { get(leftUnaryOperatorGetter { !"runtime.fromJson(" + it + !")" }) }
+        left_plus { getter(leftUnaryOperatorGetter { !"runtime.toNumber(" + it + !")" }) }
+        left_minus { getter(leftUnaryOperatorGetter { !"-runtime.toNumber(" + it + !")" }) }
+        left_ampersand { getter(leftUnaryOperatorGetter { !"runtime.toString(" + it + !")" }) }
+        left_question { getter(leftUnaryOperatorGetter { !"runtime.toBoolean(" + it + !")" }) }
+        left_exclamation { getter(leftUnaryOperatorGetter { !"!runtime.toBoolean(" + it + !")" }) }
+        left_dollar_number { getter(leftUnaryOperatorGetter { !"runtime.getLength(" + it + !")" }) }
+        left_dollar_ampersand { getter(leftUnaryOperatorGetter { !"runtime.toJson(" + it + !")" }) }
+        left_dollar_asterisk { getter(leftUnaryOperatorGetter { !"runtime.fromJson(" + it + !")" }) }
 
-        fun binaryOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.(SourcedLine, SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.() -> CodeGet = {
+        fun binaryOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.(SourcedLine, SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.() -> GetterCode = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = channel.value.right.mustGet(compiler)
             val id = compiler.nextId()
-            CodeGet(code {
+            GetterCode(code {
                 line(codeLeft.head)
                 line(codeRight.head)
                 line(!"const v$id = " + function(codeLeft.body, codeRight.body) + !";")
             }, !"v$id")
         }
-        asterisk { get(binaryOperatorGetter { left, right -> !"runtime.multiply(" + left + !", " + right + !")" }) }
-        slash { get(binaryOperatorGetter { left, right -> !"runtime.divide(" + left + !", " + right + !")" }) }
-        plus { get(binaryOperatorGetter { left, right -> !"runtime.add(" + left + !", " + right + !")" }) }
-        minus { get(binaryOperatorGetter { left, right -> !"runtime.subtract(" + left + !", " + right + !")" }) }
-        period_period { get(binaryOperatorGetter { left, right -> !"runtime.rangeClosed(" + left + !", " + right + !")" }) }
-        tilde { get(binaryOperatorGetter { left, right -> !"runtime.rangeOpened(" + left + !", " + right + !")" }) }
+        asterisk { getter(binaryOperatorGetter { left, right -> !"runtime.multiply(" + left + !", " + right + !")" }) }
+        slash { getter(binaryOperatorGetter { left, right -> !"runtime.divide(" + left + !", " + right + !")" }) }
+        plus { getter(binaryOperatorGetter { left, right -> !"runtime.add(" + left + !", " + right + !")" }) }
+        minus { getter(binaryOperatorGetter { left, right -> !"runtime.subtract(" + left + !", " + right + !")" }) }
+        period_period { getter(binaryOperatorGetter { left, right -> !"runtime.rangeClosed(" + left + !", " + right + !")" }) }
+        tilde { getter(binaryOperatorGetter { left, right -> !"runtime.rangeOpened(" + left + !", " + right + !")" }) }
 
         comparison {
-            get {
+            getter {
                 val idVars = channel.value.nodes.indices.map { "v${compiler.nextId()}\$$it" }
                 val idVarResult = "v${compiler.nextId()}\$result"
                 val idLabel = "l" + compiler.nextId()
                 val codesOperator = channel.value.types.indices.map { Node(channel.value.types[it], Unit, channel.value.locations[it]).mustCompare(compiler) }
                 val codesTerm = channel.value.nodes.map { it.mustGet(compiler) }
-                CodeGet(code {
+                GetterCode(code {
                     line(!"let $idVarResult;")
                     line(!"$idLabel:")
                     line(!"{")
@@ -350,20 +350,20 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }, !idVarResult)
             }
         }
-        equal_equal { compare { CodeCompare { left, right -> left + !" == " + right } } }
-        exclamation_equal { compare { CodeCompare { left, right -> left + !" != " + right } } }
-        equal_equal_equal { compare { CodeCompare { left, right -> left + !" === " + right } } }
-        exclamation_equal_equal { compare { CodeCompare { left, right -> left + !" !== " + right } } }
-        greater { compare { CodeCompare { left, right -> left + !" > " + right } } }
-        less { compare { CodeCompare { left, right -> left + !" < " + right } } }
-        greater_equal { compare { CodeCompare { left, right -> left + !" >= " + right } } }
-        less_equal { compare { CodeCompare { left, right -> left + !" <= " + right } } }
+        equal_equal { comparator { ComparatorCode { left, right -> left + !" == " + right } } }
+        exclamation_equal { comparator { ComparatorCode { left, right -> left + !" != " + right } } }
+        equal_equal_equal { comparator { ComparatorCode { left, right -> left + !" === " + right } } }
+        exclamation_equal_equal { comparator { ComparatorCode { left, right -> left + !" !== " + right } } }
+        greater { comparator { ComparatorCode { left, right -> left + !" > " + right } } }
+        less { comparator { ComparatorCode { left, right -> left + !" < " + right } } }
+        greater_equal { comparator { ComparatorCode { left, right -> left + !" >= " + right } } }
+        less_equal { comparator { ComparatorCode { left, right -> left + !" <= " + right } } }
 
-        fun binaryConditionOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.() -> CodeGet = {
+        fun binaryConditionOperatorGetter(function: Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, GetterContext>.() -> GetterCode = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = compiler.aliases.stack { channel.value.right.mustGet(compiler) }
             val id = compiler.nextId()
-            CodeGet(code {
+            GetterCode(code {
                 line(codeLeft.head)
                 line(!"let v$id;")
                 line(!"if (" + function(codeLeft.body) + !") {")
@@ -379,10 +379,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }, !"v$id")
         }
 
-        fun binaryConditionOperatorRunner(function: Context<OperatorContext<BinaryOperatorArgument>, Unit>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, Unit>.() -> CodeRun = {
+        fun binaryConditionOperatorRunner(function: Context<OperatorContext<BinaryOperatorArgument>, Unit>.(SourcedLine) -> SourcedLine): Context<OperatorContext<BinaryOperatorArgument>, Unit>.() -> RunnerCode = {
             val codeLeft = channel.value.left.mustGet(compiler)
             val codeRight = compiler.aliases.stack { channel.value.right.mustRun(compiler) }
-            CodeRun(code {
+            RunnerCode(code {
                 line(codeLeft.head)
                 line(!"if (" + function(codeLeft.body) + !") {")
                 indent {
@@ -392,29 +392,29 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             })
         }
         ampersand_ampersand {
-            get(binaryConditionOperatorGetter { !"runtime.toBoolean(" + it + !")" })
-            run(binaryConditionOperatorRunner { !"runtime.toBoolean(" + it + !")" })
+            getter(binaryConditionOperatorGetter { !"runtime.toBoolean(" + it + !")" })
+            runner(binaryConditionOperatorRunner { !"runtime.toBoolean(" + it + !")" })
         }
         pipe_pipe {
-            get(binaryConditionOperatorGetter { !"!runtime.toBoolean(" + it + !")" })
-            run(binaryConditionOperatorRunner { !"!runtime.toBoolean(" + it + !")" })
+            getter(binaryConditionOperatorGetter { !"!runtime.toBoolean(" + it + !")" })
+            runner(binaryConditionOperatorRunner { !"!runtime.toBoolean(" + it + !")" })
         }
         question_colon {
-            get(binaryConditionOperatorGetter { it + !" === undefined" })
-            run(binaryConditionOperatorRunner { it + !" === undefined" })
+            getter(binaryConditionOperatorGetter { it + !" === undefined" })
+            runner(binaryConditionOperatorRunner { it + !" === undefined" })
         }
         exclamation_colon {
-            get(binaryConditionOperatorGetter { it + !" !== undefined" })
-            run(binaryConditionOperatorRunner { it + !" !== undefined" })
+            getter(binaryConditionOperatorGetter { it + !" !== undefined" })
+            runner(binaryConditionOperatorRunner { it + !" !== undefined" })
         }
 
         ternary_question_colon {
-            get {
+            getter {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val codeCenter = compiler.aliases.stack { channel.value.center.mustGet(compiler) }
                 val codeRight = compiler.aliases.stack { channel.value.right.mustGet(compiler) }
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(codeLeft.head)
                     line(!"let v$id;")
                     line(!"if (runtime.toBoolean(" + codeLeft.body + !")) {")
@@ -430,11 +430,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     line(!"}")
                 }, !"v$id")
             }
-            run {
+            runner {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val codeCenter = compiler.aliases.stack { channel.value.center.mustRun(compiler) }
                 val codeRight = compiler.aliases.stack { channel.value.right.mustRun(compiler) }
-                CodeRun(code {
+                RunnerCode(code {
                     line(codeLeft.head)
                     line(!"if (runtime.toBoolean(" + codeLeft.body + !")) {")
                     indent {
@@ -449,11 +449,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
         }
         exclamation_question {
-            get {
+            getter {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val codeRight = compiler.aliases.stack { channel.value.right.mustGet(compiler) }
                 val id = compiler.nextId()
-                CodeGet(code {
+                GetterCode(code {
                     line(!"let v$id;")
                     line(!"try {")
                     indent {
@@ -468,10 +468,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     line(!"}")
                 }, !"v$id")
             }
-            run {
+            runner {
                 val codeLeft = channel.value.left.mustRun(compiler)
                 val codeRight = compiler.aliases.stack { channel.value.right.mustRun(compiler) }
-                CodeRun(code {
+                RunnerCode(code {
                     line(!"try {")
                     indent {
                         line(codeLeft.head)
@@ -486,7 +486,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         minus_greater {
-            get {
+            getter {
 
                 class Argument(val name: String, val code: String, val location: Location)
 
@@ -510,10 +510,10 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 val codeRight = compiler.aliases.stack {
                     arguments.forEach { argument ->
                         compiler.aliases[argument.name] = Alias {
-                            get { CodeGet(!argument.code) }
-                            set {
-                                CodeSet { code ->
-                                    CodeRun(code {
+                            getter { GetterCode(!argument.code) }
+                            setter {
+                                SetterCode { code ->
+                                    RunnerCode(code {
                                         line(code.head)
                                         line(!"${argument.code} = " + code.body + !";")
                                     })
@@ -526,7 +526,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 val id = compiler.nextId()
                 val idSymbol = compiler.nextId()
                 val label = (domain.givenName ?: "<LAMBDA>") + " (<EVAL>:${location.row},${location.column})"
-                CodeGet(code {
+                GetterCode(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = {[v$idSymbol]: function(" + arguments
                         .map { argument -> argument.code * argument.location }
@@ -541,16 +541,16 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         colon {
-            run {
+            runner {
                 if (channel.value.left.type == "identifier") {
                     val name = channel.value.left.value.unsafeCast<String>()
                     val internalName = name.replace("""[^a-zA-Z0-9_]""".toRegex(), "")
                     val id = compiler.nextId()
                     compiler.aliases[name] = Alias {
-                        get { CodeGet(!"v$id\$$internalName") }
-                        set {
-                            CodeSet { code ->
-                                CodeRun(code {
+                        getter { GetterCode(!"v$id\$$internalName") }
+                        setter {
+                            SetterCode { code ->
+                                RunnerCode(code {
                                     line(code.head)
                                     line(!"v$id\$$internalName = " + code.body + !";")
                                 })
@@ -558,7 +558,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         }
                     }
                     val codeRight = channel.value.right.mustGet(compiler, givenName = name)
-                    CodeRun(code {
+                    RunnerCode(code {
                         line(!"let v$id\$$internalName;")
                         line(codeRight.head)
                         line(!"v$id\$$internalName = " + codeRight.body + !";")
@@ -570,28 +570,28 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         equal {
-            get {
+            getter {
                 val id = compiler.nextId()
                 val codeRight = channel.value.right.mustGet(compiler)
-                val codeLeft = channel.value.left.mustSet(compiler).consumer(CodeGet(!"v$id"))
-                CodeGet(code {
+                val codeLeft = channel.value.left.mustSet(compiler).consumer(GetterCode(!"v$id"))
+                GetterCode(code {
                     line(codeRight.head)
                     line(!"const v$id = " + codeRight.body + !";")
                     line(codeLeft.head)
                 }, !"v$id")
             }
-            run { channel.value.left.mustSet(compiler).consumer(channel.value.right.mustGet(compiler)) }
-            objectInit {
+            runner { channel.value.left.mustSet(compiler).consumer(channel.value.right.mustGet(compiler)) }
+            objectInitializer {
                 channel.value.left.maybe(identifier) { key ->
                     val codeRight = channel.value.right.mustGet(compiler)
-                    return@objectInit CodeObjectInit { consumer ->
-                        consumer(CodeGet(JSON.stringify(key) * channel.value.left.location), codeRight)
+                    return@objectInitializer ObjectInitializerCode { consumer ->
+                        consumer(GetterCode(JSON.stringify(key) * channel.value.left.location), codeRight)
                     }
                 }
                 if (channel.value.left.isType(round)) {
                     val codeLeft = compiler.aliases.stack { channel.value.left.mustGet(compiler) }
                     val codeRight = channel.value.right.mustGet(compiler)
-                    return@objectInit CodeObjectInit { consumer ->
+                    return@objectInitializer ObjectInitializerCode { consumer ->
                         consumer(codeLeft, codeRight)
                     }
                 }
@@ -600,15 +600,15 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         pipe {
-            get {
+            getter {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val idArgument = compiler.nextId()
                 val codeRight = compiler.aliases.stack {
                     compiler.aliases["_"] = Alias {
-                        get { CodeGet(!"v$idArgument") }
-                        set {
-                            CodeSet { code ->
-                                CodeRun(code {
+                        getter { GetterCode(!"v$idArgument") }
+                        setter {
+                            SetterCode { code ->
+                                RunnerCode(code {
                                     line(code.head)
                                     line(!"v$idArgument = " + code.body + !";")
                                 })
@@ -620,7 +620,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 val id = compiler.nextId()
                 val idSymbol = compiler.nextId()
                 val label = "<PIPE> (<EVAL>:${location.row},${location.column})"
-                CodeGet(code {
+                GetterCode(code {
                     line(codeLeft.head)
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = runtime.map(" + codeLeft.body + !", {[v$idSymbol]: function(v$idArgument) {")
@@ -631,16 +631,16 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     line(!"}}[v$idSymbol]);")
                 }, !"v$id")
             }
-            run {
+            runner {
                 val codeLeft = channel.value.left.mustGet(compiler)
                 val idArgument = compiler.nextId()
                 val idArgument2 = compiler.nextId()
                 val codeRight = compiler.aliases.stack {
                     compiler.aliases["_"] = Alias {
-                        get { CodeGet(!"v$idArgument") }
-                        set {
-                            CodeSet { code ->
-                                CodeRun(code {
+                        getter { GetterCode(!"v$idArgument") }
+                        setter {
+                            SetterCode { code ->
+                                RunnerCode(code {
                                     line(code.head)
                                     line(!"v$idArgument = " + code.body + !";")
                                 })
@@ -649,7 +649,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     }
                     channel.value.right.mustRun(compiler)
                 }
-                CodeRun(code {
+                RunnerCode(code {
                     line(codeLeft.head)
                     line(!"for (let v$idArgument2 of runtime.toStream(" + codeLeft.body + !")[runtime.symbolStream]()) {")
                     indent {
@@ -662,35 +662,35 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
 
         semicolon {
-            get {
+            getter {
                 val codesLeft = channel.value.slice(0..channel.value.size - 2).map { it.mustRun(compiler) }
                 val codeRight = channel.value[channel.value.size - 1].mustGet(compiler)
-                CodeGet(code {
+                GetterCode(code {
                     codesLeft.forEach {
                         line(it.head)
                     }
                     line(codeRight.head)
                 }, codeRight.body)
             }
-            run {
+            runner {
                 val codes = channel.value.map { it.mustRun(compiler) }
-                CodeRun(code {
+                RunnerCode(code {
                     codes.forEach {
                         line(it.head)
                     }
                 })
             }
-            arrayInit {
+            arrayInitializer {
                 val codes = channel.value.map { it.mustArrayInit(compiler) }
-                CodeArrayInit { consumer ->
+                ArrayInitializerCode { consumer ->
                     codes.forEach { code ->
                         code.generator(consumer)
                     }
                 }
             }
-            objectInit {
+            objectInitializer {
                 val codes = channel.value.map { it.mustObjectInit(compiler) }
-                CodeObjectInit { consumer ->
+                ObjectInitializerCode { consumer ->
                     codes.forEach { code ->
                         code.generator(consumer)
                     }
@@ -699,19 +699,19 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
     }
     compiler.aliases.apply {
-        "TRUE" { get { CodeGet(!"true") } }
-        "FALSE" { get { CodeGet(!"false") } }
-        "NULL" { get { CodeGet(!"null") } }
-        "NAN" { get { CodeGet(!"NaN") } }
-        "INFINITY" { get { CodeGet(!"Infinity") } }
-        "UNDEFINED" { get { CodeGet(!"undefined") } }
-        "THROW" { get { CodeGet(!"(message => { throw new Error(runtime.toString(message)); })") } }
-        "OPERATOR_TO_STRING" { get { CodeGet(!"(runtime.symbolToString)") } }
-        "OPERATOR_ADD" { get { CodeGet(!"(runtime.symbolAdd)") } }
-        "OPERATOR_SUBTRACT" { get { CodeGet(!"(runtime.symbolSubtract)") } }
-        "OPERATOR_MULTIPLY" { get { CodeGet(!"(runtime.symbolMultiply)") } }
-        "OPERATOR_DIVIDE" { get { CodeGet(!"(runtime.symbolDivide)") } }
-        "OPERATOR_STREAM" { get { CodeGet(!"(runtime.symbolStream)") } }
+        "TRUE" { getter { GetterCode(!"true") } }
+        "FALSE" { getter { GetterCode(!"false") } }
+        "NULL" { getter { GetterCode(!"null") } }
+        "NAN" { getter { GetterCode(!"NaN") } }
+        "INFINITY" { getter { GetterCode(!"Infinity") } }
+        "UNDEFINED" { getter { GetterCode(!"undefined") } }
+        "THROW" { getter { GetterCode(!"(message => { throw new Error(runtime.toString(message)); })") } }
+        "OPERATOR_TO_STRING" { getter { GetterCode(!"(runtime.symbolToString)") } }
+        "OPERATOR_ADD" { getter { GetterCode(!"(runtime.symbolAdd)") } }
+        "OPERATOR_SUBTRACT" { getter { GetterCode(!"(runtime.symbolSubtract)") } }
+        "OPERATOR_MULTIPLY" { getter { GetterCode(!"(runtime.symbolMultiply)") } }
+        "OPERATOR_DIVIDE" { getter { GetterCode(!"(runtime.symbolDivide)") } }
+        "OPERATOR_STREAM" { getter { GetterCode(!"(runtime.symbolStream)") } }
     }
 
     val code = nodeRoot.mustGet(compiler)
