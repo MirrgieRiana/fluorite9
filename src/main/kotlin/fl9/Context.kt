@@ -1,7 +1,7 @@
 package fl9
 
-import fl9.domain.DomainType
 import fl9.domain.Domain
+import fl9.operator.Operator
 
 
 class Context<C, DI>(val compiler: Compiler, val location: Location, val channel: C, val domainContext: DI) {
@@ -17,18 +17,19 @@ class DomainBundle<I> {
         block()
     }
 
-    operator fun <DI, O> DomainType<DI, O>.invoke(handler: Context<I, DI>.() -> O) {
+    private val registry = mutableMapOf<Domain<*, *>, Any>()
+    operator fun <DI, O> Domain<DI, O>.invoke(handler: Context<I, DI>.() -> O) {
         registry[this] = handler
     }
 
-    operator fun <DI, O> get(domainType: DomainType<DI, O>) = registry[domainType]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
+    operator fun <DI, O> get(domain: Domain<DI, O>) = registry[domain]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
 }
 
 
 class OperatorContext<V>(val value: V)
 
 class OperatorRegistry : Registry<DomainBundle<OperatorContext<out Any>>>() {
-    operator fun <V> Token<V>.invoke(block: DomainBundle<OperatorContext<V>>.() -> Unit) {
+    operator fun <V> Operator<V>.invoke(block: DomainBundle<OperatorContext<V>>.() -> Unit) {
         val operator = DomainBundle<OperatorContext<V>>()
         this@OperatorRegistry[type] = operator.unsafeCast<DomainBundle<OperatorContext<out Any>>>() // TODO 型安全
         operator.block()
