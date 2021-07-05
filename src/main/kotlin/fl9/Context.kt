@@ -11,28 +11,31 @@ class Context<C, DI>(val compiler: Compiler, val location: Location, val channel
 }
 
 class DomainBundle<I> {
+
     constructor()
     constructor(block: DomainBundle<I>.() -> Unit) {
         block()
     }
 
-    private val registry = mutableMapOf<Domain<*, *>, Any>()
+
+    private val map = mutableMapOf<Domain<*, *>, Any>()
     operator fun <DI, O> Domain<DI, O>.invoke(handler: Context<I, DI>.() -> O) {
-        registry[this] = handler
+        map[this] = handler
     }
 
-    operator fun <DI, O> get(domain: Domain<DI, O>) = registry[domain]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
+    operator fun <DI, O> get(domain: Domain<DI, O>) = map[domain]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
+
 }
 
 class Compiler {
 
-    private val registry = mutableMapOf<Channel<*>, Any>()
+    private val map = mutableMapOf<Channel<*>, Any>()
     operator fun invoke(block: Compiler.() -> Unit) = block()
     operator fun <S> Channel<S>.invoke(block: S.() -> Unit) {
         this@Compiler[this].block()
     }
 
-    operator fun <S> get(channel: Channel<S>) = registry.getOrPut(channel) { channel.createChannel().unsafeCast<Any>() }.unsafeCast<S>() // TODO 型安全()
+    operator fun <S> get(channel: Channel<S>) = map.getOrPut(channel) { channel.createChannel().unsafeCast<Any>() }.unsafeCast<S>() // TODO 型安全()
 
 
     private var nextId: Int = 0

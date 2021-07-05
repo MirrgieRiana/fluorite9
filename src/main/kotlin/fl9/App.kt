@@ -58,7 +58,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
             identifier {
                 getter {
-                    compiler[aliases][channel.value]?.get(getter)?.invoke(Context(compiler, location, AliasContext(), domainContext)) ?: run {
+                    compiler[aliases][channel.value]?.get(getter)?.invoke(Context(compiler, location, Unit, domainContext)) ?: run {
                         val id = "v" + compiler.nextId()
                         GetterCode(code {
                             line(!"const $id = runtime.get(${JSON.stringify(channel.value)});")
@@ -66,7 +66,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     }
                 }
                 setter {
-                    compiler[aliases][channel.value]?.get(setter)?.invoke(Context(compiler, location, AliasContext(), domainContext)) ?: run {
+                    compiler[aliases][channel.value]?.get(setter)?.invoke(Context(compiler, location, Unit, domainContext)) ?: run {
                         SetterCode { code ->
                             RunnerCode(code {
                                 line(code.head)
