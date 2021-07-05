@@ -3,13 +3,13 @@ package fl9.domain
 import fl9.*
 
 
-abstract class DomainType<I, O>(val name: String) {
+abstract class Domain<I, O>(val name: String) {
     abstract fun createDomainContext(): I
     open fun getDefault(node: Node, compiler: Compiler): O? = null
 }
 
 
-val getter = object : DomainType<GetterContext, GetterCode>("getter") {
+val getter = object : Domain<GetterContext, GetterCode>("getter") {
     override fun createDomainContext() = GetterContext()
 }
 
@@ -22,7 +22,7 @@ class GetterCode(val head: SourcedFile, val body: SourcedLine) {
 }
 
 
-val runner = object : DomainType<Unit, RunnerCode>("runner") {
+val runner = object : Domain<Unit, RunnerCode>("runner") {
     override fun createDomainContext() = Unit
     override fun getDefault(node: Node, compiler: Compiler): RunnerCode? {
         return node.tryCompile(compiler, getter)?.let {
@@ -39,14 +39,14 @@ class RunnerCode(val head: SourcedFile) {
 }
 
 
-val setter = object : DomainType<Unit, SetterCode>("setter") {
+val setter = object : Domain<Unit, SetterCode>("setter") {
     override fun createDomainContext() = Unit
 }
 
 class SetterCode(val consumer: (GetterCode) -> RunnerCode)
 
 
-val arrayInitializer = object : DomainType<Unit, ArrayInitializerCode>("arrayInitializer") {
+val arrayInitializer = object : Domain<Unit, ArrayInitializerCode>("arrayInitializer") {
     override fun createDomainContext() = Unit
     override fun getDefault(node: Node, compiler: Compiler): ArrayInitializerCode? {
         return node.tryCompile(compiler, getter)?.let {
@@ -58,14 +58,14 @@ val arrayInitializer = object : DomainType<Unit, ArrayInitializerCode>("arrayIni
 class ArrayInitializerCode(val generator: ((GetterCode) -> Unit) -> Unit)
 
 
-val objectInitializer = object : DomainType<Unit, ObjectInitializerCode>("objectInitializer") {
+val objectInitializer = object : Domain<Unit, ObjectInitializerCode>("objectInitializer") {
     override fun createDomainContext() = Unit
 }
 
 class ObjectInitializerCode(val generator: ((GetterCode, GetterCode) -> Unit) -> Unit)
 
 
-val comparator = object : DomainType<Unit, ComparatorCode>("comparator") {
+val comparator = object : Domain<Unit, ComparatorCode>("comparator") {
     override fun createDomainContext() = Unit
 }
 

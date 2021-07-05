@@ -1,7 +1,7 @@
 package fl9
 
 import fl9.domain.DomainType
-import fl9.token.Token
+import fl9.domain.Domain
 
 
 class Context<C, DI>(val compiler: Compiler, val location: Location, val channel: C, val domainContext: DI) {
@@ -17,7 +17,6 @@ class DomainBundle<I> {
         block()
     }
 
-    private val registry = mutableMapOf<DomainType<*, *>, Any>()
     operator fun <DI, O> DomainType<DI, O>.invoke(handler: Context<I, DI>.() -> O) {
         registry[this] = handler
     }
