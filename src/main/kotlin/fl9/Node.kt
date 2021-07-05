@@ -16,11 +16,13 @@ fun <I, O> Node.compile(compiler: Compiler, domainType: DomainType<I, O>, initia
 }
 
 fun <I, O> Node.tryCompile(compiler: Compiler, domainType: DomainType<I, O>, initializeDomainContext: I.() -> Unit = {}): O? {
-    val domainContext = domainType.createDomainContext()
-    domainContext.initializeDomainContext()
-    val operator = compiler.operators[type]?.unsafeCast<Operator<Any>>() ?: return null
-    val handler = operator[domainType] ?: return null
-    return Context(compiler, location, OperatorContext(value), domainContext).handler() ?: domainType.getDefault(this, compiler)
+    return run {
+        val domainContext = domainType.createDomainContext()
+        domainContext.initializeDomainContext()
+        val operator = compiler.operators[type]?.unsafeCast<Operator<Any>>() ?: return@run null
+        val handler = operator[domainType] ?: return@run null
+        return@run Context(compiler, location, OperatorContext(value), domainContext).handler()
+    } ?: domainType.getDefault(this, compiler)
 }
 
 // TODO
