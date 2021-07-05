@@ -1,8 +1,7 @@
 package fl9
 
+import fl9.channel.Channel
 import fl9.domain.Domain
-import fl9.operator.Operator
-
 
 class Context<C, DI>(val compiler: Compiler, val location: Location, val channel: C, val domainContext: DI) {
     operator fun String.not(): SourcedLine {
@@ -25,33 +24,16 @@ class DomainBundle<I> {
     operator fun <DI, O> get(domain: Domain<DI, O>) = registry[domain]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
 }
 
-
-class OperatorContext<V>(val value: V)
-
-class OperatorRegistry : Registry<DomainBundle<OperatorContext<out Any>>>() {
-    operator fun <V> Operator<V>.invoke(block: DomainBundle<OperatorContext<V>>.() -> Unit) {
-        val operator = DomainBundle<OperatorContext<V>>()
-        operator.block()
-        this@OperatorRegistry[type] = operator.unsafeCast<DomainBundle<OperatorContext<out Any>>>() // TODO 型安全
-    }
-}
-
-
-class AliasContext
-
-class AliasRegistry : FramedRegistry<DomainBundle<AliasContext>>() {
-    operator fun String.invoke(block: DomainBundle<AliasContext>.() -> Unit) {
-        val alias = DomainBundle<AliasContext>()
-        this@AliasRegistry[this] = alias
-        alias.block()
-    }
-}
-
-
 class Compiler {
 
-    val operators = OperatorRegistry()
-    val aliases = AliasRegistry()
+    private val registry = mutableMapOf<Channel<*>, Any>()
+    operator fun invoke(block: Compiler.() -> Unit) = block()
+    operator fun <S> Channel<S>.invoke(block: S.() -> Unit) {
+        this@Compiler[this].block()
+    }
+
+    operator fun <S> get(channel: Channel<S>) = registry.getOrPut(channel) { channel.createChannel().unsafeCast<Any>() }.unsafeCast<S>() // TODO 型安全()
+
 
     private var nextId: Int = 0
     fun nextId(): Int {
