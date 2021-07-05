@@ -1,5 +1,6 @@
 package fl9
 
+import fl9.domain.*
 import fl9.token.Token
 
 // NodeクラスはJSが与えるのでメンバメソッドを持てない
@@ -10,26 +11,33 @@ inline fun <T> Node.maybe(token: Token<T>, block: (T) -> Unit) {
     if (isType(token)) block(value.unsafeCast<T>()) // TODO 型安全
 }
 
-fun Node.mustGet(compiler: Compiler, givenName: String? = null) = mayGet(compiler, givenName) ?: throw Exception("Unknown Operator: ${type}/get")
-fun Node.mustRun(compiler: Compiler) = mayRun(compiler) ?: throw Exception("Unknown Operator: ${type}/run")
-fun Node.mustSet(compiler: Compiler) = maySet(compiler) ?: throw Exception("Unknown Operator: ${type}/set")
-fun Node.mustArrayInit(compiler: Compiler) = mayArrayInit(compiler) ?: throw Exception("Unknown Operator: ${type}/arrayInit")
-fun Node.mustObjectInit(compiler: Compiler) = mayObjectInit(compiler) ?: throw Exception("Unknown Operator: ${type}/objectInit")
-fun Node.mustCompare(compiler: Compiler) = mayCompare(compiler) ?: throw Exception("Unknown Operator: ${type}/compare")
+fun <I, O> Node.compile(compiler: Compiler, domainType: DomainType<I, O>, initializeDomainContext: I.() -> Unit = {}): O {
+    return tryCompile(compiler, domainType, initializeDomainContext) ?: throw Exception("Unknown Operator: $type/${domainType.name}")
+}
 
-fun Node.mayGet(compiler: Compiler, givenName: String? = null) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().getter(Context(compiler, location, OperatorContext(value), GetterContext(givenName))) }  // TODO 型安全
+fun <I, O> Node.tryCompile(compiler: Compiler, domainType: DomainType<I, O>, initializeDomainContext: I.() -> Unit = {}): O? {
+    val domainContext = domainType.createDomainContext()
+    domainContext.initializeDomainContext()
+    val operator = compiler.operators[type]?.unsafeCast<Operator<Any>>() ?: return null
+    val handler = operator[domainType] ?: return null
+    return Context(compiler, location, OperatorContext(value), domainContext).handler() ?: domainType.getDefault(this, compiler)
+}
 
-fun Node.mayRun(compiler: Compiler) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().runner(Context(compiler, location, OperatorContext(value), Unit)) } ?: mayGet(compiler)?.let {
-    RunnerCode(code {
-        line(it.head)
-        // line(it.body + ";" * location)
-    })
-} // TODO 型安全
+// TODO
+@Deprecated("", ReplaceWith("compile(compiler, getter)"))
+fun Node.mustGet(compiler: Compiler, initializeDomainContext: GetterContext.() -> Unit = {}) = compile(compiler, getter, initializeDomainContext)
 
-fun Node.maySet(compiler: Compiler) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().setter(Context(compiler, location, OperatorContext(value), Unit)) }  // TODO 型安全
-fun Node.mayArrayInit(compiler: Compiler) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().arrayInitializer(Context(compiler, location, OperatorContext(value), Unit)) } ?: mayGet(compiler)?.let {
-    ArrayInitializerCode { consumer -> consumer(it) }
-} // TODO 型安全
+@Deprecated("", ReplaceWith("compile(compiler, runner)"))
+fun Node.mustRun(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, runner, initializeDomainContext)
 
-fun Node.mayObjectInit(compiler: Compiler) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().objectInitializer(Context(compiler, location, OperatorContext(value), Unit)) }  // TODO 型安全
-fun Node.mayCompare(compiler: Compiler) = compiler.operators[type]?.let { it.unsafeCast<Operator<Any>>().comparator(Context(compiler, location, OperatorContext(value), Unit)) }  // TODO 型安全
+@Deprecated("", ReplaceWith("compile(compiler, setter)"))
+fun Node.mustSet(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, setter, initializeDomainContext)
+
+@Deprecated("", ReplaceWith("compile(compiler, arrayInitializer)"))
+fun Node.mustArrayInit(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, arrayInitializer, initializeDomainContext)
+
+@Deprecated("", ReplaceWith("compile(compiler, objectInitializer)"))
+fun Node.mustObjectInit(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, objectInitializer, initializeDomainContext)
+
+@Deprecated("", ReplaceWith("compile(compiler, comparator)"))
+fun Node.mustCompare(compiler: Compiler, initializeDomainContext: Unit.() -> Unit = {}) = compile(compiler, comparator, initializeDomainContext)

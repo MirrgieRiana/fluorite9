@@ -1,5 +1,6 @@
 package fl9
 
+import fl9.domain.*
 import fl9.token.*
 
 fun getStandardCompiler(): Any = { nodeRoot: Node ->
@@ -54,7 +55,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
         }
         identifier {
             getter {
-                compiler.aliases[channel.value]?.getter?.invoke(Context(compiler, location, AliasContext(), GetterContext(domain.givenName))) ?: run {
+                compiler.aliases[channel.value]?.get(getter)?.invoke(Context(compiler, location, AliasContext(), domainContext)) ?: run {
                     val id = "v" + compiler.nextId()
                     GetterCode(code {
                         line(!"const $id = runtime.get(${JSON.stringify(channel.value)});")
@@ -62,7 +63,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
             }
             setter {
-                compiler.aliases[channel.value]?.setter?.invoke(Context(compiler, location, AliasContext(), Unit)) ?: run {
+                compiler.aliases[channel.value]?.get(setter)?.invoke(Context(compiler, location, AliasContext(), domainContext)) ?: run {
                     SetterCode { code ->
                         RunnerCode(code {
                             line(code.head)
@@ -525,7 +526,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
                 val id = compiler.nextId()
                 val idSymbol = compiler.nextId()
-                val label = (domain.givenName ?: "<LAMBDA>") + " (<EVAL>:${location.row},${location.column})"
+                val label = (domainContext.givenName ?: "<LAMBDA>") + " (<EVAL>:${location.row},${location.column})"
                 GetterCode(code {
                     line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
                     line(!"const v$id = {[v$idSymbol]: function(" + arguments
@@ -557,7 +558,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                             }
                         }
                     }
-                    val codeRight = channel.value.right.mustGet(compiler, givenName = name)
+                    val codeRight = channel.value.right.mustGet(compiler) { givenName = name }
                     RunnerCode(code {
                         line(!"let v$id\$$internalName;")
                         line(codeRight.head)
