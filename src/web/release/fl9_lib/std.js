@@ -14,7 +14,11 @@
     object.SIN = Math.sin;
     object.COS = Math.cos;
     object.TAN = Math.tan;
-    object.LOG = (a, b) => Math.log(a) / Math.log(b);
+    object.LOG = function() {
+      if (arguments.length == 1) return Math.log(runtime.toNumber(arguments[0]));
+      if (arguments.length == 2) return Math.log(runtime.toNumber(arguments[0])) / Math.log(runtime.toNumber(arguments[1]));
+      throw new Error(`Illegal Arguments: ${arguments.callee.name}/${arguments.length}`);
+    };
     object.MAP = code => array => array.map(item => code(item));
     return object;
   };
