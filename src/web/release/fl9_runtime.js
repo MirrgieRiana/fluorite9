@@ -14,17 +14,16 @@
   const symbolSubtract = Symbol("fl9Subtract");
   const symbolMultiply = Symbol("fl9Multiply");
   const symbolDivide = Symbol("fl9Divide");
-  const symbolStream = Symbol("fl9Stream");
 
   class Fl9Stream {
-    constructor(runtime, func) {
+    constructor(runtime, generator) {
       this._runtime = runtime;
-      this[symbolStream] = func;
+      this._generator = generator;
     }
     [symbolToString]() {
       let string = "";
       let first = true;
-      for (let item of this[symbolStream]()) {
+      for (let item of this) {
         if (first) {
           first = false;
         } else {
@@ -33,6 +32,9 @@
         string += this._runtime.toString(item);
       }
       return string;
+    }
+    [Symbol.iterator]() {
+      return this._generator();
     }
   }
 
@@ -55,7 +57,6 @@
         [symbolSubtract]: () => { throw new Error("Void access"); },
         [symbolMultiply]: () => { throw new Error("Void access"); },
         [symbolDivide]: () => { throw new Error("Void access"); },
-        [symbolStream]: () => { throw new Error("Void access"); },
       };
     }
 
@@ -70,19 +71,11 @@
       throw Error(`Unknown Variable: ${name}`)
     }
 
-    isStream(value) {
-      if (value === null) return false;
-      if (value === undefined) return false;
-      return value[symbolStream] !== undefined;
-    }
     toStream(value) {
-      if (value[symbolStream] !== undefined) return value;
+      if (value instanceof this.Fl9Stream) return value;
       return new this.Fl9Stream(this, function*() {
         yield value;
       });
-    }
-    streamToIterable(value) {
-      return value[symbolStream]();
     }
 
     toNumber(value) {
@@ -195,7 +188,7 @@
     map(stream, func) {
       stream = this.toStream(stream);
       return new this.Fl9Stream(this, function*() {
-        for (let item of stream[symbolStream]()) {
+        for (let item of stream) {
           yield func(item);
         }
       });
@@ -207,7 +200,6 @@
   Runtime.prototype.symbolSubtract = symbolSubtract;
   Runtime.prototype.symbolMultiply = symbolMultiply;
   Runtime.prototype.symbolDivide = symbolDivide;
-  Runtime.prototype.symbolStream = symbolStream;
   Runtime.prototype.Fl9Stream = Fl9Stream;
 
   _.Runtime = Runtime;

@@ -99,9 +99,9 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                         line(!"const v$id = [];")
                         codeMain.generator { code ->
                             line(code.head)
-                            line(!"if (runtime.isStream(" + code.body + !")) {")
+                            line(!"if (" + code.body + !" instanceof runtime.Fl9Stream) {")
                             indent {
-                                line(!"for (let $idItem of runtime.streamToIterable(" + code.body + !")) {")
+                                line(!"for (let $idItem of " + code.body + !") {")
                                 indent {
                                     line(!"v$id[v$id.length] = $idItem;")
                                 }
@@ -665,7 +665,7 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                     }
                     RunnerCode(code {
                         line(codeLeft.head)
-                        line(!"for (let v$idArgument2 of runtime.toStream(" + codeLeft.body + !")[runtime.symbolStream]()) {")
+                        line(!"for (let v$idArgument2 of runtime.toStream(" + codeLeft.body + !")) {")
                         indent {
                             line(!"let v$idArgument = v$idArgument2;")
                             line(codeRight.head)
@@ -727,7 +727,6 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             "OPERATOR_SUBTRACT" { getter { GetterCode(!"(runtime.symbolSubtract)") } }
             "OPERATOR_MULTIPLY" { getter { GetterCode(!"(runtime.symbolMultiply)") } }
             "OPERATOR_DIVIDE" { getter { GetterCode(!"(runtime.symbolDivide)") } }
-            "OPERATOR_STREAM" { getter { GetterCode(!"(runtime.symbolStream)") } }
         }
 
     }
