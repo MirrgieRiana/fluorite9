@@ -64,7 +64,7 @@ EmbeddedFluorite
     )* "<%" !("=" / "%") { return node("join", main, location()); }
 
 EmbeddedFluoriteRoot
-  = main:(
+  = ("#!" [^\r\n]* ("\r\n" / "\r" / "\n"))? main:(
       main:(
         !"<%" main:. { return main; }
       / "<%%" { return "<%"; }
