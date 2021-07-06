@@ -79,7 +79,7 @@
     return Unit;
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_3($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(' + $receiver.channel.value + ')'));
+    return GetterCode_init($receiver.not_pdl1vz$('(' + $receiver.channelContext.value + ')'));
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_0($receiver) {
     $receiver.invoke_wbj58y$(getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda_3);
@@ -87,13 +87,13 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$id, this$) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('const ' + closure$id + ' = ' + JSON.stringify(this$.channel.value) + ';'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const ' + closure$id + ' = ' + JSON.stringify(this$.channelContext.value) + ';'));
       return Unit;
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_4(closure$compiler) {
     return function ($receiver) {
-      if ($receiver.channel.value.length === 0) {
+      if ($receiver.channelContext.value.length === 0) {
         return GetterCode_init($receiver.not_pdl1vz$('""'));
       } else {
         var id = 'v' + toString(closure$compiler.nextId());
@@ -149,10 +149,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_5(closure$compiler) {
     return function ($receiver) {
-      if ($receiver.channel.value.length === 0) {
+      if ($receiver.channelContext.value.length === 0) {
         return GetterCode_init($receiver.not_pdl1vz$('""'));
       } else {
-        var $receiver_0 = $receiver.channel.value;
+        var $receiver_0 = $receiver.channelContext.value;
         var destination = ArrayList_init($receiver_0.length);
         var tmp$;
         loop_label: for (tmp$ = 0; tmp$ !== $receiver_0.length; ++tmp$) {
@@ -188,7 +188,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$id, this$) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.get(' + JSON.stringify(this$.channel.value) + ');'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.get(' + JSON.stringify(this$.channelContext.value) + ');'));
       return Unit;
     };
   }
@@ -196,7 +196,7 @@
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
       var tmp$_2;
-      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_ttiokq$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_loizr5$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, $receiver.domainContext)) : null) != null)
+      if ((tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_ttiokq$(aliases).get_61zpoe$($receiver.channelContext.value)) != null ? tmp$.get_loizr5$(getter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, $receiver.domainContext)) : null) != null)
         tmp$_2 = tmp$_1;
       else {
         var id = 'v' + toString(closure$compiler.nextId());
@@ -208,7 +208,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda(closure$code, this$) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$code.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('runtime.set(' + JSON.stringify(this$.channel.value) + ', '), closure$code.body), this$.not_pdl1vz$(');')));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('runtime.set(' + JSON.stringify(this$.channelContext.value) + ', '), closure$code.body), this$.not_pdl1vz$(');')));
       return Unit;
     };
   }
@@ -220,7 +220,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_7(closure$compiler) {
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1;
-      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_ttiokq$(aliases).get_61zpoe$($receiver.channel.value)) != null ? tmp$.get_loizr5$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
+      return (tmp$_1 = (tmp$_0 = (tmp$ = closure$compiler.get_ttiokq$(aliases).get_61zpoe$($receiver.channelContext.value)) != null ? tmp$.get_loizr5$(setter) : null) != null ? tmp$_0(new Context(closure$compiler, $receiver.location, Unit, Unit)) : null) != null ? tmp$_1 : new SetterCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_3(closure$compiler) {
@@ -241,7 +241,7 @@
     return function ($receiver) {
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.main, closure$compiler, getter);
+      var result = compile($receiver.channelContext.value.main, closure$compiler, getter);
       $this.pop();
       return result;
     };
@@ -250,7 +250,7 @@
     return function ($receiver) {
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.main, closure$compiler, runner);
+      var result = compile($receiver.channelContext.value.main, closure$compiler, runner);
       $this.pop();
       return result;
     };
@@ -320,7 +320,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_12(closure$compiler) {
     return function ($receiver) {
-      var codeMain = compile($receiver.channel.value.main, closure$compiler, arrayInitializer);
+      var codeMain = compile($receiver.channelContext.value.main, closure$compiler, arrayInitializer);
       var id = closure$compiler.nextId();
       var idItem = 'v' + toString(closure$compiler.nextId());
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_4(id, $receiver, codeMain, idItem)), $receiver.not_pdl1vz$('v' + id));
@@ -367,7 +367,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_14(closure$compiler) {
     return function ($receiver) {
-      var codeMain = compile($receiver.channel.value.main, closure$compiler, objectInitializer);
+      var codeMain = compile($receiver.channelContext.value.main, closure$compiler, objectInitializer);
       var id = closure$compiler.nextId();
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_6(id, $receiver, codeMain)), $receiver.not_pdl1vz$('v' + id));
     };
@@ -389,7 +389,7 @@
     return function ($receiver) {
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.main, closure$compiler, getter);
+      var result = compile($receiver.channelContext.value.main, closure$compiler, getter);
       $this.pop();
       return result;
     };
@@ -403,7 +403,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$codeLeft, closure$id, this$, closure$name) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = '), closure$codeLeft.body), this$.not_pdl1vz$('[')), times(JSON.stringify(closure$name), this$.channel.value.right.location)), this$.not_pdl1vz$('];')));
+      $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = '), closure$codeLeft.body), this$.not_pdl1vz$('[')), times(JSON.stringify(closure$name), this$.channelContext.value.right.location)), this$.not_pdl1vz$('];')));
       return Unit;
     };
   }
@@ -412,14 +412,14 @@
       var closure$compiler_0 = closure$compiler;
       var block$result;
       block$break: do {
-        var $receiver_0 = $receiver.channel.value.right;
+        var $receiver_0 = $receiver.channelContext.value.right;
         if (isType($receiver_0, identifier)) {
           var name = $receiver_0.value;
-          var codeLeft = compile($receiver.channel.value.left, closure$compiler_0, getter);
+          var codeLeft = compile($receiver.channelContext.value.left, closure$compiler_0, getter);
           var id = closure$compiler_0.nextId();
           block$result = new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$('v' + id));
           break block$break;
-        }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + '.' + $receiver.channel.value.right.type);
+        }throw Exception_init('Illegal Operator Argument: ' + $receiver.channelContext.value.left.type + '.' + $receiver.channelContext.value.right.type);
       }
        while (false);
       return block$result;
@@ -434,7 +434,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(closure$codeLeft, closure$id, this$, closure$name) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.createDelegate('), closure$codeLeft.body), this$.not_pdl1vz$(', ')), times(JSON.stringify(closure$name), this$.channel.value.right.location)), this$.not_pdl1vz$(');')));
+      $receiver.line_3pad5q$(plus_1(plus_1(plus_1(plus_1(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.createDelegate('), closure$codeLeft.body), this$.not_pdl1vz$(', ')), times(JSON.stringify(closure$name), this$.channelContext.value.right.location)), this$.not_pdl1vz$(');')));
       return Unit;
     };
   }
@@ -443,14 +443,14 @@
       var closure$compiler_0 = closure$compiler;
       var block$result;
       block$break: do {
-        var $receiver_0 = $receiver.channel.value.right;
+        var $receiver_0 = $receiver.channelContext.value.right;
         if (isType($receiver_0, identifier)) {
           var name = $receiver_0.value;
-          var codeLeft = compile($receiver.channel.value.left, closure$compiler_0, getter);
+          var codeLeft = compile($receiver.channelContext.value.left, closure$compiler_0, getter);
           var id = 'v' + toString(closure$compiler_0.nextId());
           block$result = new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(codeLeft, id, $receiver, name)), $receiver.not_pdl1vz$(id));
           break block$break;
-        }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + '::' + $receiver.channel.value.right.type);
+        }throw Exception_init('Illegal Operator Argument: ' + $receiver.channelContext.value.left.type + '::' + $receiver.channelContext.value.right.type);
       }
        while (false);
       return block$result;
@@ -471,7 +471,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_19(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var id = closure$compiler.nextId();
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_7(codeLeft, id, $receiver)), $receiver.not_pdl1vz$('v' + id));
     };
@@ -574,14 +574,14 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_20(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var block$result;
       block$break: do {
-        var $receiver_0 = $receiver.channel.value.main;
+        var $receiver_0 = $receiver.channelContext.value.main;
         if (isType($receiver_0, semicolon)) {
           block$result = toList($receiver_0.value);
           break block$break;
-        }block$result = listOf($receiver.channel.value.main);
+        }block$result = listOf($receiver.channelContext.value.main);
       }
        while (false);
       var nodesMain = block$result;
@@ -684,13 +684,13 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_21(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var idArgument = closure$compiler.nextId();
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
       closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_4(idArgument));
-      var result = compile($receiver.channel.value.main, closure$compiler_0, getter);
+      var result = compile($receiver.channelContext.value.main, closure$compiler_0, getter);
       $this.pop();
       var codeRight = result;
       var id = closure$compiler.nextId();
@@ -714,7 +714,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$leftUnaryOperatorGetter$lambda(closure$compiler, closure$function) {
     return function ($receiver) {
-      var codeRight = compile($receiver.channel.value.right, closure$compiler, getter);
+      var codeRight = compile($receiver.channelContext.value.right, closure$compiler, getter);
       var id = closure$compiler.nextId();
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$leftUnaryOperatorGetter$lambda$lambda(codeRight, id, $receiver, closure$function)), $receiver.not_pdl1vz$('v' + id));
     };
@@ -806,8 +806,8 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$binaryOperatorGetter$lambda(closure$compiler, closure$function) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
-      var codeRight = compile($receiver.channel.value.right, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
+      var codeRight = compile($receiver.channelContext.value.right, closure$compiler, getter);
       var id = closure$compiler.nextId();
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$binaryOperatorGetter$lambda$lambda(codeLeft, codeRight, id, $receiver, closure$function)), $receiver.not_pdl1vz$('v' + id));
     };
@@ -882,7 +882,7 @@
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codesTerm.get_za3lpa$(0).head);
       $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const ' + closure$idVars.get_za3lpa$(0) + ' = '), closure$codesTerm.get_za3lpa$(0).body), this$.not_pdl1vz$(';')));
-      var $receiver_0 = get_indices(this$.channel.value.types);
+      var $receiver_0 = get_indices(this$.channelContext.value.types);
       var tmp$;
       tmp$ = $receiver_0.iterator();
       while (tmp$.hasNext()) {
@@ -915,7 +915,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_36(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = get_indices($receiver.channel.value.nodes);
+      var $receiver_0 = get_indices($receiver.channelContext.value.nodes);
       var destination = ArrayList_init(collectionSizeOrDefault($receiver_0, 10));
       var tmp$;
       tmp$ = $receiver_0.iterator();
@@ -926,7 +926,7 @@
       var idVars = destination;
       var idVarResult = 'v' + closure$compiler.nextId() + '$' + 'result';
       var idLabel = 'l' + toString(closure$compiler.nextId());
-      var $receiver_1 = get_indices($receiver.channel.value.types);
+      var $receiver_1 = get_indices($receiver.channelContext.value.types);
       var destination_0 = ArrayList_init(collectionSizeOrDefault($receiver_1, 10));
       var tmp$_0;
       tmp$_0 = $receiver_1.iterator();
@@ -934,10 +934,10 @@
         var item_0 = tmp$_0.next();
         var tmp$_1 = destination_0.add_11rb$;
         var closure$compiler_0 = closure$compiler;
-        tmp$_1.call(destination_0, compile(new Node($receiver.channel.value.types[item_0], Unit, $receiver.channel.value.locations[item_0]), closure$compiler_0, comparator));
+        tmp$_1.call(destination_0, compile(new Node($receiver.channelContext.value.types[item_0], Unit, $receiver.channelContext.value.locations[item_0]), closure$compiler_0, comparator));
       }
       var codesOperator = destination_0;
-      var $receiver_2 = $receiver.channel.value.nodes;
+      var $receiver_2 = $receiver.channelContext.value.nodes;
       var destination_1 = ArrayList_init($receiver_2.length);
       var tmp$_2;
       for (tmp$_2 = 0; tmp$_2 !== $receiver_2.length; ++tmp$_2) {
@@ -1077,10 +1077,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$binaryConditionOperatorGetter$lambda(closure$compiler, closure$function) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.right, closure$compiler, getter);
+      var result = compile($receiver.channelContext.value.right, closure$compiler, getter);
       $this.pop();
       var codeRight = result;
       var id = closure$compiler.nextId();
@@ -1109,10 +1109,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$binaryConditionOperatorRunner$lambda(closure$compiler, closure$function) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.right, closure$compiler, runner);
+      var result = compile($receiver.channelContext.value.right, closure$compiler, runner);
       $this.pop();
       var codeRight = result;
       return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$binaryConditionOperatorRunner$lambda$lambda(codeLeft, $receiver, closure$function, codeRight)));
@@ -1203,15 +1203,15 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_53(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.center, closure$compiler, getter);
+      var result = compile($receiver.channelContext.value.center, closure$compiler, getter);
       $this.pop();
       var codeCenter = result;
       var $this_0 = closure$compiler.get_ttiokq$(aliases);
       $this_0.push();
-      var result_0 = compile($receiver.channel.value.right, closure$compiler, getter);
+      var result_0 = compile($receiver.channelContext.value.right, closure$compiler, getter);
       $this_0.pop();
       var codeRight = result_0;
       var id = closure$compiler.nextId();
@@ -1243,15 +1243,15 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_54(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.center, closure$compiler, runner);
+      var result = compile($receiver.channelContext.value.center, closure$compiler, runner);
       $this.pop();
       var codeCenter = result;
       var $this_0 = closure$compiler.get_ttiokq$(aliases);
       $this_0.push();
-      var result_0 = compile($receiver.channel.value.right, closure$compiler, runner);
+      var result_0 = compile($receiver.channelContext.value.right, closure$compiler, runner);
       $this_0.pop();
       var codeRight = result_0;
       return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_21(codeLeft, $receiver, codeCenter, codeRight)));
@@ -1291,10 +1291,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_55(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.right, closure$compiler, getter);
+      var result = compile($receiver.channelContext.value.right, closure$compiler, getter);
       $this.pop();
       var codeRight = result;
       var id = closure$compiler.nextId();
@@ -1325,10 +1325,10 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_56(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, runner);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, runner);
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
-      var result = compile($receiver.channel.value.right, closure$compiler, runner);
+      var result = compile($receiver.channelContext.value.right, closure$compiler, runner);
       $this.pop();
       var codeRight = result;
       return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_23($receiver, codeLeft, codeRight)));
@@ -1421,7 +1421,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_57(closure$compiler) {
     return function ($receiver) {
       var tmp$;
-      var node = $receiver.channel.value.left;
+      var node = $receiver.channelContext.value.left;
       var block$result;
       block$break: do {
         if (isType(node, empty_round)) {
@@ -1496,7 +1496,7 @@
         var element_0 = tmp$_6.next();
         closure$compiler_1.get_ttiokq$(aliases).invoke_myna1y$(element_0.name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_3(element_0));
       }
-      var result = compile($receiver.channel.value.right, closure$compiler_1, getter);
+      var result = compile($receiver.channelContext.value.right, closure$compiler_1, getter);
       $this.pop();
       var codeRight = result;
       var id = closure$compiler.nextId();
@@ -1556,15 +1556,15 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_58(closure$compiler) {
     return function ($receiver) {
-      if (equals($receiver.channel.value.left.type, 'identifier')) {
-        var name = $receiver.channel.value.left.value;
+      if (equals($receiver.channelContext.value.left.type, 'identifier')) {
+        var name = $receiver.channelContext.value.left.value;
         var internalName = Regex_init('[^a-zA-Z0-9_]').replace_x2uqeu$(name, '');
         var id = closure$compiler.nextId();
         closure$compiler.get_ttiokq$(aliases).invoke_myna1y$(name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_14(id, internalName));
-        var codeRight = compile($receiver.channel.value.right, closure$compiler, getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_25(name));
+        var codeRight = compile($receiver.channelContext.value.right, closure$compiler, getter, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_25(name));
         return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_26(id, internalName, $receiver, codeRight)));
       } else {
-        throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + ' : ' + $receiver.channel.value.right.type);
+        throw Exception_init('Illegal Operator Argument: ' + $receiver.channelContext.value.left.type + ' : ' + $receiver.channelContext.value.right.type);
       }
     };
   }
@@ -1585,19 +1585,19 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_59(closure$compiler) {
     return function ($receiver) {
       var id = closure$compiler.nextId();
-      var codeRight = compile($receiver.channel.value.right, closure$compiler, getter);
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, setter).consumer(GetterCode_init($receiver.not_pdl1vz$('v' + id)));
+      var codeRight = compile($receiver.channelContext.value.right, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, setter).consumer(GetterCode_init($receiver.not_pdl1vz$('v' + id)));
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_27(codeRight, id, $receiver, codeLeft)), $receiver.not_pdl1vz$('v' + id));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_60(closure$compiler) {
     return function ($receiver) {
-      return compile($receiver.channel.value.left, closure$compiler, setter).consumer(compile($receiver.channel.value.right, closure$compiler, getter));
+      return compile($receiver.channelContext.value.left, closure$compiler, setter).consumer(compile($receiver.channelContext.value.right, closure$compiler, getter));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_15(closure$key, this$, closure$codeRight) {
     return function (consumer) {
-      consumer(GetterCode_init(times(JSON.stringify(closure$key), this$.channel.value.left.location)), closure$codeRight);
+      consumer(GetterCode_init(times(JSON.stringify(closure$key), this$.channelContext.value.left.location)), closure$codeRight);
       return Unit;
     };
   }
@@ -1609,22 +1609,22 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_61(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = $receiver.channel.value.left;
+      var $receiver_0 = $receiver.channelContext.value.left;
       var operator = identifier;
       if (isType($receiver_0, operator)) {
         var closure$compiler_0 = closure$compiler;
         var key = $receiver_0.value;
-        var codeRight = compile($receiver.channel.value.right, closure$compiler_0, getter);
+        var codeRight = compile($receiver.channelContext.value.right, closure$compiler_0, getter);
         return new ObjectInitializerCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_15(key, $receiver, codeRight));
-      }if (isType($receiver.channel.value.left, round)) {
+      }if (isType($receiver.channelContext.value.left, round)) {
         var $this = closure$compiler.get_ttiokq$(aliases);
         $this.push();
-        var result = compile($receiver.channel.value.left, closure$compiler, getter);
+        var result = compile($receiver.channelContext.value.left, closure$compiler, getter);
         $this.pop();
         var codeLeft = result;
-        var codeRight_0 = compile($receiver.channel.value.right, closure$compiler, getter);
+        var codeRight_0 = compile($receiver.channelContext.value.right, closure$compiler, getter);
         return new ObjectInitializerCode(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_28(codeLeft, codeRight_0));
-      }throw Exception_init('Illegal Operator Argument: ' + $receiver.channel.value.left.type + ' = ' + $receiver.channel.value.right.type);
+      }throw Exception_init('Illegal Operator Argument: ' + $receiver.channelContext.value.left.type + ' = ' + $receiver.channelContext.value.right.type);
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda_48(closure$compiler) {
@@ -1683,13 +1683,13 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_62(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var idArgument = closure$compiler.nextId();
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
       closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(idArgument));
-      var result = compile($receiver.channel.value.right, closure$compiler_0, getter);
+      var result = compile($receiver.channelContext.value.right, closure$compiler_0, getter);
       $this.pop();
       var codeRight = result;
       var id = closure$compiler.nextId();
@@ -1745,14 +1745,14 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_63(closure$compiler) {
     return function ($receiver) {
-      var codeLeft = compile($receiver.channel.value.left, closure$compiler, getter);
+      var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
       var idArgument = closure$compiler.nextId();
       var idArgument2 = closure$compiler.nextId();
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
       closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(idArgument));
-      var result = compile($receiver.channel.value.right, closure$compiler_0, runner);
+      var result = compile($receiver.channelContext.value.right, closure$compiler_0, runner);
       $this.pop();
       var codeRight = result;
       return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_30(codeLeft, idArgument2, $receiver, idArgument, codeRight)));
@@ -1779,7 +1779,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_64(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = slice($receiver.channel.value, new IntRange(0, $receiver.channel.value.length - 2 | 0));
+      var $receiver_0 = slice($receiver.channelContext.value, new IntRange(0, $receiver.channelContext.value.length - 2 | 0));
       var destination = ArrayList_init(collectionSizeOrDefault($receiver_0, 10));
       var tmp$;
       tmp$ = $receiver_0.iterator();
@@ -1788,7 +1788,7 @@
         destination.add_11rb$(compile(item, closure$compiler, runner));
       }
       var codesLeft = destination;
-      var codeRight = compile($receiver.channel.value[$receiver.channel.value.length - 1 | 0], closure$compiler, getter);
+      var codeRight = compile($receiver.channelContext.value[$receiver.channelContext.value.length - 1 | 0], closure$compiler, getter);
       return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_31(codesLeft, codeRight)), codeRight.body);
     };
   }
@@ -1805,7 +1805,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_65(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = $receiver.channel.value;
+      var $receiver_0 = $receiver.channelContext.value;
       var destination = ArrayList_init($receiver_0.length);
       var tmp$;
       for (tmp$ = 0; tmp$ !== $receiver_0.length; ++tmp$) {
@@ -1829,7 +1829,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_66(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = $receiver.channel.value;
+      var $receiver_0 = $receiver.channelContext.value;
       var destination = ArrayList_init($receiver_0.length);
       var tmp$;
       for (tmp$ = 0; tmp$ !== $receiver_0.length; ++tmp$) {
@@ -1853,7 +1853,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_67(closure$compiler) {
     return function ($receiver) {
-      var $receiver_0 = $receiver.channel.value;
+      var $receiver_0 = $receiver.channelContext.value;
       var destination = ArrayList_init($receiver_0.length);
       var tmp$;
       for (tmp$ = 0; tmp$ !== $receiver_0.length; ++tmp$) {
@@ -2115,10 +2115,10 @@
   function getStandardCompiler() {
     return getStandardCompiler$lambda;
   }
-  function Context(compiler, location, channel, domainContext) {
+  function Context(compiler, location, channelContext, domainContext) {
     this.compiler = compiler;
     this.location = location;
-    this.channel = channel;
+    this.channelContext = channelContext;
     this.domainContext = domainContext;
   }
   Context.prototype.not_pdl1vz$ = function ($receiver) {
