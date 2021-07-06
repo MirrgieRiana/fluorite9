@@ -89,6 +89,8 @@
       if (typeof value === "number") return value;
       if (typeof value === "string") return parseFloat(value);
       if (typeof value === "boolean") return value ? 1 : 0;
+      if (value === undefined) return 0;
+      if (value === null) return 0;
       throw new Error("Illegal Action: toNumber(" + value + ")");
     }
     toString(value) {
