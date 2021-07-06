@@ -5,5 +5,5 @@ type npm > /dev/null || exit
 cd "$(dirname "$0")"
 
 npm install pegjs@0.10.0
-node_modules/pegjs/bin/pegjs --cache --allowed-start-rules Root fl9_parser.pegjs -o fl9_parser.pegjs
-node_modules/pegjs/bin/pegjs --cache --allowed-start-rules EmbeddedFluoriteRoot fl9_parser.pegjs -o fl9_parser_embedded.pegjs
+node_modules/pegjs/bin/pegjs --cache --allowed-start-rules Root -o fl9_parser.js fl9_parser.pegjs
+node_modules/pegjs/bin/pegjs --cache --allowed-start-rules EmbeddedFluoriteRoot -o fl9_parser_embedded.js fl9_parser.pegjs
