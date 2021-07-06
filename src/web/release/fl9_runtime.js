@@ -153,7 +153,15 @@
       if (value instanceof Function) {
         return value.apply(null, args);
       } else if (value instanceof Array) {
-        return value[args[0]];
+        if (args.length === 0) {
+          return new this.Fl9Stream(this, function*() {
+            for (let item of value) {
+              yield item;
+            }
+          });
+        } else if (args.length === 1) {
+          return value[args[0]];
+        }
       } else {
         throw new Error(`Illegal Argument: ${value.constructor.name}[${args.constructor.name}]`);
       }

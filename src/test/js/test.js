@@ -209,6 +209,18 @@ function assertEqualsJson(expected, src) {
   ]`); // 改行によって記述される配列
 }
 
+// 関数呼び出し
+{
+
+  assertEqualsJson([], "                [[]       [  ]               ]"); // 空配列のストリームアクセス
+  assertEqualsJson([1, 2, 3], "         [[1; 2; 3][  ]               ]"); // 配列のストリームアクセス
+  assertEqualsJson([1, 2, 3, 4, 5, 6], "[[1; 2; 3][  ]; [4; 5; 6][  ]]"); // 配列のストリームアクセス
+  assertEquals(2, "                      [1; 2; 3][ 1]                "); // 配列の要素アクセス
+  assertEquals(undefined, "              [1; 2; 3][-1]                "); // 配列の定義域外要素アクセス
+  assertEquals(undefined, "              [1; 2; 3][ 3]                "); // 配列の定義域外要素アクセス
+
+}
+
 // デリゲート
 {
   assertEquals(100, "o : {v = 100; m = _       -> _.v        }; o::m[     ]"); // メソッド
