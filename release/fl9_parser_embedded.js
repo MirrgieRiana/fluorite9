@@ -138,8 +138,8 @@ function peg$parse(input, options) {
 
   var peg$FAILED = {},
 
-      peg$startRuleFunctions = { Root: peg$parseRoot },
-      peg$startRuleFunction  = peg$parseRoot,
+      peg$startRuleFunctions = { EmbeddedFluoriteRoot: peg$parseEmbeddedFluoriteRoot },
+      peg$startRuleFunction  = peg$parseEmbeddedFluoriteRoot,
 
       peg$c0 = /^[ \t]/,
       peg$c1 = peg$classExpectation([" ", "\t"], false, false),
