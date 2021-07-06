@@ -403,6 +403,34 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// カンマ
+{
+
+  assertEquals("", '   &[    ,       ]'); // 単 , は空ストリーム
+  assertEquals("1", '  &[   1,       ]'); // 左単要素
+  assertEquals("2", '  &[    ,   2   ]'); // 右単要素
+  assertEquals("1,2", '&[   1,   2   ]'); // 2項
+  assertEquals("1,2", '&[,,,1,,,,2,,,]'); // 冗長な .
+
+  // 複数行表記でもちゃんと単一のストリームが生成されているか
+  assertEquals(7, `
+    $#[
+      1,
+      2,
+      (
+        3,
+        4,
+        5
+      ),
+      6,
+      (
+      ),
+      7,
+    ]
+  `);
+
+}
+
 // ラムダ式
 {
 
