@@ -178,6 +178,16 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// EFL
+{
+  assertEquals("123abc", "     %>123abc<%                   "); // 文字列を書ける
+  assertEquals("123abc", "     %>12<%= '3a' %>bc<%          "); // 文字列を埋め込むことができる
+  assertEquals("123abc", "     %>12<%= 3 %>abc<%            "); // 文字列以外を埋め込むと文字列化される
+  assertEquals("---1,2,3---", "%>---<%= [1; 2; 3] %>---<%   "); // 配列の埋め込み
+  assertEquals(true, "         %><%= TRUE %><% === 'TRUE'   "); // 要素が埋め込みしかなくても文字列化は行う
+  assertEquals("aaa1bbb2ccc", "%>aaa<%= 1 %>bbb<%= 2 %>ccc<%"); // 複数の埋め込みを含むEFL
+}
+
 // 配列初期化子
 {
   assertEqualsJson([], "                   [                     ]"); // 空配列

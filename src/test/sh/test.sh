@@ -35,6 +35,17 @@ assertEqual 15 "$(  node -e '
   console.log(require("./tmp1.js").main(runtime))
 '  )"
 
+# EFL
+{
+
+  # -e でEFLボディーとして実行
+  assertEqual "aaa1,2,3bbb" "$(  fl9 -e 'aaa<%= [1; 2; 3] %>bbb'  )"
+
+  # fl9e で fl9 -e の短縮形
+  assertEqual "aaa1,2,3bbb" "$(  fl9e 'aaa<%= [1; 2; 3] %>bbb'  )"
+
+}
+
 # console.js
 {
 
