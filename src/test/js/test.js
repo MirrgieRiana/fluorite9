@@ -212,6 +212,25 @@ function assertEqualsJson(expected, src) {
 // 関数呼び出し
 {
 
+  // 基本
+  assertEquals(123, "([    ] ->              123)[    ]"); // 0引数関数の呼び出し
+  assertEquals(200, "([a   ] -> a * 100         )[2   ]"); // 1引数関数の呼び出し
+  assertEquals(230, "([a; b] -> a * 100 + b * 10)[2; 3]"); // 多引数関数の呼び出し
+
+  // 複数行形式での ; を省略した関数呼び出し
+  assertEquals(230, `
+    (a, b -> a * 100 + b * 10)[
+      2
+      3
+    ]
+  `);
+
+  // 名前付き引数
+  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; 3; a : 4  ]"); // 名前付き引数
+  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3  ]"); // 名前付き引数のあとに通常の引数を記述してもよい
+  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3; ]"); // 名前付き引数のあとでは無駄な ; は無視される
+
+  // 配列
   assertEqualsJson([], "                [[]       [  ]               ]"); // 空配列のストリームアクセス
   assertEqualsJson([1, 2, 3], "         [[1; 2; 3][  ]               ]"); // 配列のストリームアクセス
   assertEqualsJson([1, 2, 3, 4, 5, 6], "[[1; 2; 3][  ]; [4; 5; 6][  ]]"); // 配列のストリームアクセス
@@ -381,6 +400,25 @@ function assertEqualsJson(expected, src) {
   assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 4 > 0 != 2 > -5 !== 7 ');
   assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 0 > -5 !== 7 ');
   assertEquals(false, '1 < 2 <= 2 <= 3 < 4  < 5 == 5 > 3  === 3 > 0 != 2 > -5 !== -5');
+
+}
+
+// ラムダ式
+{
+
+  assertEquals(123, "([    ] ->              123)[    ]"); // 引数は0個でもよい
+  assertEquals(200, "([a   ] -> a * 100         )[2   ]"); // 引数は1個でもよい
+  assertEquals(230, "([a; b] -> a * 100 + b * 10)[2; 3]"); // 引数は複数でもよい
+  assertEquals(230, "((a; b) -> a * 100 + b * 10)[2; 3]"); // 引数列は () で囲んでもよい
+  assertEquals(230, "((a, b) -> a * 100 + b * 10)[2; 3]"); // 引数列は , で区切ってもよい
+  assertEquals(230, "( a, b  -> a * 100 + b * 10)[2; 3]"); // 引数列を , で区切るとき、括弧を省略してもよい
+
+  // 複数行関数宣言
+  assertEquals(230, `
+    f : a, b ->
+      a * 100 + b * 10
+    f[2; 3]
+  `);
 
 }
 
