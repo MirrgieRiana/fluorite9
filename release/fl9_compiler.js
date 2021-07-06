@@ -1704,15 +1704,41 @@
       return Unit;
     };
   }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver(name, node) {
+    this.name = name;
+    this.node = node;
+  }
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.$metadata$ = {kind: Kind_CLASS, simpleName: 'Receiver', interfaces: []};
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.component1 = function () {
+    return this.name;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.component2 = function () {
+    return this.node;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.copy_5myqj9$ = function (name, node) {
+    return new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver(name === void 0 ? this.name : name, node === void 0 ? this.node : node);
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.toString = function () {
+    return 'Receiver(name=' + Kotlin.toString(this.name) + (', node=' + Kotlin.toString(this.node)) + ')';
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.name) | 0;
+    result = result * 31 + Kotlin.hashCode(this.node) | 0;
+    return result;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.node, other.node)))));
+  };
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_5(closure$idArgument) {
     return function ($receiver) {
-      return GetterCode_init($receiver.not_pdl1vz$('v' + closure$idArgument));
+      return GetterCode_init($receiver.not_pdl1vz$(closure$idArgument));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$code, closure$idArgument, this$) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$code.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('v' + closure$idArgument + ' = '), closure$code.body), this$.not_pdl1vz$(';')));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$(closure$idArgument + ' = '), closure$code.body), this$.not_pdl1vz$(';')));
       return Unit;
     };
   }
@@ -1743,39 +1769,80 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_30(closure$codeLeft, closure$idSymbol, closure$label, this$, closure$id, closure$idArgument, closure$codeRight) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('const v' + closure$idSymbol + ' = Symbol(' + JSON.stringify(closure$label) + ');'));
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const v' + closure$id + ' = runtime.map('), closure$codeLeft.body), this$.not_pdl1vz$(', {[v' + closure$idSymbol + ']: function(v' + closure$idArgument + ') {')));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('const ' + closure$idSymbol + ' = Symbol(' + JSON.stringify(closure$label) + ');'));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('const ' + closure$id + ' = runtime.map('), closure$codeLeft.body), this$.not_pdl1vz$(', {[' + closure$idSymbol + ']: function(' + closure$idArgument + ') {')));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_16(closure$codeRight, this$));
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('}}[v' + closure$idSymbol + ']);'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('}}[' + closure$idSymbol + ']);'));
       return Unit;
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_63(closure$compiler) {
     return function ($receiver) {
       var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
-      var idArgument = closure$compiler.nextId();
+      var block$result;
+      block$break: do {
+        var $receiver_0 = $receiver.channelContext.value.right;
+        if (isType($receiver_0, equal_greater)) {
+          var value2 = $receiver_0.value;
+          var $receiver_1 = value2.left;
+          if (isType($receiver_1, identifier)) {
+            block$result = new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver($receiver_1.value, value2.right);
+            break block$break;
+          }throw Exception_init('Illegal Operator Argument: ' + value2.left.type + ' => ' + value2.right.type);
+        }block$result = new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver('_', $receiver.channelContext.value.right);
+      }
+       while (false);
+      var tmp$ = block$result;
+      var name = tmp$.component1(), nodeBody = tmp$.component2();
+      var idArgument = 'v' + toString(closure$compiler.nextId());
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
-      closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(idArgument));
-      var result = compile($receiver.channelContext.value.right, closure$compiler_0, getter);
+      closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$(name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(idArgument));
+      var result = compile(nodeBody, closure$compiler_0, getter);
       $this.pop();
       var codeRight = result;
-      var id = closure$compiler.nextId();
-      var idSymbol = closure$compiler.nextId();
+      var id = 'v' + toString(closure$compiler.nextId());
+      var idSymbol = 'v' + toString(closure$compiler.nextId());
       var label = '<PIPE> (<EVAL>:' + $receiver.location.row + ',' + $receiver.location.column + ')';
-      return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_30(codeLeft, idSymbol, label, $receiver, id, idArgument, codeRight)), $receiver.not_pdl1vz$('v' + id));
+      return new GetterCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_30(codeLeft, idSymbol, label, $receiver, id, idArgument, codeRight)), $receiver.not_pdl1vz$(id));
     };
   }
+  function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0(name, node) {
+    this.name = name;
+    this.node = node;
+  }
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.$metadata$ = {kind: Kind_CLASS, simpleName: 'Receiver', interfaces: []};
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.component1 = function () {
+    return this.name;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.component2 = function () {
+    return this.node;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.copy_5myqj9$ = function (name, node) {
+    return new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0(name === void 0 ? this.name : name, node === void 0 ? this.node : node);
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.toString = function () {
+    return 'Receiver(name=' + Kotlin.toString(this.name) + (', node=' + Kotlin.toString(this.node)) + ')';
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.name) | 0;
+    result = result * 31 + Kotlin.hashCode(this.node) | 0;
+    return result;
+  };
+  getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.node, other.node)))));
+  };
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_7(closure$idArgument) {
     return function ($receiver) {
-      return GetterCode_init($receiver.not_pdl1vz$('v' + closure$idArgument));
+      return GetterCode_init($receiver.not_pdl1vz$(closure$idArgument));
     };
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_2(closure$code, closure$idArgument, this$) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$code.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('v' + closure$idArgument + ' = '), closure$code.body), this$.not_pdl1vz$(';')));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$(closure$idArgument + ' = '), closure$code.body), this$.not_pdl1vz$(';')));
       return Unit;
     };
   }
@@ -1798,7 +1865,7 @@
   }
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_17(closure$idArgument, closure$idArgument2, this$, closure$codeRight) {
     return function ($receiver) {
-      $receiver.line_3pad5q$(this$.not_pdl1vz$('let v' + closure$idArgument + ' = v' + closure$idArgument2 + ';'));
+      $receiver.line_3pad5q$(this$.not_pdl1vz$('let ' + closure$idArgument + ' = ' + closure$idArgument2 + ';'));
       $receiver.line_3pe74m$(closure$codeRight.head);
       return Unit;
     };
@@ -1806,7 +1873,7 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_31(closure$codeLeft, closure$idArgument2, this$, closure$idArgument, closure$codeRight) {
     return function ($receiver) {
       $receiver.line_3pe74m$(closure$codeLeft.head);
-      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('for (let v' + closure$idArgument2 + ' of runtime.toStream('), closure$codeLeft.body), this$.not_pdl1vz$(')) {')));
+      $receiver.line_3pad5q$(plus_1(plus_1(this$.not_pdl1vz$('for (let ' + closure$idArgument2 + ' of runtime.toStream('), closure$codeLeft.body), this$.not_pdl1vz$(')) {')));
       $receiver.indent_3vmjfp$(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda_17(closure$idArgument, closure$idArgument2, this$, closure$codeRight));
       $receiver.line_3pad5q$(this$.not_pdl1vz$('}'));
       return Unit;
@@ -1815,15 +1882,30 @@
   function getStandardCompiler$lambda$lambda$lambda$lambda$lambda_64(closure$compiler) {
     return function ($receiver) {
       var codeLeft = compile($receiver.channelContext.value.left, closure$compiler, getter);
-      var idArgument = closure$compiler.nextId();
-      var idArgument2 = closure$compiler.nextId();
+      var block$result;
+      block$break: do {
+        var $receiver_0 = $receiver.channelContext.value.right;
+        if (isType($receiver_0, equal_greater)) {
+          var value2 = $receiver_0.value;
+          var $receiver_1 = value2.left;
+          if (isType($receiver_1, identifier)) {
+            block$result = new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0($receiver_1.value, value2.right);
+            break block$break;
+          }throw Exception_init('Illegal Operator Argument: ' + value2.left.type + ' => ' + value2.right.type);
+        }block$result = new getStandardCompiler$lambda$lambda$lambda$lambda$lambda$Receiver_0('_', $receiver.channelContext.value.right);
+      }
+       while (false);
+      var tmp$ = block$result;
+      var name = tmp$.component1(), nodeBody = tmp$.component2();
+      var idArgument = 'v' + toString(closure$compiler.nextId());
       var $this = closure$compiler.get_ttiokq$(aliases);
       $this.push();
       var closure$compiler_0 = closure$compiler;
-      closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$('_', getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(idArgument));
-      var result = compile($receiver.channelContext.value.right, closure$compiler_0, runner);
+      closure$compiler_0.get_ttiokq$(aliases).invoke_myna1y$(name, getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda_8(idArgument));
+      var result = compile(nodeBody, closure$compiler_0, runner);
       $this.pop();
       var codeRight = result;
+      var idArgument2 = 'v' + toString(closure$compiler.nextId());
       return new RunnerCode(code(getStandardCompiler$lambda$lambda$lambda$lambda$lambda$lambda_31(codeLeft, idArgument2, $receiver, idArgument, codeRight)));
     };
   }
