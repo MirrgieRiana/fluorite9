@@ -491,6 +491,27 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
                 }
             }
 
+            comma {
+                getter {
+                    val codes = channelContext.value.mapNotNull {
+                        it.maybe(void) {
+                            return@mapNotNull null
+                        }
+                        return@mapNotNull it.compile(compiler, getter)
+                    }
+                    val id = "v" + compiler.nextId()
+                    GetterCode(code {
+                        codes.forEach {
+                            line(it.head)
+                        }
+                        line(!"const $id = runtime.createStream([" + codes
+                            .map { it.body }
+                            .reduceOrZero { a, b -> a + !", " + b } + !"]);")
+                    }, !id)
+                }
+            }
+
+
             minus_greater {
                 getter {
 

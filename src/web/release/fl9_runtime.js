@@ -185,6 +185,20 @@
         }
       });
     }
+    createStream(array) {
+      const runtime = this;
+      return new this.Fl9Stream(this, function*() {
+        for (let item of array) {
+          if (item instanceof runtime.Fl9Stream) {
+            for (let item2 of item) {
+              yield item2;
+            }
+          } else {
+            yield item;
+          }
+        }
+      });
+    }
     map(stream, func) {
       stream = this.toStream(stream);
       return new this.Fl9Stream(this, function*() {
