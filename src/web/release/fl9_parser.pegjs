@@ -54,6 +54,24 @@ EmbedString
   / DollarFactor
   )* "\"" { return node("join", main, location()); }
 
+EmbeddedFluorite
+  = "%>" main:(
+      main:(
+        !"<%" main:. { return main; }
+      / "<%%" { return "<%"; }
+      )+ { return node("string", main.join(""), location()); }
+    / "<%=" __ main:Expression __ "%>" { return main; }
+    )* "<%" !("=" / "%") { return node("join", main, location()); }
+
+EmbeddedFluoriteRoot
+  = main:(
+      main:(
+        !"<%" main:. { return main; }
+      / "<%%" { return "<%"; }
+      )+ { return node("string", main.join(""), location()); }
+    / "<%=" __ main:Expression __ "%>" { return main; }
+    )* { return node("join", main, location()); }
+
 Identifier
   = [a-zA-Z_][a-zA-Z_0-9]* { return node("identifier", text(), location()); }
 
@@ -77,14 +95,16 @@ Factor
   = Number
   / String
   / EmbedString
+  / EmbeddedFluorite
   / Identifier
   / Brackets
 
 DollarFactor
-  = "$" main:Number      { return main; }
-  / "$" main:String      { return main; }
-  / "$" main:EmbedString { return main; }
-  / "$" main:Identifier  { return main; }
+  = "$" main:Number           { return main; }
+  / "$" main:String           { return main; }
+  / "$" main:EmbedString      { return main; }
+  / "$" main:EmbeddedFluorite { return main; }
+  / "$" main:Identifier       { return main; }
   / DollarBrackets
 
 Right
