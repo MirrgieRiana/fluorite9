@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec "$(cd "$(dirname "$0")"; pwd)"/fl9 -e "$@"
+exec "$(cd "$(dirname "$0")"; pwd)"/fl9 -e -f "$@"
