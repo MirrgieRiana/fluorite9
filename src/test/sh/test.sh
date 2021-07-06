@@ -42,7 +42,10 @@ assertEqual 15 "$(  node -e '
   assertEqual "aaa1,2,3bbb" "$(  fl9 -e 'aaa<%= [1; 2; 3] %>bbb'  )"
 
   # fl9e で fl9 -e の短縮形
-  assertEqual "aaa1,2,3bbb" "$(  fl9e 'aaa<%= [1; 2; 3] %>bbb'  )"
+  echo '#!/usr/bin/env fl9e' > tmp.fl9e
+  echo 'aaa<%= [1; 2; 3] %>bbb' >> tmp.fl9e
+  chmod +x tmp.fl9e
+  assertEqual "$(echo "aaa1,2,3bbb")" "$(  fl9e tmp.fl9e  )"
 
 }
 
