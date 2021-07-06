@@ -2,8 +2,7 @@ package fl9.operator
 
 import fl9.Location
 import fl9.Node
-
-class Operator<T>(val type: String)
+import fl9.channel.Operator
 
 class EmptyBracketsArgument
 class BracketsArgument(val main: Node)

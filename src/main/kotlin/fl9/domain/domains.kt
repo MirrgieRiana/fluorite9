@@ -3,12 +3,6 @@ package fl9.domain
 import fl9.*
 
 
-abstract class Domain<I, O>(val name: String) {
-    abstract fun createDomainContext(): I
-    open fun getDefault(node: Node, compiler: Compiler): O? = null
-}
-
-
 val getter = object : Domain<GetterContext, GetterCode>("getter") {
     override fun createDomainContext() = GetterContext()
 }

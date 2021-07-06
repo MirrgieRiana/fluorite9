@@ -1,13 +1,15 @@
 package fl9
 
-import fl9.channel.Channel
-import fl9.domain.Domain
-
 class Context<C, DI>(val compiler: Compiler, val location: Location, val channel: C, val domainContext: DI) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
     }
+}
+
+abstract class Domain<I, O>(val name: String) {
+    abstract fun createDomainContext(): I
+    open fun getDefault(node: Node, compiler: Compiler): O? = null
 }
 
 class DomainBundle<I> {
@@ -25,6 +27,10 @@ class DomainBundle<I> {
 
     operator fun <DI, O> get(domain: Domain<DI, O>) = map[domain]?.unsafeCast<Context<I, DI>.() -> O>() // TODO 型安全
 
+}
+
+abstract class Channel<R> {
+    abstract fun createChannel(): R
 }
 
 class Compiler {

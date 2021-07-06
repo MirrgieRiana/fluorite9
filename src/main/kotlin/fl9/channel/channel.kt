@@ -1,18 +1,14 @@
 package fl9.channel
 
+import fl9.Channel
 import fl9.DomainBundle
-import fl9.operator.Operator
 
-abstract class Channel<R> {
-    abstract fun createChannel(): R
+
+val operators = object : Channel<OperatorRegistry>() {
+    override fun createChannel() = OperatorRegistry()
 }
 
-
-val operators = object : Channel<OperatorChannel>() {
-    override fun createChannel() = OperatorChannel()
-}
-
-class OperatorChannel {
+class OperatorRegistry {
 
     private val map = mutableMapOf<String, Any>()
 
@@ -26,14 +22,16 @@ class OperatorChannel {
 
 }
 
+class Operator<I>(val type: String)
+
 class OperatorContext<V>(val value: V)
 
 
-val aliases = object : Channel<AliasChannel>() {
-    override fun createChannel() = AliasChannel()
+val aliases = object : Channel<AliasRegistry>() {
+    override fun createChannel() = AliasRegistry()
 }
 
-class AliasChannel {
+class AliasRegistry {
 
     class Frame(val parent: Frame?) {
 

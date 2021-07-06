@@ -1,9 +1,9 @@
 package fl9
 
+import fl9.channel.Operator
 import fl9.channel.OperatorContext
 import fl9.channel.operators
 import fl9.domain.*
-import fl9.operator.Operator
 
 // NodeクラスはJSが与えるのでメンバメソッドを持てない
 data class Node(val type: String, val value: Any, val location: Location)
@@ -21,7 +21,7 @@ fun <I, O> Node.tryCompile(compiler: Compiler, domain: Domain<I, O>, initializeD
     return run {
         val domainContext = domain.createDomainContext()
         domainContext.initializeDomainContext()
-        val operator = compiler[operators][type].unsafeCast<DomainBundle<OperatorContext<Any>>>() ?: return@run null
+        val operator = compiler[operators][type]?.unsafeCast<DomainBundle<OperatorContext<Any>>>() ?: return@run null // TODO 型安全
         val handler = operator[domain] ?: return@run null
         return@run Context(compiler, location, OperatorContext(value), domainContext).handler()
     } ?: domain.getDefault(this, compiler)
