@@ -1,6 +1,6 @@
 package fl9
 
-class Context<C, DI>(val compiler: Compiler, val location: Location, val channel: C, val domainContext: DI) {
+class Context<C, DI>(val compiler: Compiler, val location: Location, val channelContext: C, val domainContext: DI) {
     operator fun String.not(): SourcedLine {
         if (contains("\n")) throw Exception("SourcedString cannot have line breaks")
         return SourcedLine(listOf(SourcedString(this, location)))
