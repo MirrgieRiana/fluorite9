@@ -633,62 +633,90 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             pipe {
                 getter {
                     val codeLeft = channelContext.value.left.compile(compiler, getter)
-                    val idArgument = compiler.nextId()
+
+                    data class Receiver(val name: String, val node: Node)
+                    val (name, nodeBody) = run {
+                        channelContext.value.right.maybe(equal_greater) { value2 ->
+                            value2.left.maybe(identifier) { name ->
+                                return@run Receiver(name, value2.right)
+                            }
+                            throw Exception("Illegal Operator Argument: ${value2.left.type} => ${value2.right.type}")
+                        }
+                        return@run Receiver("_", channelContext.value.right)
+                    }
+
+                    val idArgument = "v" + compiler.nextId()
+
                     val codeRight = compiler[aliases].stack {
                         compiler[aliases].apply {
-                            "_"  {
-                                getter { GetterCode(!"v$idArgument") }
+                            name {
+                                getter { GetterCode(!idArgument) }
                                 setter {
                                     SetterCode { code ->
                                         RunnerCode(code {
                                             line(code.head)
-                                            line(!"v$idArgument = " + code.body + !";")
+                                            line(!"$idArgument = " + code.body + !";")
                                         })
                                     }
                                 }
                             }
                         }
-                        channelContext.value.right.compile(compiler, getter)
+                        nodeBody.compile(compiler, getter)
                     }
-                    val id = compiler.nextId()
-                    val idSymbol = compiler.nextId()
+
+                    val id = "v" + compiler.nextId()
+                    val idSymbol = "v" + compiler.nextId()
                     val label = "<PIPE> (<EVAL>:${location.row},${location.column})"
                     GetterCode(code {
                         line(codeLeft.head)
-                        line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
-                        line(!"const v$id = runtime.map(" + codeLeft.body + !", {[v$idSymbol]: function(v$idArgument) {")
+                        line(!"const $idSymbol = Symbol(${JSON.stringify(label)});")
+                        line(!"const $id = runtime.map(" + codeLeft.body + !", {[$idSymbol]: function($idArgument) {")
                         indent {
                             line(codeRight.head)
                             line(!"return " + codeRight.body + !";")
                         }
-                        line(!"}}[v$idSymbol]);")
-                    }, !"v$id")
+                        line(!"}}[$idSymbol]);")
+                    }, !id)
                 }
                 runner {
                     val codeLeft = channelContext.value.left.compile(compiler, getter)
-                    val idArgument = compiler.nextId()
-                    val idArgument2 = compiler.nextId()
+
+                    data class Receiver(val name: String, val node: Node)
+                    val (name, nodeBody) = run {
+                        channelContext.value.right.maybe(equal_greater) { value2 ->
+                            value2.left.maybe(identifier) { name ->
+                                return@run Receiver(name, value2.right)
+                            }
+                            throw Exception("Illegal Operator Argument: ${value2.left.type} => ${value2.right.type}")
+                        }
+                        return@run Receiver("_", channelContext.value.right)
+                    }
+
+                    val idArgument = "v" + compiler.nextId()
+
                     val codeRight = compiler[aliases].stack {
                         compiler[aliases].apply {
-                            "_" {
-                                getter { GetterCode(!"v$idArgument") }
+                            name {
+                                getter { GetterCode(!idArgument) }
                                 setter {
                                     SetterCode { code ->
                                         RunnerCode(code {
                                             line(code.head)
-                                            line(!"v$idArgument = " + code.body + !";")
+                                            line(!"$idArgument = " + code.body + !";")
                                         })
                                     }
                                 }
                             }
                         }
-                        channelContext.value.right.compile(compiler, runner)
+                        nodeBody.compile(compiler, runner)
                     }
+
+                    val idArgument2 = "v" + compiler.nextId()
                     RunnerCode(code {
                         line(codeLeft.head)
-                        line(!"for (let v$idArgument2 of runtime.toStream(" + codeLeft.body + !")) {")
+                        line(!"for (let $idArgument2 of runtime.toStream(" + codeLeft.body + !")) {")
                         indent {
-                            line(!"let v$idArgument = v$idArgument2;")
+                            line(!"let $idArgument = $idArgument2;")
                             line(codeRight.head)
                         }
                         line(!"}")
