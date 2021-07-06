@@ -450,4 +450,24 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// パイプ
+{
+
+  // getドメイン
+  assertEquals("", "   &[()   |      _    ]"); // 空ストリーム
+  assertEquals("1", "  &[1    |      _    ]"); // 要素が1個のストリーム
+  assertEquals("1,2", "&[1, 2 |      _    ]"); // 要素が複数のストリーム
+  assertEquals("1,4", "&[1, 2 |      _ * _]"); // 要素に対する演算
+  assertEquals("1,4", "&[1, 2 | a => a * a]"); // 引数名の指定
+
+  // runドメイン
+  // 副作用が1回だけ発生する
+  assertEquals(120, `
+    a : 1
+    1 .. 5 | b => a = a * b
+    a
+  `);
+
+}
+
 console.log("test.js OK");
