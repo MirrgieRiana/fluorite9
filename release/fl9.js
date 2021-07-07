@@ -102,15 +102,30 @@ function main() {
     src = exec;
   }
 
-  const fl9_parser = embedded ? require("fl9_parser_embedded.js") : require("fl9_parser.js");
-  const node = codeInput ? src : nodeInput ? JSON.parse(src) : fl9_parser.parse(src);
+  let node;
+  if (codeInput) {
+    node = src;
+  } else if (nodeInput) {
+    node = JSON.parse(src);
+  } else {
+    const fl9_parser = embedded ? require("fl9_parser_embedded.js") : require("fl9_parser.js");
+    node = fl9_parser.parse(src);
+  }
   if (nodeOutput) {
     console.log(JSON.stringify(node, undefined, "  "));
     return;
   }
 
-  const fl9_compiler = require("fl9_compiler.js");
-  const code = codeInput ? node : fl9_compiler.fl9.getStandardCompiler()(node);
+  let code;
+  if (codeInput) {
+    code = node;
+  } else {
+    const fl9_compiler = require("fl9_compiler.js");
+    const compiler = fl9_compiler.fl9.createCompiler();
+    fl9_compiler.fl9.applyStandardOperatorPlugin(compiler);
+    fl9_compiler.fl9.applyEnglishKeywordPlugin(compiler);
+    code = fl9_compiler.fl9.compile(compiler, node);
+  }
   if (codeOutput) {
     console.log(code);
     return;
