@@ -29,7 +29,10 @@ function compile() {
 
   let code;
   try {
-    code = fl9_compiler.fl9.getStandardCompiler()(node);
+    const compiler = fl9_compiler.fl9.createCompiler();
+    fl9_compiler.fl9.applyStandardOperatorPlugin(compiler);
+    fl9_compiler.fl9.applyEnglishKeywordPlugin(compiler);
+    code = fl9_compiler.fl9.compile(compiler, node);
   } catch (e) {
     console.error(e);
     document.getElementById("code").value = "" + e;

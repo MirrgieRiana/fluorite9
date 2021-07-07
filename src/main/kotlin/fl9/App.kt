@@ -4,10 +4,55 @@ import fl9.channel.*
 import fl9.domain.*
 import fl9.operator.*
 
-fun getStandardCompiler(): Any = { nodeRoot: Node ->
-    val compiler = Compiler()
-    compiler {
+var createCompiler = { Compiler() }
 
+var compile = { compiler: Compiler, node: Node ->
+    val code = node.compile(compiler, getter)
+    val idSymbol = compiler.nextId()
+    val label = "<ROOT> (<EVAL>)"
+    val sourcedFile = code {
+        line("(function(root, factory) {" * nullLocation)
+        indent {
+            line("if (typeof define === \"function\" && define.amd) {" * nullLocation)
+            indent {
+                line("define([\"exports\"], factory);" * nullLocation)
+            }
+            line("} else if (typeof exports === \"object\") {" * nullLocation)
+            indent {
+                line("factory(module.exports);" * nullLocation)
+            }
+            line("} else {" * nullLocation)
+            indent {
+                line("root.fl9_result = factory(typeof fl9_result === \"undefined\" ? {} : fl9_result);" * nullLocation)
+            }
+            line("}" * nullLocation)
+        }
+        line("}(this, function(_) {" * nullLocation)
+        indent {
+            line("\"use strict\";" * nullLocation)
+            line("_.main = (v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
+            indent {
+                line(code.head)
+                line("return " * nullLocation + code.body + ";" * nullLocation)
+            }
+            line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}));" * nullLocation)
+            line("return _;" * nullLocation)
+        }
+        line("}));" * nullLocation)
+    }
+    sourcedFile.sourcedLines.joinToString("") { sourcedLine ->
+        sourcedLine.sourcesStrings.joinToString("") { sourcedString ->
+            //if (sourcedString.location != nullLocation) {
+            //    "/* R:${sourcedString.location.row} C:${sourcedString.location.column} */${sourcedString.string}"
+            //} else {
+            sourcedString.string
+            //}
+        } + "\n"
+    }
+}
+
+var applyStandardOperatorPlugin = { compiler: Compiler ->
+    compiler {
         operators {
 
             void {
@@ -762,7 +807,11 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             }
 
         }
+    }
+}
 
+var applyEnglishKeywordPlugin = { compiler: Compiler ->
+    compiler {
         aliases {
             "TRUE" { getter { GetterCode(!"true") } }
             "FALSE" { getter { GetterCode(!"false") } }
@@ -777,49 +826,5 @@ fun getStandardCompiler(): Any = { nodeRoot: Node ->
             "OPERATOR_MULTIPLY" { getter { GetterCode(!"(runtime.symbolMultiply)") } }
             "OPERATOR_DIVIDE" { getter { GetterCode(!"(runtime.symbolDivide)") } }
         }
-
-    }
-
-    val code = nodeRoot.compile(compiler, getter)
-    val idSymbol = compiler.nextId()
-    val label = "<ROOT> (<EVAL>)"
-    val sourcedFile = code {
-        line("(function(root, factory) {" * nullLocation)
-        indent {
-            line("if (typeof define === \"function\" && define.amd) {" * nullLocation)
-            indent {
-                line("define([\"exports\"], factory);" * nullLocation)
-            }
-            line("} else if (typeof exports === \"object\") {" * nullLocation)
-            indent {
-                line("factory(module.exports);" * nullLocation)
-            }
-            line("} else {" * nullLocation)
-            indent {
-                line("root.fl9_result = factory(typeof fl9_result === \"undefined\" ? {} : fl9_result);" * nullLocation)
-            }
-            line("}" * nullLocation)
-        }
-        line("}(this, function(_) {" * nullLocation)
-        indent {
-            line("\"use strict\";" * nullLocation)
-            line("_.main = (v$idSymbol => ({[v$idSymbol]: function(runtime) {" * nullLocation)
-            indent {
-                line(code.head)
-                line("return " * nullLocation + code.body + ";" * nullLocation)
-            }
-            line("}})[v$idSymbol])(Symbol(${JSON.stringify(label)}));" * nullLocation)
-            line("return _;" * nullLocation)
-        }
-        line("}));" * nullLocation)
-    }
-    sourcedFile.sourcedLines.joinToString("") { sourcedLine ->
-        sourcedLine.sourcesStrings.joinToString("") { sourcedString ->
-            //if (sourcedString.location != nullLocation) {
-            //    "/* R:${sourcedString.location.row} C:${sourcedString.location.column} */${sourcedString.string}"
-            //} else {
-            sourcedString.string
-            //}
-        } + "\n"
     }
 }
