@@ -3,6 +3,14 @@
 
 # fluorite9(fl9) - Symbolic Programming Language for One-liner
 
+# Browser Version
+
+### Online fluorite9 Editor
+
+https://mirrgieriana.github.io/fluorite9/release/editor.html
+
+# Console Version
+
 ## Installation
 
 ### 1. Environment
@@ -43,6 +51,6 @@ $ fl9 '1 + 2 + 3'
 6
 ```
 
-# Documents
+# Documentation
 
 See [fluorite9 Portal](https://mirrgieriana.github.io/fluorite9/).
