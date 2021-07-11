@@ -263,8 +263,8 @@ function assertEqualsJson(expected, src) {
   assertEquals(0, '   +UNDEFINED '); // UNDEFINEDの数値化
   assertEquals(0, '   +     NULL '); // NULLの数値化
 
-  assertEquals(50, `  o : {(OPERATOR_TO_NUMBER) = _ ->  50   }; +o `); // 数値化のオーバーライド
-  assertEquals(-1.5, `o : {(OPERATOR_TO_NUMBER) = _ -> "-1.5"}; +o `); // 数値化のオーバーライドの結果は数値化される
+  assertEquals(50, '  o : {(OPERATOR_TO_NUMBER) = _ ->  50   }; +o'); // 数値化のオーバーライド
+  assertEquals(-1.5, 'o : {(OPERATOR_TO_NUMBER) = _ -> "-1.5"}; +o'); // 数値化のオーバーライドの結果は数値化される
 }
 
 // JSONエンコード・デコード
