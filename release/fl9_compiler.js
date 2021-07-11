@@ -2214,38 +2214,52 @@
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_6($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolToString)'));
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolToNumber)'));
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_6($receiver) {
     $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_6);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_7($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolAdd)'));
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolToString)'));
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_7($receiver) {
     $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_7);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_8($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolSubtract)'));
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolToBoolean)'));
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_8($receiver) {
     $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_8);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_9($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolMultiply)'));
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolAdd)'));
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_9($receiver) {
     $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_9);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_10($receiver) {
-    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolDivide)'));
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolSubtract)'));
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_10($receiver) {
     $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_10);
+    return Unit;
+  }
+  function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_11($receiver) {
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolMultiply)'));
+  }
+  function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_11($receiver) {
+    $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_11);
+    return Unit;
+  }
+  function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_12($receiver) {
+    return GetterCode_init($receiver.not_pdl1vz$('(runtime.symbolDivide)'));
+  }
+  function applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_12($receiver) {
+    $receiver.invoke_wbj58y$(getter, applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda$lambda_12);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda$lambda($receiver) {
@@ -2256,11 +2270,13 @@
     $receiver.invoke_myna1y$('INFINITY', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_3);
     $receiver.invoke_myna1y$('UNDEFINED', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_4);
     $receiver.invoke_myna1y$('THROW', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_5);
-    $receiver.invoke_myna1y$('OPERATOR_TO_STRING', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_6);
-    $receiver.invoke_myna1y$('OPERATOR_ADD', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_7);
-    $receiver.invoke_myna1y$('OPERATOR_SUBTRACT', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_8);
-    $receiver.invoke_myna1y$('OPERATOR_MULTIPLY', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_9);
-    $receiver.invoke_myna1y$('OPERATOR_DIVIDE', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_10);
+    $receiver.invoke_myna1y$('OPERATOR_TO_NUMBER', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_6);
+    $receiver.invoke_myna1y$('OPERATOR_TO_STRING', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_7);
+    $receiver.invoke_myna1y$('OPERATOR_TO_BOOLEAN', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_8);
+    $receiver.invoke_myna1y$('OPERATOR_ADD', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_9);
+    $receiver.invoke_myna1y$('OPERATOR_SUBTRACT', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_10);
+    $receiver.invoke_myna1y$('OPERATOR_MULTIPLY', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_11);
+    $receiver.invoke_myna1y$('OPERATOR_DIVIDE', applyEnglishKeywordPlugin$lambda$lambda$lambda$lambda_12);
     return Unit;
   }
   function applyEnglishKeywordPlugin$lambda$lambda($receiver) {
