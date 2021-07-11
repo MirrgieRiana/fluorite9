@@ -21,5 +21,6 @@
     });
     return object;
   };
+
   return _;
 }));
