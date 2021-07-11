@@ -22,6 +22,13 @@
       this._runtime = runtime;
       this._generator = generator;
     }
+    [symbolToNumber]() {
+      let i = 0;
+      for (let item of this) {
+        i += this._runtime.toNumber(item);
+      }
+      return i;
+    }
     [symbolToString]() {
       let string = "";
       let first = true;
@@ -34,6 +41,13 @@
         string += this._runtime.toString(item);
       }
       return string;
+    }
+    [symbolToBoolean]() {
+      let b = false;
+      for (let item of this) {
+        b ||= this._runtime.toBoolean(item);
+      }
+      return b;
     }
     [Symbol.iterator]() {
       return this._generator();

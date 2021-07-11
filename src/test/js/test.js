@@ -255,16 +255,36 @@ function assertEqualsJson(expected, src) {
 
 // 数値化
 {
-  assertEquals(1, '   +        1 '); // 数値の数値化
-  assertEquals(1.5, ' +     "1.5"'); // 文字列の数値化
-  assertEquals(-1.5, '+    "-1.5"'); // 文字列の数値化
-  assertEquals(1, '   +     TRUE '); // 論理値の数値化
-  assertEquals(0, '   +    FALSE '); // 論理値の数値化
-  assertEquals(0, '   +UNDEFINED '); // UNDEFINEDの数値化
-  assertEquals(0, '   +     NULL '); // NULLの数値化
+  assertEquals(1, '   +        1 '); // 数値
+  assertEquals(1.5, ' +     "1.5"'); // 文字列
+  assertEquals(-1.5, '+    "-1.5"'); // 文字列
+  assertEquals(1, '   +     TRUE '); // 論理値
+  assertEquals(0, '   +    FALSE '); // 論理値
+  assertEquals(0, '   +UNDEFINED '); // UNDEFINED
+  assertEquals(0, '   +     NULL '); // NULL
 
-  assertEquals(50, '  o : {(OPERATOR_TO_NUMBER) = _ ->  50   }; +o'); // 数値化のオーバーライド
-  assertEquals(-1.5, 'o : {(OPERATOR_TO_NUMBER) = _ -> "-1.5"}; +o'); // 数値化のオーバーライドの結果は数値化される
+  assertEquals(6, '+(   1, 2,  3 )'); // ストリーム
+  assertEquals(6, '+(TRUE, 2, "3")'); // 不一致型のストリーム
+  assertEquals(0, '+(            )'); // 空ストリーム
+
+  assertEquals(50, '  o : {(OPERATOR_TO_NUMBER) = _ ->  50   }; +o'); // オーバーライド
+  assertEquals(-1.5, 'o : {(OPERATOR_TO_NUMBER) = _ -> "-1.5"}; +o'); // オーバーライドの結果は数値化される
+}
+
+// 文字列化
+{
+  assertEquals("a\nb\nc", '   &(  "a", "b", "c")'); // ストリーム
+  assertEquals("TRUE\n2\n3", '&(TRUE ,  2 , "3")'); // 不一致型のストリーム
+  assertEquals("", '          &(               )'); // 空ストリーム
+}
+
+// 論理値化
+{
+  assertEquals(false, '?(FALSE, FALSE, FALSE )'); // ストリーム
+  assertEquals(true, ' ?(FALSE,  TRUE, FALSE )'); // ストリーム
+  assertEquals(true, ' ?( TRUE,  TRUE,  TRUE )'); // ストリーム
+  assertEquals(true, ' ?( TRUE,     2,    "3")'); // 不一致型のストリーム
+  assertEquals(false, '?(                    )'); // 空ストリーム
 }
 
 // JSONエンコード・デコード
