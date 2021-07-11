@@ -2,12 +2,23 @@ import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    base
-    id("kotlin2js") version "1.3.30"
-    id("kotlin-dce-js") version "1.5.20"
+    //base
+    kotlin("js") version "1.5.20"
+    //kotlin("kotlin-dce-js") version "1.5.20"
     //id("org.jetbrains.kotlin.js") version "1.3.40"
 }
 
+kotlin {
+    js {
+        browser {
+
+        }
+    }
+}
+
+
+/*
+*/
 repositories {
     mavenCentral()
 }
@@ -26,12 +37,12 @@ sourceSets {
 
 tasks {
 
-    "compileKotlin2Js"(Kotlin2JsCompile::class) {
+    "compileKotlinJs"(Kotlin2JsCompile::class) {
         kotlinOptions {
             moduleKind = "umd" //"plain", "amd", "commonjs", "umd"
             sourceMap = true
             sourceMapEmbedSources = "always"
-            outputFile = "${buildDir.path}/compileKotlin2Js/fl9_compiler.js"
+            outputFile = "${buildDir.path}/compileKotlinJs/fl9_compiler.js"
         }
     }
 
@@ -47,17 +58,16 @@ tasks {
 
 }
 
-(tasks["runDceKotlinJs"] as KotlinJsDce).apply {
+(tasks["processDceKotlinJs"] as KotlinJsDce).apply {
     keep("fl9_compiler.fl9")
 }
 
 afterEvaluate {
-    tasks["build"].dependsOn("runDceKotlinJs")
+    tasks["build"].dependsOn("processDceKotlinJs")
     tasks["build"].dependsOn("copyWeb")
-    tasks["copyMinifiedFiles"].dependsOn("runDceKotlinJs")
+    tasks["copyMinifiedFiles"].dependsOn("processDceKotlinJs")
     tasks["build"].dependsOn("copyMinifiedFiles")
 }
-
 
 // apply false
 //id("org.jetbrains.kotlin.js") version "1.3.40"

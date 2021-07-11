@@ -1,4 +1,4 @@
-
+/*
 pluginManagement {
     repositories {
         gradlePluginPortal() //muss angegeben werden
@@ -16,3 +16,4 @@ pluginManagement {
         }
     }
 }
+*/
