@@ -820,7 +820,9 @@ var applyEnglishKeywordPlugin = { compiler: Compiler ->
             "INFINITY" { getter { GetterCode(!"Infinity") } }
             "UNDEFINED" { getter { GetterCode(!"undefined") } }
             "THROW" { getter { GetterCode(!"(message => { throw new Error(runtime.toString(message)); })") } }
+            "OPERATOR_TO_NUMBER" { getter { GetterCode(!"(runtime.symbolToNumber)") } }
             "OPERATOR_TO_STRING" { getter { GetterCode(!"(runtime.symbolToString)") } }
+            "OPERATOR_TO_BOOLEAN" { getter { GetterCode(!"(runtime.symbolToBoolean)") } }
             "OPERATOR_ADD" { getter { GetterCode(!"(runtime.symbolAdd)") } }
             "OPERATOR_SUBTRACT" { getter { GetterCode(!"(runtime.symbolSubtract)") } }
             "OPERATOR_MULTIPLY" { getter { GetterCode(!"(runtime.symbolMultiply)") } }

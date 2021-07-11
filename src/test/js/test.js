@@ -253,6 +253,20 @@ function assertEqualsJson(expected, src) {
   assertEquals(123, "o : {v = 100; m = _, b, c -> _.v + b + c}; o::m[20; 3]"); // 2個の引数を受け取るメソッド
 }
 
+// 数値化
+{
+  assertEquals(1, '   +        1 '); // 数値の数値化
+  assertEquals(1.5, ' +     "1.5"'); // 文字列の数値化
+  assertEquals(-1.5, '+    "-1.5"'); // 文字列の数値化
+  assertEquals(1, '   +     TRUE '); // 論理値の数値化
+  assertEquals(0, '   +    FALSE '); // 論理値の数値化
+  assertEquals(0, '   +UNDEFINED '); // UNDEFINEDの数値化
+  assertEquals(0, '   +     NULL '); // NULLの数値化
+
+  assertEquals(50, `  o : {(OPERATOR_TO_NUMBER) = _ ->  50   }; +o `); // 数値化のオーバーライド
+  assertEquals(-1.5, `o : {(OPERATOR_TO_NUMBER) = _ -> "-1.5"}; +o `); // 数値化のオーバーライドの結果は数値化される
+}
+
 // JSONエンコード・デコード
 {
   assertEquals('1', '$&1'); // 数値のJSON化

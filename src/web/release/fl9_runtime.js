@@ -9,11 +9,13 @@
 }(this, function(_) {
   "use strict";
 
-  const symbolToString = Symbol("fl9ToString");
-  const symbolAdd = Symbol("fl9Add");
-  const symbolSubtract = Symbol("fl9Subtract");
-  const symbolMultiply = Symbol("fl9Multiply");
-  const symbolDivide = Symbol("fl9Divide");
+  const symbolToNumber = Symbol("fl9.symbolToNumber");
+  const symbolToString = Symbol("fl9.symbolToString");
+  const symbolToBoolean = Symbol("fl9.symbolToBoolean");
+  const symbolAdd = Symbol("fl9.symbolAdd");
+  const symbolSubtract = Symbol("fl9.symbolSubtract");
+  const symbolMultiply = Symbol("fl9.symbolMultiply");
+  const symbolDivide = Symbol("fl9.symbolDivide");
 
   class Fl9Stream {
     constructor(runtime, generator) {
@@ -82,25 +84,46 @@
       if (typeof value === "number") return value;
       if (typeof value === "string") return parseFloat(value);
       if (typeof value === "boolean") return value ? 1 : 0;
+
       if (value === undefined) return 0;
       if (value === null) return 0;
+
+      if (typeof value === "object") {
+        if (value[symbolToNumber] !== undefined) return this.toNumber(value[symbolToNumber]());
+        throw new Error("Illegal Action: toNumber(" + value + ")");
+      }
+
       throw new Error("Illegal Action: toNumber(" + value + ")");
     }
     toString(value) {
       if (typeof value === "string") return value;
       if (typeof value === "number") return "" + value;
       if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
+
       if (value === undefined) return "UNDEFINED";
       if (value === null) return "NULL";
-      if (value instanceof Array) return value.map(item => this.toString(item)).join(",");
-      if (typeof value === "object" && value[symbolToString] !== undefined) return value[symbolToString]();
-      if (typeof value === "object") return Object.getOwnPropertyNames(value).map(name => `${name}:${this.toString(value[name])};`).join("");
+
+      if (typeof value === "object") {
+        if (value[symbolToString] !== undefined) return this.toString(value[symbolToString]());
+        if (value instanceof Array) return value.map(item => this.toString(item)).join(",");
+        return Object.getOwnPropertyNames(value).map(name => `${name}:${this.toString(value[name])};`).join("");
+      }
+
       throw new Error("Illegal Action: toString(" + value + ")");
     }
     toBoolean(value) {
       if (typeof value === "boolean") return value;
       if (typeof value === "number") return value !== 0;
       if (typeof value === "string") return value !== "";
+
+      if (value === undefined) return false;
+      if (value === null) return false;
+
+      if (typeof value === "object") {
+        if (value[symbolToBoolean] !== undefined) return this.toBoolean(value[symbolToBoolean]());
+        throw new Error("Illegal Action: toBoolean(" + value + ")");
+      }
+
       throw new Error("Illegal Action: toBoolean(" + value + ")");
     }
 
@@ -209,7 +232,9 @@
     }
 
   }
+  Runtime.prototype.symbolToNumber = symbolToNumber;
   Runtime.prototype.symbolToString = symbolToString;
+  Runtime.prototype.symbolToBoolean = symbolToBoolean;
   Runtime.prototype.symbolAdd = symbolAdd;
   Runtime.prototype.symbolSubtract = symbolSubtract;
   Runtime.prototype.symbolMultiply = symbolMultiply;
