@@ -52,7 +52,7 @@ tasks {
     }
 
     register<Copy>("copyMinifiedFiles") {
-        from("${buildDir.path}/kotlin-js-min/main")
+        from(project.tasks["processDceKotlinJs"].outputs)
         into(file("${buildDir.path}/web/release"))
     }
 
