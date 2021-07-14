@@ -13,7 +13,7 @@
   _.main = function(runtime) {
     const object = Object.create(null);
     object.IN = new runtime.Fl9Stream(runtime, function*() {
-      const lines = fs.readFileSync(0, "utf8").split(/\r\n|\r|\n/);
+      const lines = fs.readFileSync(process.stdin.fd, "utf8").split(/\r\n|\r|\n/);
       if (lines[lines.length - 1] === "") lines.pop();
       for (let line of lines) {
         yield line;
