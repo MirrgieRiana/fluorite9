@@ -53,7 +53,7 @@
     [symbolToBoolean]() {
       let b = false;
       for (let item of this) {
-        b ||= this._runtime.toBoolean(item);
+        b = b || this._runtime.toBoolean(item);
       }
       return b;
     }
