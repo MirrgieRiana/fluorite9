@@ -17,10 +17,25 @@
   const symbolMultiply = Symbol("fl9.symbolMultiply");
   const symbolDivide = Symbol("fl9.symbolDivide");
 
+  const theVoid = {
+   [symbolToString]: () => { throw new Error("Void access"); },
+   [symbolAdd]: () => { throw new Error("Void access"); },
+   [symbolSubtract]: () => { throw new Error("Void access"); },
+   [symbolMultiply]: () => { throw new Error("Void access"); },
+   [symbolDivide]: () => { throw new Error("Void access"); },
+ };
+
   class Fl9Stream {
     constructor(runtime, generator) {
       this._runtime = runtime;
       this._generator = generator;
+    }
+    [symbolToNumber]() {
+      let i = 0;
+      for (let item of this) {
+        i += this._runtime.toNumber(item);
+      }
+      return i;
     }
     [symbolToString]() {
       let string = "";
@@ -34,6 +49,13 @@
         string += this._runtime.toString(item);
       }
       return string;
+    }
+    [symbolToBoolean]() {
+      let b = false;
+      for (let item of this) {
+        b = b || this._runtime.toBoolean(item);
+      }
+      return b;
     }
     [Symbol.iterator]() {
       return this._generator();
@@ -53,13 +75,7 @@
       return new this.Fl9Stream(this, function*() { });
     }
     getVoid() {
-      return {
-        [symbolToString]: () => { throw new Error("Void access"); },
-        [symbolAdd]: () => { throw new Error("Void access"); },
-        [symbolSubtract]: () => { throw new Error("Void access"); },
-        [symbolMultiply]: () => { throw new Error("Void access"); },
-        [symbolDivide]: () => { throw new Error("Void access"); },
-      };
+      return theVoid;
     }
 
     get(name) {
