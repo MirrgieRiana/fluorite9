@@ -63,6 +63,15 @@ assertEqual 15 "$(  node -e '
   # 末尾に改行がなくてもよい
   assertEqual 2 "$(  { echo "a"; echo -n "b"; } | fl9 '[IN].$#' )"
 
+  # INB
+  assertEqual "52,10" "$(  echo "4" | fl9 'INB' )"
+
+  # OUTB
+  assertEqual "4" "$(  fl9 'OUTB[[52, 10]];' )"
+
+  # OUTBで渡してINBで受け取っても同じ
+  assertEqual "12345" "$(  echo "12345" | fl9 'INB | OUTB[_];'  )"
+
 }
 
 echo "test.sh OK"
