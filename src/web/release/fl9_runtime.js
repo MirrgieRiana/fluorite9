@@ -17,6 +17,14 @@
   const symbolMultiply = Symbol("fl9.symbolMultiply");
   const symbolDivide = Symbol("fl9.symbolDivide");
 
+  const theVoid = {
+   [symbolToString]: () => { throw new Error("Void access"); },
+   [symbolAdd]: () => { throw new Error("Void access"); },
+   [symbolSubtract]: () => { throw new Error("Void access"); },
+   [symbolMultiply]: () => { throw new Error("Void access"); },
+   [symbolDivide]: () => { throw new Error("Void access"); },
+ };
+
   class Fl9Stream {
     constructor(runtime, generator) {
       this._runtime = runtime;
@@ -67,13 +75,7 @@
       return new this.Fl9Stream(this, function*() { });
     }
     getVoid() {
-      return {
-        [symbolToString]: () => { throw new Error("Void access"); },
-        [symbolAdd]: () => { throw new Error("Void access"); },
-        [symbolSubtract]: () => { throw new Error("Void access"); },
-        [symbolMultiply]: () => { throw new Error("Void access"); },
-        [symbolDivide]: () => { throw new Error("Void access"); },
-      };
+      return theVoid;
     }
 
     get(name) {
