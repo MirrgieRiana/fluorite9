@@ -4,7 +4,7 @@ import fl9.Location
 import fl9.Node
 import fl9.channel.Operator
 
-class Formatter(val width: Int, val zero: Boolean)
+class Formatter(val width: Int?, val zero: Boolean)
 
 class EmptyFormattedBracketsArgument(val formatter: Formatter)
 class FormattedBracketsArgument(val formatter: Formatter, val main: Node)
