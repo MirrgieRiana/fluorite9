@@ -46,6 +46,7 @@ tasks {
     }
 
     register<Copy>("copyMinifiedFiles") {
+        dependsOn("processDceKotlinJs")
         from(project.tasks["processDceKotlinJs"].outputs)
         into(file("${buildDir.path}/web/release"))
     }
@@ -59,6 +60,5 @@ tasks {
 afterEvaluate {
     tasks["build"].dependsOn("processDceKotlinJs")
     tasks["build"].dependsOn("copyWeb")
-    tasks["copyMinifiedFiles"].dependsOn("processDceKotlinJs")
     tasks["build"].dependsOn("copyMinifiedFiles")
 }
