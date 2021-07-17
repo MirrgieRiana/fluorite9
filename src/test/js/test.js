@@ -217,10 +217,11 @@ function assertEqualsJson(expected, src) {
 
 // フォーマット
 {
-  assertEquals("[12]", '     "[$%s( 12 )]"'); // 何もしないフォーマッター
-  assertEquals("[   12]", ' "[$%5s( 12 )]"'); // 5桁埋めフォーマッター
-  assertEquals("[00012]", '"[$%05s( 12 )]"'); // 0埋め
-  assertEquals("[000ab]", '"[$%05s("ab")]"'); // 文字列もOK
+  assertEquals("[12]", '      "[$%s(     12 )]"'); // 何もしないフォーマッター
+  assertEquals("[   12]", '  "[$%5s(     12 )]"'); // 5桁埋めフォーマッター
+  assertEquals("[00012]", ' "[$%05s(     12 )]"'); // 0埋め
+  assertEquals("[000ab]", ' "[$%05s(    "ab")]"'); // 文字列もOK
+  assertEquals("[123456]", ' "[$%5s( 123456 )]"'); // 溢れた場合は単に埋め込む
 
   assertEquals("12", '$%s(12)'); // 中身が数値で特にフォーマットする内容がなくても文字列化は行う
 }
