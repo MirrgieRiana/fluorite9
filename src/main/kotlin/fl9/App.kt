@@ -185,6 +185,23 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
             }
             empty_dollar_round { getter { GetterCode(!"(runtime.getEmpty())") } }
             dollar_round { getter { compiler[aliases].stack { channelContext.value.main.compile(compiler, getter) } } }
+            formatted_dollar_round {
+                getter {
+                    val formatter = channelContext.value.formatter
+                    val code = compiler[aliases].stack { channelContext.value.main.compile(compiler, getter) }
+                    val idString = "v" + compiler.nextId()
+                    val id = "v" + compiler.nextId()
+                    GetterCode(code {
+                        line(code.head)
+                        line(!"const $idString = runtime.toString(" + code.body + !");")
+                        if (formatter.width != null) {
+                            line(!"const $id = ${if (formatter.zero) "\"0\"" else "\" \""}.repeat(Math.max(${formatter.width} - $idString.length, 0)) + $idString;")
+                        } else {
+                            line(!"const $id = $idString;")
+                        }
+                    }, !id)
+                }
+            }
 
             period {
                 getter {
