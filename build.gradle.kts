@@ -58,7 +58,6 @@ tasks {
 }
 
 afterEvaluate {
-    tasks["build"].dependsOn("processDceKotlinJs")
     tasks["build"].dependsOn("copyWeb")
     tasks["build"].dependsOn("copyMinifiedFiles")
 }
