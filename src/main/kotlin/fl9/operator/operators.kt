@@ -4,6 +4,10 @@ import fl9.Location
 import fl9.Node
 import fl9.channel.Operator
 
+class Formatter(val width: Int, val zero: Boolean)
+
+class EmptyFormattedBracketsArgument(val formatter: Formatter)
+class FormattedBracketsArgument(val formatter: Formatter, val main: Node)
 class EmptyBracketsArgument
 class BracketsArgument(val main: Node)
 class RightEmptyBracketsArgument(val left: Node)
@@ -21,11 +25,17 @@ val join = Operator<Array<Node>>("join")
 val identifier = Operator<String>("identifier")
 
 val empty_round = Operator<EmptyBracketsArgument>("empty_round")
-val round = Operator<BracketsArgument>("round")
 val empty_square = Operator<EmptyBracketsArgument>("empty_square")
-val square = Operator<BracketsArgument>("square")
 val empty_curly = Operator<EmptyBracketsArgument>("empty_curly")
+val round = Operator<BracketsArgument>("round")
+val square = Operator<BracketsArgument>("square")
 val curly = Operator<BracketsArgument>("curly")
+val empty_formatted_round = Operator<EmptyFormattedBracketsArgument>("empty_formatted_round")
+val empty_formatted_square = Operator<EmptyFormattedBracketsArgument>("empty_formatted_square")
+val empty_formatted_curly = Operator<EmptyFormattedBracketsArgument>("empty_formatted_curly")
+val formatted_round = Operator<FormattedBracketsArgument>("formatted_round")
+val formatted_square = Operator<FormattedBracketsArgument>("formatted_square")
+val formatted_curly = Operator<FormattedBracketsArgument>("formatted_curly")
 
 val empty_dollar_round = Operator<EmptyBracketsArgument>("empty_dollar_round")
 val dollar_round = Operator<BracketsArgument>("dollar_round")
