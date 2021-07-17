@@ -110,6 +110,7 @@ Factor
   / EmbeddedFluorite
   / Identifier
   / Brackets
+  / DollarBrackets
 
 DollarFactor
   = "$" main:Number           { return main; }
