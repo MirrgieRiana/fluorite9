@@ -51,6 +51,25 @@ tasks {
         into(file("${buildDir.path}/web/release"))
     }
 
+    register<Exec>("installNpms") {
+        dependsOn("copyWeb")
+        workingDir = file("${buildDir.path}/web/release")
+        executable = "bash"
+        args("make.sh")
+    }
+
+    register<Task>("buildWeb") {
+        dependsOn("copyWeb")
+        dependsOn("copyMinifiedFiles")
+        dependsOn("installNpms")
+    }
+
+    register<Exec>("testWeb") {
+        dependsOn("buildWeb")
+        executable = "bash"
+        args("test.sh")
+    }
+
 }
 
 (tasks["processDceKotlinJs"] as KotlinJsDce).apply {
@@ -58,6 +77,6 @@ tasks {
 }
 
 afterEvaluate {
-    tasks["build"].dependsOn("copyWeb")
-    tasks["build"].dependsOn("copyMinifiedFiles")
+    tasks["build"].dependsOn("buildWeb")
+    tasks["test"].dependsOn("testWeb")
 }

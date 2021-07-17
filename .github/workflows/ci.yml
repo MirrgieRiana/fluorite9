@@ -24,13 +24,8 @@ jobs:
       - name: Build
         run: bash gradlew build
 
-      - name: Compile
-        run: |
-          cd build/web/release
-          bash make.sh
-
       - name: Test
-        run: bash test.sh
+        run: bash gradlew test
 
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v3
