@@ -141,10 +141,14 @@ function main() {
     const exports = {};
     const module = {exports: {}};
     eval(code);
-    result = runtime.toString(module.exports.main(runtime));
+    result = module.exports.main(runtime);
   }
 
-  console.log(result);
+  if (result !== runtime.getVoid()) {
+    for (let item of runtime.toStream(result)) {
+      console.log(runtime.toString(item));
+    }
+  }
 
 }
 main();

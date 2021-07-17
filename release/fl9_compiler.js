@@ -2711,6 +2711,20 @@
     this.comparator = comparator;
   }
   ComparatorCode.$metadata$ = {kind: Kind_CLASS, simpleName: 'ComparatorCode', interfaces: []};
+  function Formatter(width, zero) {
+    this.width = width;
+    this.zero = zero;
+  }
+  Formatter.$metadata$ = {kind: Kind_CLASS, simpleName: 'Formatter', interfaces: []};
+  function EmptyFormattedBracketsArgument(formatter) {
+    this.formatter = formatter;
+  }
+  EmptyFormattedBracketsArgument.$metadata$ = {kind: Kind_CLASS, simpleName: 'EmptyFormattedBracketsArgument', interfaces: []};
+  function FormattedBracketsArgument(formatter, main) {
+    this.formatter = formatter;
+    this.main = main;
+  }
+  FormattedBracketsArgument.$metadata$ = {kind: Kind_CLASS, simpleName: 'FormattedBracketsArgument', interfaces: []};
   function EmptyBracketsArgument() {
   }
   EmptyBracketsArgument.$metadata$ = {kind: Kind_CLASS, simpleName: 'EmptyBracketsArgument', interfaces: []};
@@ -2754,11 +2768,17 @@
   var join;
   var identifier;
   var empty_round;
-  var round;
   var empty_square;
-  var square;
   var empty_curly;
+  var round;
+  var square;
   var curly;
+  var empty_formatted_round;
+  var empty_formatted_square;
+  var empty_formatted_curly;
+  var formatted_round;
+  var formatted_square;
+  var formatted_curly;
   var empty_dollar_round;
   var dollar_round;
   var empty_dollar_square;
@@ -2901,6 +2921,9 @@
   }});
   package$domain.ComparatorCode = ComparatorCode;
   var package$operator = package$fl9.operator || (package$fl9.operator = {});
+  package$operator.Formatter = Formatter;
+  package$operator.EmptyFormattedBracketsArgument = EmptyFormattedBracketsArgument;
+  package$operator.FormattedBracketsArgument = FormattedBracketsArgument;
   package$operator.EmptyBracketsArgument = EmptyBracketsArgument;
   package$operator.BracketsArgument = BracketsArgument;
   package$operator.RightEmptyBracketsArgument = RightEmptyBracketsArgument;
@@ -2927,20 +2950,38 @@
   Object.defineProperty(package$operator, 'empty_round', {get: function () {
     return empty_round;
   }});
-  Object.defineProperty(package$operator, 'round', {get: function () {
-    return round;
-  }});
   Object.defineProperty(package$operator, 'empty_square', {get: function () {
     return empty_square;
-  }});
-  Object.defineProperty(package$operator, 'square', {get: function () {
-    return square;
   }});
   Object.defineProperty(package$operator, 'empty_curly', {get: function () {
     return empty_curly;
   }});
+  Object.defineProperty(package$operator, 'round', {get: function () {
+    return round;
+  }});
+  Object.defineProperty(package$operator, 'square', {get: function () {
+    return square;
+  }});
   Object.defineProperty(package$operator, 'curly', {get: function () {
     return curly;
+  }});
+  Object.defineProperty(package$operator, 'empty_formatted_round', {get: function () {
+    return empty_formatted_round;
+  }});
+  Object.defineProperty(package$operator, 'empty_formatted_square', {get: function () {
+    return empty_formatted_square;
+  }});
+  Object.defineProperty(package$operator, 'empty_formatted_curly', {get: function () {
+    return empty_formatted_curly;
+  }});
+  Object.defineProperty(package$operator, 'formatted_round', {get: function () {
+    return formatted_round;
+  }});
+  Object.defineProperty(package$operator, 'formatted_square', {get: function () {
+    return formatted_square;
+  }});
+  Object.defineProperty(package$operator, 'formatted_curly', {get: function () {
+    return formatted_curly;
   }});
   Object.defineProperty(package$operator, 'empty_dollar_round', {get: function () {
     return empty_dollar_round;
@@ -3115,11 +3156,17 @@
   join = new Operator('join');
   identifier = new Operator('identifier');
   empty_round = new Operator('empty_round');
-  round = new Operator('round');
   empty_square = new Operator('empty_square');
-  square = new Operator('square');
   empty_curly = new Operator('empty_curly');
+  round = new Operator('round');
+  square = new Operator('square');
   curly = new Operator('curly');
+  empty_formatted_round = new Operator('empty_formatted_round');
+  empty_formatted_square = new Operator('empty_formatted_square');
+  empty_formatted_curly = new Operator('empty_formatted_curly');
+  formatted_round = new Operator('formatted_round');
+  formatted_square = new Operator('formatted_square');
+  formatted_curly = new Operator('formatted_curly');
   empty_dollar_round = new Operator('empty_dollar_round');
   dollar_round = new Operator('dollar_round');
   empty_dollar_square = new Operator('empty_dollar_square');

@@ -83,13 +83,25 @@ Brackets
   / "{" __                    "}" { return node("empty_curly" , {    }, location()); }
   / "{" __ main:Expression __ "}" { return node(      "curly" , {main}, location()); }
 
+Formatter
+  = "%" zero:"0"? width:([1-9][0-9]* { return parseInt(text()); })? "s" { return {
+      width,
+      zero: zero !== null
+    }; }
+
 DollarBrackets
-  = "$(" __                    ")" { return node("empty_dollar_round" , {    }, location()); }
-  / "$(" __ main:Expression __ ")" { return node(      "dollar_round" , {main}, location()); }
-  / "$[" __                    "]" { return node("empty_dollar_square", {    }, location()); }
-  / "$[" __ main:Expression __ "]" { return node(      "dollar_square", {main}, location()); }
-  / "${" __                    "}" { return node("empty_dollar_curly" , {    }, location()); }
-  / "${" __ main:Expression __ "}" { return node(      "dollar_curly" , {main}, location()); }
+  = "$"                     "(" __                    ")" { return node(          "empty_dollar_round" , {               }, location()); }
+  / "$"                     "[" __                    "]" { return node(          "empty_dollar_square", {               }, location()); }
+  / "$"                     "{" __                    "}" { return node(          "empty_dollar_curly" , {               }, location()); }
+  / "$"                     "(" __ main:Expression __ ")" { return node(                "dollar_round" , {           main}, location()); }
+  / "$"                     "[" __ main:Expression __ "]" { return node(                "dollar_square", {           main}, location()); }
+  / "$"                     "{" __ main:Expression __ "}" { return node(                "dollar_curly" , {           main}, location()); }
+  / "$" formatter:Formatter "(" __                    ")" { return node("empty_formatted_dollar_round" , {formatter,     }, location()); }
+  / "$" formatter:Formatter "[" __                    "]" { return node("empty_formatted_dollar_square", {formatter,     }, location()); }
+  / "$" formatter:Formatter "{" __                    "}" { return node("empty_formatted_dollar_curly" , {formatter,     }, location()); }
+  / "$" formatter:Formatter "(" __ main:Expression __ ")" { return node(      "formatted_dollar_round" , {formatter, main}, location()); }
+  / "$" formatter:Formatter "[" __ main:Expression __ "]" { return node(      "formatted_dollar_square", {formatter, main}, location()); }
+  / "$" formatter:Formatter "{" __ main:Expression __ "}" { return node(      "formatted_dollar_curly" , {formatter, main}, location()); }
 
 Factor
   = Number
