@@ -77,10 +77,10 @@ Identifier
 
 Brackets
   = "(" __                    ")" { return node("empty_round" , {    }, location()); }
-  / "(" __ main:Expression __ ")" { return node(      "round" , {main}, location()); }
   / "[" __                    "]" { return node("empty_square", {    }, location()); }
-  / "[" __ main:Expression __ "]" { return node(      "square", {main}, location()); }
   / "{" __                    "}" { return node("empty_curly" , {    }, location()); }
+  / "(" __ main:Expression __ ")" { return node(      "round" , {main}, location()); }
+  / "[" __ main:Expression __ "]" { return node(      "square", {main}, location()); }
   / "{" __ main:Expression __ "}" { return node(      "curly" , {main}, location()); }
 
 Formatter
