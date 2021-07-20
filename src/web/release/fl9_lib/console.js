@@ -68,6 +68,18 @@
       }
       throw new Error("Illegal argument");
     };
+    object.JS = function JS() {
+      if (arguments.length == 1) {
+        return eval(runtime.toString(arguments[0]))
+      }
+      throw new Error("Illegal argument");
+    };
+    object.REQUIRE = function REQUIRE() {
+      if (arguments.length == 1) {
+        return require(runtime.toString(arguments[0]))
+      }
+      throw new Error("Illegal argument");
+    };
     return object;
   };
 
