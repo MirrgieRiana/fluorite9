@@ -52,7 +52,7 @@
       }
     });
     object.INB = createBufferReader(runtime, process.stdin.fd, 4096, false);
-    object.OUTB = function() {
+    object.OUTB = function OUTB() {
       if (arguments.length == 1) {
         const stream = runtime.toStream(arguments[0]);
         for (let item of stream) {
