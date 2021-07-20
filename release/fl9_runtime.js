@@ -125,6 +125,8 @@
         return Object.getOwnPropertyNames(value).map(name => `${name}:${this.toString(value[name])};`).join("");
       }
 
+      if (typeof value === "function") return `FUNCTION[${value.name}]`;
+
       throw new Error("Illegal Action: toString(" + value + ")");
     }
     toBoolean(value) {
@@ -137,7 +139,7 @@
 
       if (typeof value === "object") {
         if (value[symbolToBoolean] !== undefined) return this.toBoolean(value[symbolToBoolean]());
-        throw new Error("Illegal Action: toBoolean(" + value + ")");
+        return true;
       }
 
       throw new Error("Illegal Action: toBoolean(" + value + ")");
