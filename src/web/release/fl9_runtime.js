@@ -137,7 +137,7 @@
 
       if (typeof value === "object") {
         if (value[symbolToBoolean] !== undefined) return this.toBoolean(value[symbolToBoolean]());
-        throw new Error("Illegal Action: toBoolean(" + value + ")");
+        return true;
       }
 
       throw new Error("Illegal Action: toBoolean(" + value + ")");
