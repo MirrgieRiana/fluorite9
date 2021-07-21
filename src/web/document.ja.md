@@ -83,6 +83,7 @@
     - [丸括弧と文](#%E4%B8%B8%E6%8B%AC%E5%BC%A7%E3%81%A8%E6%96%87)
 - [consoleライブラリ](#console%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA)
   - [`IN`定数](#in%E5%AE%9A%E6%95%B0)
+  - [`READ[file]`関数](#readfile%E9%96%A2%E6%95%B0)
   - [`JS[code]`関数](#jscode%E9%96%A2%E6%95%B0)
   - [`REQUIRE[name]`関数](#requirename%E9%96%A2%E6%95%B0)
 - [コンソール](#%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB)
