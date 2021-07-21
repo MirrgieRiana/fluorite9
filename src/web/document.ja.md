@@ -1589,6 +1589,11 @@ $ echo -en "abc\ndef\n" | fl9 'IN | "[$_]"'
 [def]
 ```
 
+## `READ[file]`関数
+
+`file`を開き、内容を1行ずつ返すストリームを生成する関数です。
+詳細な挙動は`IN`定数に準じます。
+
 ## `JS[code]`関数
 
 `code`をJavaScriptとして実行します。

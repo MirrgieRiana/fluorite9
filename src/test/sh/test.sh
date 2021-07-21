@@ -72,6 +72,10 @@ assertEqual 15 "$(  node -e '
   # OUTBで渡してINBで受け取っても同じ
   assertEqual "12345" "$(  echo "12345" | fl9 'INB | OUTB[_];'  )"
 
+  # READ
+  { echo "100"; echo "20"; } > tmp.txt
+  assertEqual "120" "$(  fl9 '+READ["tmp.txt"]'  )"
+
 }
 
 echo "test.sh OK"

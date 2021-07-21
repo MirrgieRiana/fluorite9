@@ -68,6 +68,21 @@
       }
       throw new Error("Illegal argument");
     };
+    object.READ = function READ() {
+      if (arguments.length == 1) {
+        const file = runtime.toString(arguments[0]);
+        return new runtime.Fl9Stream(runtime, function*() {
+          const fd = fs.openSync(file, "r");
+          const lines = fs.readFileSync(fd, "utf8").split(/\r\n|\r|\n/);
+          if (lines[lines.length - 1] === "") lines.pop();
+          for (let line of lines) {
+            yield line;
+          }
+          fs.closeSync(fd);
+        });
+      }
+      throw new Error("Illegal argument");
+    };
     object.JS = function JS() {
       if (arguments.length == 1) {
         return eval(runtime.toString(arguments[0]))
