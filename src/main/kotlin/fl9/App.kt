@@ -234,122 +234,196 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
                 }
             }
 
+            data class ParseArgumentsResult(
+                val codesMain: MutableList<GetterCode>,
+                val codesMainNamed: MutableList<Triple<String, GetterCode, Location>>
+            )
+
+            fun <C, DI> Context<C, DI>.parseArguments(node: Node): ArgumentsGetterCode {
+
+                // 引数列セミコロン解体
+                val nodesMain = let {
+                    node.maybe(semicolon) {
+                        return@let it.toList()
+                    }
+                    return@let listOf(node)
+                }
+
+                // 引数列void解体
+                val codesMain = mutableListOf<GetterCode>()
+                val codesMainNamed = mutableListOf<Triple<String, GetterCode, Location>>()
+                var namedMode = false
+                nodesMain.forEach {
+                    if (it.type == "void") {
+                        if (!namedMode) {
+                            codesMain += GetterCode(!"undefined")
+                        }
+                        // 名前付き引数モードになった場合はvoidは単に無視する
+                    } else if (it.type == "colon") {
+                        namedMode = true
+                        val nodeKey = it.value.unsafeCast<BinaryOperatorArgument>().left
+                        val nodeValue = it.value.unsafeCast<BinaryOperatorArgument>().right
+                        if (nodeKey.type == "identifier") {
+                            codesMainNamed += Triple(
+                                nodeKey.value.unsafeCast<String>(),
+                                compiler[aliases].stack { nodeValue.compile(compiler, getter) },
+                                nodeKey.location
+                            )
+                        } else {
+                            throw Exception("Illegal Argument Name: ${nodeKey.type}")
+                        }
+                    } else {
+                        codesMain += compiler[aliases].stack { it.compile(compiler, getter) }
+                    }
+                }
+
+                val codes = mutableListOf<ArgumentsGetterCode>()
+
+                codesMain.forEach {
+                    codes += it.toArgumentsGetter()
+                }
+
+                if (codesMainNamed.isNotEmpty()) {
+                    val idObject = compiler.nextId()
+                    codes += ArgumentsGetterCode(code {
+                        line(!"const v$idObject = {};")
+                        codesMainNamed.forEach {
+                            line(it.second.head)
+                            line(!"v$idObject[" + JSON.stringify(it.first) * it.third + !"] = " + it.second.body + !";")
+                        }
+                    }, listOf(!"v$idObject"))
+                }
+
+                return codes.concat()
+            }
             right_empty_square {
                 getter {
-                    val codeLeft = channelContext.value.left.compile(compiler, getter)
+                    val codeFunction = channelContext.value.left.compile(compiler, getter)
+                    val codeArguments = ArgumentsGetterCode()
+
                     val id = compiler.nextId()
                     GetterCode(code {
-                        line(codeLeft.head)
-                        line(!"const v$id = runtime.apply(" + codeLeft.body + !", []);")
+                        line(codeFunction.head)
+                        line(codeArguments.head)
+                        line(!"const v$id = runtime.apply(" + codeFunction.body + !", [" + codeArguments.bodies.reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 }
             }
             right_square {
                 getter {
+                    val codeFunction = channelContext.value.left.compile(compiler, getter)
+                    val codeArguments = parseArguments(channelContext.value.main)
 
-                    // 関数
-                    val codeLeft = channelContext.value.left.compile(compiler, getter)
-
-                    // 引数列セミコロン解体
-                    val nodesMain = let {
-                        channelContext.value.main.maybe(semicolon) {
-                            return@let it.toList()
+                    val id = compiler.nextId()
+                    GetterCode(code {
+                        line(codeFunction.head)
+                        line(codeArguments.head)
+                        line(!"const v$id = runtime.apply(" + codeFunction.body + !", [" + codeArguments.bodies.reduceOrZero { left, right -> left + !", " + right } + !"]);")
+                    }, !"v$id")
+                }
+            }
+            right_empty_round {
+                getter {
+                    lateinit var codeFunction: GetterCode
+                    lateinit var codeArguments: ArgumentsGetterCode
+                    channelContext.value.left.let { node ->
+                        node.maybe(right_empty_square) { value ->
+                            codeFunction = value.left.compile(compiler, getter)
+                            codeArguments = ArgumentsGetterCode()
+                            return@let
                         }
-                        return@let listOf(channelContext.value.main)
-                    }
-
-                    // 引数列void解体
-                    val codesMain = mutableListOf<GetterCode>()
-                    val codesMainNamed = mutableListOf<Triple<String, GetterCode, Location>>()
-                    var namedMode = false
-                    nodesMain.forEach {
-                        if (it.type == "void") {
-                            if (!namedMode) {
-                                codesMain += GetterCode("undefined" * location)
-                            }
-                            // 名前付き引数モードになった場合はvoidは単に無視する
-                        } else if (it.type == "colon") {
-                            namedMode = true
-                            val nodeKey = it.value.unsafeCast<BinaryOperatorArgument>().left
-                            val nodeValue = it.value.unsafeCast<BinaryOperatorArgument>().right
-                            if (nodeKey.type == "identifier") {
-                                codesMainNamed += Triple(
-                                    nodeKey.value.unsafeCast<String>(),
-                                    compiler[aliases].stack { nodeValue.compile(compiler, getter) },
-                                    nodeKey.location
-                                )
-                            } else {
-                                throw Exception("Illegal Argument Name: ${nodeKey.type}")
-                            }
-                        } else {
-                            codesMain += compiler[aliases].stack { it.compile(compiler, getter) }
+                        node.maybe(right_square) { value ->
+                            codeFunction = value.left.compile(compiler, getter)
+                            codeArguments = parseArguments(value.main)
+                            return@let
                         }
+                        codeFunction = node.compile(compiler, getter)
+                        codeArguments = ArgumentsGetterCode()
                     }
 
-                    if (codesMainNamed.isEmpty()) {
-                        val id = compiler.nextId()
-                        GetterCode(code {
-                            line(codeLeft.head)
-                            codesMain.forEach {
-                                line(it.head)
+                    codeArguments += run {
+                        val idArgument = "v" + compiler.nextId()
+                        val codeMainContent = GetterCode(!"(runtime.getEmpty())")
+
+                        val idFuntion = "v" + compiler.nextId()
+                        val idSymbol = "v" + compiler.nextId()
+                        val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
+                        ArgumentsGetterCode(code {
+                            line(!"const $idSymbol = Symbol(${JSON.stringify(label)});")
+                            line(!"const $idFuntion = {[$idSymbol]: function($idArgument) {")
+                            indent {
+                                line(codeMainContent.head)
+                                line(!"return " + codeMainContent.body + !";")
                             }
-                            line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
-                                .map { it.body }
-                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
-                        }, !"v$id")
-                    } else {
-                        val id = compiler.nextId()
-                        val idObject = compiler.nextId()
-                        GetterCode(code {
-                            line(codeLeft.head)
-                            codesMain.forEach {
-                                line(it.head)
-                            }
-                            line(!"const v$idObject = {};")
-                            codesMainNamed.forEach {
-                                line(it.second.head)
-                                line(!"v$idObject[" + JSON.stringify(it.first) * it.third + !"] = " + it.second.body + !";")
-                            }
-                            line(!"const v$id = runtime.apply(" + codeLeft.body + !", [" + codesMain
-                                .map { it.body }
-                                .plus(!"v$idObject")
-                                .reduceOrZero { left, right -> left + !", " + right } + !"]);")
-                        }, !"v$id")
+                            line(!"}}[$idSymbol];")
+                        }, listOf(!idFuntion))
                     }
+
+                    val id = compiler.nextId()
+                    GetterCode(code {
+                        line(codeFunction.head)
+                        line(codeArguments.head)
+                        line(!"const v$id = runtime.apply(" + codeFunction.body + !", [" + codeArguments.bodies.reduceOrZero { left, right -> left + !", " + right } + !"]);")
+                    }, !"v$id")
                 }
             }
             right_round {
                 getter {
-                    val codeLeft = channelContext.value.left.compile(compiler, getter)
-                    val idArgument = compiler.nextId()
-                    val codeRight = compiler[aliases].stack {
-                        compiler[aliases].apply {
-                            "_" {
-                                getter { GetterCode(!"v$idArgument") }
-                                setter {
-                                    SetterCode { code ->
-                                        RunnerCode(code {
-                                            line(code.head)
-                                            line(!"v$idArgument = " + code.body + !";")
-                                        })
+                    lateinit var codeFunction: GetterCode
+                    lateinit var codeArguments: ArgumentsGetterCode
+                    channelContext.value.left.let { node ->
+                        node.maybe(right_empty_square) { value ->
+                            codeFunction = value.left.compile(compiler, getter)
+                            codeArguments = ArgumentsGetterCode()
+                            return@let
+                        }
+                        node.maybe(right_square) { value ->
+                            codeFunction = value.left.compile(compiler, getter)
+                            codeArguments = parseArguments(value.main)
+                            return@let
+                        }
+                        codeFunction = node.compile(compiler, getter)
+                        codeArguments = ArgumentsGetterCode()
+                    }
+
+                    codeArguments += run {
+                        val idArgument = "v" + compiler.nextId()
+                        val codeMainContent = compiler[aliases].stack {
+                            compiler[aliases].apply {
+                                "_" {
+                                    getter { GetterCode(!idArgument) }
+                                    setter {
+                                        SetterCode { code ->
+                                            RunnerCode(code {
+                                                line(code.head)
+                                                line(!"$idArgument = " + code.body + !";")
+                                            })
+                                        }
                                     }
                                 }
                             }
+                            channelContext.value.main.compile(compiler, getter)
                         }
-                        channelContext.value.main.compile(compiler, getter)
+
+                        val idFuntion = "v" + compiler.nextId()
+                        val idSymbol = "v" + compiler.nextId()
+                        val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
+                        ArgumentsGetterCode(code {
+                            line(!"const $idSymbol = Symbol(${JSON.stringify(label)});")
+                            line(!"const $idFuntion = {[$idSymbol]: function($idArgument) {")
+                            indent {
+                                line(codeMainContent.head)
+                                line(!"return " + codeMainContent.body + !";")
+                            }
+                            line(!"}}[$idSymbol];")
+                        }, listOf(!idFuntion))
                     }
+
                     val id = compiler.nextId()
-                    val idSymbol = compiler.nextId()
-                    val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
                     GetterCode(code {
-                        line(codeLeft.head)
-                        line(!"const v$idSymbol = Symbol(${JSON.stringify(label)});")
-                        line(!"const v$id = runtime.apply(" + codeLeft.body + !", [{[v$idSymbol]: function(v$idArgument) {")
-                        indent {
-                            line(codeRight.head)
-                            line(!"return " + codeRight.body + !";")
-                        }
-                        line(!"}}[v$idSymbol]]);")
+                        line(codeFunction.head)
+                        line(codeArguments.head)
+                        line(!"const v$id = runtime.apply(" + codeFunction.body + !", [" + codeArguments.bodies.reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 }
             }

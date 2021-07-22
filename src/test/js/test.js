@@ -255,6 +255,11 @@ function assertEqualsJson(expected, src) {
   assertEquals(undefined, "              [1; 2; 3][-1]                "); // 配列の定義域外要素アクセス
   assertEquals(undefined, "              [1; 2; 3][ 3]                "); // 配列の定義域外要素アクセス
 
+  // クロージャによる関数呼び出し
+  assertEquals(30, "(      block -> block[2 * 5  ])           (_ * 3)") // クロージャを受け取る関数は後置 ( ) で呼び出せる
+  assertEquals(30, "(a,    block -> block[a * 5  ])[2       ] (_ * 3)") // クロージャと引数は同時に指定できる
+  assertEquals(30, "(a, o, block -> block[a * o.c])[2; c : 5] (_ * 3)") // クロージャと引数と名前付き引数を同時に指定する
+
 }
 
 // デリゲート

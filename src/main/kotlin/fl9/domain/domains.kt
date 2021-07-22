@@ -64,3 +64,21 @@ val comparator = object : Domain<Unit, ComparatorCode>("comparator") {
 }
 
 class ComparatorCode(val comparator: (SourcedLine, SourcedLine) -> SourcedLine)
+
+
+val argumentsGetter = object : Domain<Unit, ArgumentsGetterCode>("argumentsGetter") {
+    override fun createDomainContext() = Unit
+}
+
+class ArgumentsGetterCode(val head: SourcedFile, val bodies: List<SourcedLine>) {
+    constructor(bodies: List<SourcedLine>) : this(zeroFile, bodies)
+    constructor() : this(zeroFile, emptyList())
+
+    operator fun plus(other: ArgumentsGetterCode) = ArgumentsGetterCode(code {
+        line(head)
+        line(other.head)
+    }, bodies + other.bodies)
+}
+
+fun GetterCode.toArgumentsGetter() = ArgumentsGetterCode(head, listOf(body))
+fun Iterable<ArgumentsGetterCode>.concat() = reduce { a, b -> a + b }
