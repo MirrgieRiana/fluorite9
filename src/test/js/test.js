@@ -243,9 +243,10 @@ function assertEqualsJson(expected, src) {
   `);
 
   // 名前付き引数
-  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; 3; a : 4  ]"); // 名前付き引数
-  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3  ]"); // 名前付き引数のあとに通常の引数を記述してもよい
-  assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3; ]"); // 名前付き引数のあとでは無駄な ; は無視される
+  assertEqualsJson([2, 3, {a : 4       }], "(a, b, args -> [a; b; args])[2; 3; a : 4       ]"); // 名前付き引数
+  assertEqualsJson([2, 3, {a : 4, b : 5}], "(a, b, args -> [a; b; args])[2; 3; a : 4; b : 5]"); // 名前付き引数を複数指定すると1個にまとめられる
+  assertEqualsJson([2, 3, {a : 4       }], "(a, b, args -> [a; b; args])[2; a : 4; 3       ]"); // 名前付き引数のあとに通常の引数を記述してもよい
+  assertEqualsJson([2, 3, {a : 4       }], "(a, b, args -> [a; b; args])[2; a : 4; 3;      ]"); // 名前付き引数のあとでは無駄な ; は無視される
 
   // 配列の要素アクセス
   assertEqualsJson([], "                [[]       [  ]               ]"); // 空配列のストリームアクセス
