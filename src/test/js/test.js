@@ -247,7 +247,7 @@ function assertEqualsJson(expected, src) {
   assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3  ]"); // 名前付き引数のあとに通常の引数を記述してもよい
   assertEqualsJson([2, 3, {a : 4}], "(a, b, args -> [a; b; args])[2; a : 4; 3; ]"); // 名前付き引数のあとでは無駄な ; は無視される
 
-  // 配列
+  // 配列の要素アクセス
   assertEqualsJson([], "                [[]       [  ]               ]"); // 空配列のストリームアクセス
   assertEqualsJson([1, 2, 3], "         [[1; 2; 3][  ]               ]"); // 配列のストリームアクセス
   assertEqualsJson([1, 2, 3, 4, 5, 6], "[[1; 2; 3][  ]; [4; 5; 6][  ]]"); // 配列のストリームアクセス
