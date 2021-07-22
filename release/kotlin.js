@@ -1071,6 +1071,8 @@
     NoSuchElementException.prototype.constructor = NoSuchElementException;
     ArithmeticException.prototype = Object.create(RuntimeException.prototype);
     ArithmeticException.prototype.constructor = ArithmeticException;
+    UninitializedPropertyAccessException.prototype = Object.create(RuntimeException.prototype);
+    UninitializedPropertyAccessException.prototype.constructor = UninitializedPropertyAccessException;
     AbstractList.prototype = Object.create(AbstractCollection.prototype);
     AbstractList.prototype.constructor = AbstractList;
     AbstractMutableCollection.prototype = Object.create(AbstractCollection.prototype);
@@ -1264,12 +1266,6 @@
         }
         return tmp$;
       }return optimizeReadOnlySet(toCollection_8($receiver, LinkedHashSet_init_0()));
-    }
-    function plus_0($receiver, element) {
-      var result = ArrayList_init_0($receiver.size + 1 | 0);
-      result.addAll_brywnq$($receiver);
-      result.add_11rb$(element);
-      return result;
     }
     function plus_4($receiver, elements) {
       if (Kotlin.isType(elements, Collection)) {
@@ -2291,6 +2287,16 @@
       this.name = 'ArithmeticException';
     }
     ArithmeticException.$metadata$ = {kind: Kind_CLASS, simpleName: 'ArithmeticException', interfaces: [RuntimeException]};
+    function UninitializedPropertyAccessException(message, cause) {
+      RuntimeException.call(this, message, cause);
+      this.name = 'UninitializedPropertyAccessException';
+    }
+    UninitializedPropertyAccessException.$metadata$ = {kind: Kind_CLASS, simpleName: 'UninitializedPropertyAccessException', interfaces: [RuntimeException]};
+    function UninitializedPropertyAccessException_init_0(message, $this) {
+      $this = $this || Object.create(UninitializedPropertyAccessException.prototype);
+      UninitializedPropertyAccessException.call($this, message, null);
+      return $this;
+    }
     function asList($receiver) {
       return new ArrayList($receiver);
     }
@@ -3643,6 +3649,9 @@
     }
     function throwISE(message) {
       throw IllegalStateException_init_0(message);
+    }
+    function throwUPAE(propertyName) {
+      throw UninitializedPropertyAccessException_init_0('lateinit property ' + propertyName + ' has not been initialized');
     }
     function Serializable() {
     }
@@ -5871,7 +5880,6 @@
     package$collections.toCollection_5cfyqp$ = toCollection_8;
     package$collections.toSet_7wnvza$ = toSet_8;
     package$collections.Collection = Collection;
-    package$collections.plus_qloxvw$ = plus_0;
     package$collections.plus_mydzjv$ = plus_4;
     package$collections.joinTo_gcc71v$ = joinTo_8;
     package$collections.joinToString_fmv235$ = joinToString_8;
@@ -5965,6 +5973,8 @@
     package$kotlin.ClassCastException = ClassCastException;
     package$kotlin.NoSuchElementException = NoSuchElementException;
     package$kotlin.ArithmeticException = ArithmeticException;
+    package$kotlin.UninitializedPropertyAccessException_init_pdl1vj$ = UninitializedPropertyAccessException_init_0;
+    package$kotlin.UninitializedPropertyAccessException = UninitializedPropertyAccessException;
     package$collections.asList_us0mfu$ = asList;
     package$collections.arrayCopy = arrayCopy;
     package$collections.copyOfRange_5f8l3u$ = copyOfRange_3;
@@ -6012,6 +6022,7 @@
     _.throwNPE = throwNPE;
     _.throwCCE = throwCCE_0;
     _.throwISE = throwISE;
+    _.throwUPAE = throwUPAE;
     package$io.Serializable = Serializable;
     var package$reflect = package$kotlin.reflect || (package$kotlin.reflect = {});
     package$reflect.KCallable = KCallable;

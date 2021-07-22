@@ -33,12 +33,12 @@
     - [ストリームの展開](#%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%81%AE%E5%B1%95%E9%96%8B)
   - [オブジェクト初期化子 `{key = value; ...}`](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96%E5%AD%90-key--value-)
     - [式によるキーの指定 `{(formula) = value}`](#%E5%BC%8F%E3%81%AB%E3%82%88%E3%82%8B%E3%82%AD%E3%83%BC%E3%81%AE%E6%8C%87%E5%AE%9A-formula--value)
-  - [ブロック呼び出し `function(closure)`](#%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionclosure)
   - [関数呼び出し `function[argument; ...]`](#%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-functionargument-)
     - [配列要素アクセス `array[index]`](#%E9%85%8D%E5%88%97%E8%A6%81%E7%B4%A0%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-arrayindex)
     - [配列のストリーム展開 `array[]`](#%E9%85%8D%E5%88%97%E3%81%AE%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E5%B1%95%E9%96%8B-array)
     - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
     - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
+    - [クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)`](#%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%81%AB%E3%82%88%E3%82%8B%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-function-closure-functionargument--closure)
   - [デリゲートアクセス `object::method`](#%E3%83%87%E3%83%AA%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-objectmethod)
     - [厳密な挙動の説明](#%E5%8E%B3%E5%AF%86%E3%81%AA%E6%8C%99%E5%8B%95%E3%81%AE%E8%AA%AC%E6%98%8E)
   - [JSONエンコード・デコード演算子 `$&value` `$*json`](#json%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%E6%BC%94%E7%AE%97%E5%AD%90-value-json)
@@ -581,11 +581,6 @@ obj + 6
 10
 ```
 
-## ブロック呼び出し `function(closure)`
-
-`closure`はコードブロックとして`function`に渡されます。
-`function`は常に一つの引数が与えられた状態で呼び出されます。
-
 ## 関数呼び出し `function[argument; ...]`
 
 fl9では関数の呼び出しに角括弧`[ ]`を使います。
@@ -735,6 +730,43 @@ f[
 ```
 arg1:1;arg2:2;arg3:3;
 ```
+
+### クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)`
+
+`closure`部分に記述した式は、関数として`argument`列の末尾に追加された状態で`function`に渡されます。
+
+```
+iterate : mapper -> (1 .. 5 | mapper[_])
+
+iterate (_ * _)
+```
+↓
+```
+1
+4
+9
+16
+25
+```
+
+クロージャは通常の引数列と同時に利用することができます。
+
+```
+map : stream, mapper -> (stream | mapper[_])
+
+map[1 .. 5] (_ * _)
+```
+↓
+```
+1
+4
+9
+16
+25
+```
+
+名前付き引数も同時に使用した場合、通常の引数列→名前付き引数→クロージャの順で関数に適用されます。
+これはNode.jsの`http.request(url[, options][, callback])`関数のようなAPIを呼び出すのに向いています。
 
 ## デリゲートアクセス `object::method`
 
