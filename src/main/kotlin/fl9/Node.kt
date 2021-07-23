@@ -26,3 +26,21 @@ fun <I, O> Node.tryCompile(compiler: Compiler, domain: Domain<I, O>, initializeD
         return@run Context(compiler, location, OperatorContext(value), domainContext).handler()
     } ?: domain.getDefault(this, compiler)
 }
+
+class NodeSwitcher<T>(private val node: Node) {
+    private inner class Slot(val value: T)
+
+    private var result: Slot? = null
+    fun <OI> on(operator: Operator<OI>, block: (OI) -> T): NodeSwitcher<T> {
+        if (result == null) {
+            if (node.type == operator.type) {
+                result = Slot(block(node.value.unsafeCast<OI>())) // TODO 型安全
+            }
+        }
+        return this
+    }
+
+    fun default(block: (Node) -> T) = result?.value ?: block(node)
+}
+
+fun <T> Node.switch() = NodeSwitcher<T>(this)

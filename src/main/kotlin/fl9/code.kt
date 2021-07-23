@@ -28,6 +28,8 @@ val zeroLine = SourcedLine(listOf())
 
 inline fun Iterable<SourcedLine>.reduceOrZero(operation: (SourcedLine, SourcedLine) -> SourcedLine) = reduceOrNull(operation) ?: zeroLine
 
+inline fun Iterable<SourcedLine>.joinToSourcedLine(separator: SourcedLine) = reduceOrZero { a, b -> a + separator + b }
+
 
 class SourcedFile(val sourcedLines: List<SourcedLine>) {
     @Deprecated("", ReplaceWith(""), DeprecationLevel.ERROR)
