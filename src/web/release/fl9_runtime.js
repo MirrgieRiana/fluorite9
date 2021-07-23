@@ -184,6 +184,10 @@
       if (typeof left === "object" && left[symbolDivide] !== undefined) return left[symbolDivide](left, right);
       throw new Error(`Illegal Argument: ${left.constructor.name}.divide(${right.constructor.name})`);
     }
+    mod(left, right) {
+      if (typeof left === "number") return left % this.toNumber(right);
+      throw new Error(`Illegal Argument: ${left.constructor.name}.mod(${right.constructor.name})`);
+    }
 
     apply(value, args) {
       if (value instanceof Function) {

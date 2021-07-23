@@ -337,6 +337,12 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// 剰余
+{
+  assertEquals(1, "10 % 3"); // 基本
+  assertEquals(0, "10 % 2"); // 基本
+}
+
 // 条件
 {
 

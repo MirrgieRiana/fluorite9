@@ -66,6 +66,8 @@ val left_dollar_asterisk = Operator<LeftUnaryOperatorArgument>("left_dollar_aste
 
 val asterisk = Operator<BinaryOperatorArgument>("asterisk")
 val slash = Operator<BinaryOperatorArgument>("slash")
+val percentage_percentage = Operator<BinaryOperatorArgument>("percentage_percentage")
+val percentage = Operator<BinaryOperatorArgument>("percentage")
 val plus = Operator<BinaryOperatorArgument>("plus")
 val minus = Operator<BinaryOperatorArgument>("minus")
 

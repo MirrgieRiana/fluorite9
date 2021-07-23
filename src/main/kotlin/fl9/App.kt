@@ -457,6 +457,7 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
             }
             asterisk { getter(binaryOperatorGetter { left, right -> !"runtime.multiply(" + left + !", " + right + !")" }) }
             slash { getter(binaryOperatorGetter { left, right -> !"runtime.divide(" + left + !", " + right + !")" }) }
+            percentage { getter(binaryOperatorGetter { left, right -> !"runtime.mod(" + left + !", " + right + !")" }) }
             plus { getter(binaryOperatorGetter { left, right -> !"runtime.add(" + left + !", " + right + !")" }) }
             minus { getter(binaryOperatorGetter { left, right -> !"runtime.subtract(" + left + !", " + right + !")" }) }
             period_period { getter(binaryOperatorGetter { left, right -> !"runtime.rangeClosed(" + left + !", " + right + !")" }) }
