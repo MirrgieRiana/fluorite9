@@ -52,6 +52,17 @@
       }
     });
     object.INB = createBufferReader(runtime, process.stdin.fd, 4096, false);
+    object.OUT = function OUT() {
+      if (arguments.length == 1) {
+        const stream = runtime.toStream(arguments[0]);
+        for (let item of stream) {
+          process.stdout.write(runtime.toString(item));
+          process.stdout.write("\n");
+        }
+        return runtime.getVoid();
+      }
+      throw new Error("Illegal argument");
+    };
     object.OUTB = function OUTB() {
       if (arguments.length == 1) {
         const stream = runtime.toStream(arguments[0]);

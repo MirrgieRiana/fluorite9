@@ -66,6 +66,9 @@ assertEqual 15 "$(  node -e '
   # INB
   assertEqual "52,10" "$(  echo "4" | fl9 'INB' )"
 
+  # OUT
+  assertEqual $'abc\n123\nTRUE' "$(  fl9 'OUT["abc"]; OUT[123]; OUT[TRUE]' )"
+
   # OUTB
   assertEqual "4" "$(  fl9 'OUTB[[52, 10]];' )"
 
