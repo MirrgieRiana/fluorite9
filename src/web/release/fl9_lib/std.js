@@ -15,7 +15,7 @@
     object.SIN = Math.sin;
     object.COS = Math.cos;
     object.TAN = Math.tan;
-    object.LOG = function() {
+    object.LOG = function LOG() {
       if (arguments.length == 1) return Math.log(runtime.toNumber(arguments[0]));
       if (arguments.length == 2) return Math.log(runtime.toNumber(arguments[0])) / Math.log(runtime.toNumber(arguments[1]));
       throw new Error(`Illegal Arguments: ${arguments.callee.name}/${arguments.length}`);
