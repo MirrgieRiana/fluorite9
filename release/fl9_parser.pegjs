@@ -156,8 +156,10 @@ Left
 
 Mul
   = head:Left tail:(_ (
-    "*" { return (location => (left, right) => node("asterisk", {left, right}, location))(location()); }
-  / "/" { return (location => (left, right) => node("slash"   , {left, right}, location))(location()); }
+    "*"  { return (location => (left, right) => node("asterisk"              , {left, right}, location))(location()); }
+  / "/"  { return (location => (left, right) => node("slash"                 , {left, right}, location))(location()); }
+  / "%%" { return (location => (left, right) => node("percentage_percentage" , {left, right}, location))(location()); }
+  / "%"  { return (location => (left, right) => node("percentage"            , {left, right}, location))(location()); }
   ) __ Left)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
 Add

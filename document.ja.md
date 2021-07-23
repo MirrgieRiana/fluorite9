@@ -38,7 +38,7 @@
     - [配列のストリーム展開 `array[]`](#%E9%85%8D%E5%88%97%E3%81%AE%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E5%B1%95%E9%96%8B-array)
     - [名前付き引数 `name : value`](#%E5%90%8D%E5%89%8D%E4%BB%98%E3%81%8D%E5%BC%95%E6%95%B0-name--value)
     - [引数の省略](#%E5%BC%95%E6%95%B0%E3%81%AE%E7%9C%81%E7%95%A5)
-    - [クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)`](#%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%81%AB%E3%82%88%E3%82%8B%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-function-closure-functionargument--closure)
+    - [クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)...`](#%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%81%AB%E3%82%88%E3%82%8B%E9%96%A2%E6%95%B0%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97-function-closure-functionargument--closure)
   - [デリゲートアクセス `object::method`](#%E3%83%87%E3%83%AA%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-objectmethod)
     - [厳密な挙動の説明](#%E5%8E%B3%E5%AF%86%E3%81%AA%E6%8C%99%E5%8B%95%E3%81%AE%E8%AA%AC%E6%98%8E)
   - [JSONエンコード・デコード演算子 `$&value` `$*json`](#json%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%E6%BC%94%E7%AE%97%E5%AD%90-value-json)
@@ -52,6 +52,7 @@
     - [配列の繰り返し `[array] * number`](#%E9%85%8D%E5%88%97%E3%81%AE%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97-array--number)
     - [型の自動変換](#%E5%9E%8B%E3%81%AE%E8%87%AA%E5%8B%95%E5%A4%89%E6%8F%9B)
     - [オーバーライド](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
+  - [剰余演算子 `left % right`](#%E5%89%B0%E4%BD%99%E6%BC%94%E7%AE%97%E5%AD%90-left--right)
   - [範囲演算子 `start .. end` `start ~ endExcluded`](#%E7%AF%84%E5%9B%B2%E6%BC%94%E7%AE%97%E5%AD%90-start--end-start--endexcluded)
     - [ストリーム生成](#%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E7%94%9F%E6%88%90)
     - [閉区間と半開区間](#%E9%96%89%E5%8C%BA%E9%96%93%E3%81%A8%E5%8D%8A%E9%96%8B%E5%8C%BA%E9%96%93)
@@ -731,14 +732,32 @@ f[
 arg1:1;arg2:2;arg3:3;
 ```
 
-### クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)`
+### クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)...`
 
 `closure`部分に記述した式は、関数として`argument`列の末尾に追加された状態で`function`に渡されます。
 
 ```
 iterate : mapper -> (1 .. 5 | mapper[_])
 
-iterate (_ * _)
+iterate (50)
+```
+↓
+```
+50
+50
+50
+50
+50
+```
+
+----
+
+`closure`部分では`args =>`によりクロージャが受け取る引数列を指定できます。
+
+```
+iterate : mapper -> (1 .. 5 | mapper[_])
+
+iterate (x => x * x)
 ```
 ↓
 ```
@@ -749,12 +768,14 @@ iterate (_ * _)
 25
 ```
 
+----
+
 クロージャは通常の引数列と同時に利用することができます。
 
 ```
 map : stream, mapper -> (stream | mapper[_])
 
-map[1 .. 5] (_ * _)
+map[1 .. 5] (x => x * x)
 ```
 ↓
 ```
@@ -767,6 +788,32 @@ map[1 .. 5] (_ * _)
 
 名前付き引数も同時に使用した場合、通常の引数列→名前付き引数→クロージャの順で関数に適用されます。
 これはNode.jsの`http.request(url[, options][, callback])`関数のようなAPIを呼び出すのに向いています。
+
+----
+
+クロージャを複数指定することで、制御構文のような見た目の関数が実装できます。
+
+```
+if : condition, then, else -> condition[] ? then[] : else[]
+
+1 .. 5 | (
+
+  if (_ % 2 == 0) (
+    "$_ is Even"
+  ) (
+    "$_ is Odd"
+  )
+
+)
+```
+↓
+```
+1 is Odd
+2 is Even
+3 is Odd
+4 is Even
+5 is Odd
+```
 
 ## デリゲートアクセス `object::method`
 
@@ -978,6 +1025,11 @@ obj + 6
 ```
 10
 ```
+
+## 剰余演算子 `left % right`
+
+`%`で余りを得ます。
+結合優先度は乗除算と同じです。
 
 ## 範囲演算子 `start .. end` `start ~ endExcluded`
 
