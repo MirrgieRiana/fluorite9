@@ -731,14 +731,32 @@ f[
 arg1:1;arg2:2;arg3:3;
 ```
 
-### クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)`
+### クロージャによる関数呼び出し `function (closure)` `function[argument; ...] (closure)...`
 
 `closure`部分に記述した式は、関数として`argument`列の末尾に追加された状態で`function`に渡されます。
 
 ```
 iterate : mapper -> (1 .. 5 | mapper[_])
 
-iterate (_ * _)
+iterate (50)
+```
+↓
+```
+50
+50
+50
+50
+50
+```
+
+----
+
+`closure`部分では`args =>`によりクロージャが受け取る引数列を指定できます。
+
+```
+iterate : mapper -> (1 .. 5 | mapper[_])
+
+iterate (x => x * x)
 ```
 ↓
 ```
@@ -749,12 +767,14 @@ iterate (_ * _)
 25
 ```
 
+----
+
 クロージャは通常の引数列と同時に利用することができます。
 
 ```
 map : stream, mapper -> (stream | mapper[_])
 
-map[1 .. 5] (_ * _)
+map[1 .. 5] (x => x * x)
 ```
 ↓
 ```
@@ -767,6 +787,32 @@ map[1 .. 5] (_ * _)
 
 名前付き引数も同時に使用した場合、通常の引数列→名前付き引数→クロージャの順で関数に適用されます。
 これはNode.jsの`http.request(url[, options][, callback])`関数のようなAPIを呼び出すのに向いています。
+
+----
+
+クロージャを複数指定することで、制御構文のような見た目の関数が実装できます。
+
+```
+if : condition, then, else -> condition[] ? then[] : else[]
+
+1 .. 5 | (
+
+  if (_ % 2 == 0) (
+    "$_ is Even"
+  ) (
+    "$_ is Odd"
+  )
+
+)
+```
+↓
+```
+1 is Odd
+2 is Even
+3 is Odd
+4 is Even
+5 is Odd
+```
 
 ## デリゲートアクセス `object::method`
 

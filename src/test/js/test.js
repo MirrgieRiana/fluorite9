@@ -257,9 +257,16 @@ function assertEqualsJson(expected, src) {
   assertEquals(undefined, "              [1; 2; 3][ 3]                "); // 配列の定義域外要素アクセス
 
   // クロージャによる関数呼び出し
-  assertEquals(30, "(      block -> block[2 * 5  ])           (_ * 3)") // クロージャを受け取る関数は後置 ( ) で呼び出せる
-  assertEquals(30, "(a,    block -> block[a * 5  ])[2       ] (_ * 3)") // クロージャと引数は同時に指定できる
-  assertEquals(30, "(a, o, block -> block[a * o.c])[2; c : 5] (_ * 3)") // クロージャと引数と名前付き引数を同時に指定する
+  assertEquals(30, "(      block -> block[2 * 5  ])           (x => x * 3)") // クロージャを受け取る関数は後置 ( ) で呼び出せる
+  assertEquals(30, "(a,    block -> block[a * 5  ])[2       ] (x => x * 3)") // クロージャと引数は同時に指定できる
+  assertEquals(30, "(a, o, block -> block[a * o.c])[2; c : 5] (x => x * 3)") // クロージャと引数と名前付き引数を同時に指定する
+
+  // クロージャの引数
+  assertEquals(10, "f : b -> b[20]; _ : 10; f (_     )") // クロージャは暗黙の引数を取らない
+  assertEquals(20, "f : b -> b[20]; _ : 10; f (_ => _)") // クロージャは引数を明示して指定できる
+
+  // クロージャと引数の順序
+  assertEquals("12345", '(a, b, c, d, e -> "$a$(b.f)$(c[])$(d[])$(e[])")[f : 2; 1] (3) (4) (5)')
 
 }
 

@@ -324,40 +324,92 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
             }
             right_empty_round {
                 getter {
-                    lateinit var codeFunction: GetterCode
-                    lateinit var codeArguments: ArgumentsGetterCode
-                    channelContext.value.left.let { node ->
-                        node.maybe(right_empty_square) { value ->
-                            codeFunction = value.left.compile(compiler, getter)
-                            codeArguments = ArgumentsGetterCode()
-                            return@let
-                        }
-                        node.maybe(right_square) { value ->
-                            codeFunction = value.left.compile(compiler, getter)
-                            codeArguments = parseArguments(value.main)
-                            return@let
-                        }
-                        codeFunction = node.compile(compiler, getter)
-                        codeArguments = ArgumentsGetterCode()
-                    }
+                    fun parseClosure(node: Node?): ArgumentsGetterCode {
 
-                    codeArguments += run {
-                        val idArgument = "v" + compiler.nextId()
-                        val codeMainContent = GetterCode(!"(runtime.getEmpty())")
+                        // 引数列と本文の抽出
+                        val (codesArgument, nodeClosureContent) = if (node == null) {
+                            Pair(emptyList(), Node("void", Unit, location))
+                        } else {
+                            node.switch<Pair<List<Pair<() -> Unit, SourcedLine>>, Node>>()
+                                .on(equal_greater) { valueEqualGreater ->
+
+                                    // カンマの解体
+                                    val nodesArgument = valueEqualGreater.left.switch<List<Node>>()
+                                        .on(comma) { value -> value.toList() }
+                                        .default { node -> listOf(node) }
+
+                                    // 個々の引数の評価
+                                    val arguments = nodesArgument.flatMap { nodeArgument ->
+                                        nodeArgument.switch<List<Pair<() -> Unit, SourcedLine>>>()
+                                            .on(identifier) { valueArgument ->
+                                                val idArgument = "v" + compiler.nextId()
+                                                listOf(Pair({
+                                                    compiler[aliases].apply {
+                                                        valueArgument {
+                                                            getter { GetterCode(!idArgument) }
+                                                            setter {
+                                                                SetterCode { code ->
+                                                                    RunnerCode(code {
+                                                                        line(code.head)
+                                                                        line(!"$idArgument = " + code.body + !";")
+                                                                    })
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }, !idArgument))
+                                            }
+                                            .default { node -> throw Error("Illegal Operator: ${node.type}") }
+                                    }
+
+                                    Pair(arguments, valueEqualGreater.right)
+                                }
+                                .default { node -> Pair(emptyList(), node) }
+                        }
+
+                        // 本文のコンパイル
+                        val codeClosureContent = compiler[aliases].stack {
+                            codesArgument.forEach { codeArgument -> codeArgument.first() }
+                            nodeClosureContent.compile(compiler, getter)
+                        }
 
                         val idFuntion = "v" + compiler.nextId()
                         val idSymbol = "v" + compiler.nextId()
                         val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
-                        ArgumentsGetterCode(code {
+                        return ArgumentsGetterCode(code {
                             line(!"const $idSymbol = Symbol(${JSON.stringify(label)});")
-                            line(!"const $idFuntion = {[$idSymbol]: function($idArgument) {")
+                            line(!"const $idFuntion = {[$idSymbol]: function(" + codesArgument.map { it.second }.joinToSourcedLine(!", ") + !") {")
                             indent {
-                                line(codeMainContent.head)
-                                line(!"return " + codeMainContent.body + !";")
+                                line(codeClosureContent.head)
+                                line(!"return " + codeClosureContent.body + !";")
                             }
                             line(!"}}[$idSymbol];")
                         }, listOf(!idFuntion))
                     }
+
+                    var codeArguments = ArgumentsGetterCode()
+                    fun parseFunction(node: Node): GetterCode {
+                        node.maybe(right_empty_square) { value ->
+                            return value.left.compile(compiler, getter)
+                        }
+                        node.maybe(right_square) { value ->
+                            codeArguments += parseArguments(value.main)
+                            return value.left.compile(compiler, getter)
+                        }
+                        node.maybe(right_empty_round) { value ->
+                            return parseFunction(value.left)
+                        }
+                        node.maybe(right_round) { value ->
+                            val codeFunction = parseFunction(value.left)
+                            codeArguments += parseClosure(value.main)
+                            return codeFunction
+                        }
+                        return node.compile(compiler, getter)
+                    }
+
+                    val codeFunction = parseFunction(channelContext.value.left)
+
+                    codeArguments += parseClosure(null)
 
                     val id = compiler.nextId()
                     GetterCode(code {
@@ -369,55 +421,92 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
             }
             right_round {
                 getter {
-                    lateinit var codeFunction: GetterCode
-                    lateinit var codeArguments: ArgumentsGetterCode
-                    channelContext.value.left.let { node ->
-                        node.maybe(right_empty_square) { value ->
-                            codeFunction = value.left.compile(compiler, getter)
-                            codeArguments = ArgumentsGetterCode()
-                            return@let
-                        }
-                        node.maybe(right_square) { value ->
-                            codeFunction = value.left.compile(compiler, getter)
-                            codeArguments = parseArguments(value.main)
-                            return@let
-                        }
-                        codeFunction = node.compile(compiler, getter)
-                        codeArguments = ArgumentsGetterCode()
-                    }
+                    fun parseClosure(node: Node?): ArgumentsGetterCode {
 
-                    codeArguments += run {
-                        val idArgument = "v" + compiler.nextId()
-                        val codeMainContent = compiler[aliases].stack {
-                            compiler[aliases].apply {
-                                "_" {
-                                    getter { GetterCode(!idArgument) }
-                                    setter {
-                                        SetterCode { code ->
-                                            RunnerCode(code {
-                                                line(code.head)
-                                                line(!"$idArgument = " + code.body + !";")
-                                            })
-                                        }
+                        // 引数列と本文の抽出
+                        val (codesArgument, nodeClosureContent) = if (node == null) {
+                            Pair(emptyList(), Node("void", Unit, location))
+                        } else {
+                            node.switch<Pair<List<Pair<() -> Unit, SourcedLine>>, Node>>()
+                                .on(equal_greater) { valueEqualGreater ->
+
+                                    // カンマの解体
+                                    val nodesArgument = valueEqualGreater.left.switch<List<Node>>()
+                                        .on(comma) { value -> value.toList() }
+                                        .default { node -> listOf(node) }
+
+                                    // 個々の引数の評価
+                                    val arguments = nodesArgument.flatMap { nodeArgument ->
+                                        nodeArgument.switch<List<Pair<() -> Unit, SourcedLine>>>()
+                                            .on(identifier) { valueArgument ->
+                                                val idArgument = "v" + compiler.nextId()
+                                                listOf(Pair({
+                                                    compiler[aliases].apply {
+                                                        valueArgument {
+                                                            getter { GetterCode(!idArgument) }
+                                                            setter {
+                                                                SetterCode { code ->
+                                                                    RunnerCode(code {
+                                                                        line(code.head)
+                                                                        line(!"$idArgument = " + code.body + !";")
+                                                                    })
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }, !idArgument))
+                                            }
+                                            .default { node -> throw Error("Illegal Operator: ${node.type}") }
                                     }
+
+                                    Pair(arguments, valueEqualGreater.right)
                                 }
-                            }
-                            channelContext.value.main.compile(compiler, getter)
+                                .default { node -> Pair(emptyList(), node) }
+                        }
+
+                        // 本文のコンパイル
+                        val codeClosureContent = compiler[aliases].stack {
+                            codesArgument.forEach { codeArgument -> codeArgument.first() }
+                            nodeClosureContent.compile(compiler, getter)
                         }
 
                         val idFuntion = "v" + compiler.nextId()
                         val idSymbol = "v" + compiler.nextId()
                         val label = "<CLOSURE> (<EVAL>:${location.row},${location.column})"
-                        ArgumentsGetterCode(code {
+                        return ArgumentsGetterCode(code {
                             line(!"const $idSymbol = Symbol(${JSON.stringify(label)});")
-                            line(!"const $idFuntion = {[$idSymbol]: function($idArgument) {")
+                            line(!"const $idFuntion = {[$idSymbol]: function(" + codesArgument.map { it.second }.joinToSourcedLine(!", ") + !") {")
                             indent {
-                                line(codeMainContent.head)
-                                line(!"return " + codeMainContent.body + !";")
+                                line(codeClosureContent.head)
+                                line(!"return " + codeClosureContent.body + !";")
                             }
                             line(!"}}[$idSymbol];")
                         }, listOf(!idFuntion))
                     }
+
+                    var codeArguments = ArgumentsGetterCode()
+                    fun parseFunction(node: Node): GetterCode {
+                        node.maybe(right_empty_square) { value ->
+                            return value.left.compile(compiler, getter)
+                        }
+                        node.maybe(right_square) { value ->
+                            codeArguments += parseArguments(value.main)
+                            return value.left.compile(compiler, getter)
+                        }
+                        node.maybe(right_empty_round) { value ->
+                            return parseFunction(value.left)
+                        }
+                        node.maybe(right_round) { value ->
+                            val codeFunction = parseFunction(value.left)
+                            codeArguments += parseClosure(value.main)
+                            return codeFunction
+                        }
+                        return node.compile(compiler, getter)
+                    }
+
+                    val codeFunction = parseFunction(channelContext.value.left)
+
+                    codeArguments += parseClosure(channelContext.value.main)
 
                     val id = compiler.nextId()
                     GetterCode(code {
