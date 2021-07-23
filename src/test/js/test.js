@@ -540,6 +540,21 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// std
+{
+
+  // JOIN
+  assertEquals("abc|def|ghi", '  JOIN["abc", "def", "ghi";  "|"]'); // 基本
+  assertEquals("abcdefghi", '    JOIN["abc", "def", "ghi";   ""]'); // デリミタは空白でもよい
+  assertEquals("abc\ndef\nghi", 'JOIN["abc", "def", "ghi"; "\n"]'); // デリミタは改行でもよい
+  assertEquals("abc,def,ghi", '  JOIN["abc", "def", "ghi"      ]'); // デリミタは省略可能
+
+  // SPLIT
+  assertEqualsJson(["abc", "def", "ghi"], '[SPLIT["abc|def|ghi"; "|"]]'); // 基本
+  assertEqualsJson(["abc", "def", "ghi"], '[SPLIT["abc,def,ghi"     ]]'); // デリミタは省略可能
+
+}
+
 // Console
 {
   assertEquals(3, '  JS[     "1 + 2"]  '); // JSコード呼び出し

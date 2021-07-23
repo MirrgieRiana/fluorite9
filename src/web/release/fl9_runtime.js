@@ -189,16 +189,20 @@
       throw new Error(`Illegal Argument: ${left.constructor.name}.mod(${right.constructor.name})`);
     }
 
+    arrayToStream(array) {
+      return new this.Fl9Stream(this, function*() {
+        for (let item of array) {
+          yield item;
+        }
+      });
+    }
+
     apply(value, args) {
       if (value instanceof Function) {
         return value.apply(null, args);
       } else if (value instanceof Array) {
         if (args.length === 0) {
-          return new this.Fl9Stream(this, function*() {
-            for (let item of value) {
-              yield item;
-            }
-          });
+          return this.arrayToStream(value);
         } else if (args.length === 1) {
           return value[args[0]];
         }

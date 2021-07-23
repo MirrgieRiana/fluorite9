@@ -1656,6 +1656,36 @@ result
 542
 ```
 
+# stdライブラリ
+
+## `JOIN[stream[; delimiter]]`関数
+
+`stream`を`delimiter`で結合した文字列を返します。
+`delimiter`を省略した場合、`,`が指定されたものとみなされます。
+
+```
+JOIN["ABC", 123, TRUE; "|"]
+```
+↓
+```
+ABC|123|true
+```
+
+## `SPLIT[string[; delimiter]]`関数
+
+`string`を`delimiter`で分離したストリームを返します。
+`delimiter`を省略した場合、`,`が指定されたものとみなされます。
+
+```
+SPLIT["ABC|123|true"; "|"]
+```
+↓
+```
+ABC
+123
+true
+```
+
 # consoleライブラリ
 
 consoleライブラリは、node.js版でのみ利用可能なライブラリです。
