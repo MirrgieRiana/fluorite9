@@ -1741,6 +1741,57 @@ $ echo -en "abc\ndef\n" | fl9 'IN | "[$_]"'
 `file`を開き、内容を1行ずつ返すストリームを生成する関数です。
 詳細な挙動は`IN`定数に準じます。
 
+## `EXEC[filename; [args]; [options]; [input]]`関数
+
+Linuxのコマンドを実行します。
+`filename`には呼び出すコマンド名を、`args`には引数列をストリームで指定します。
+`EXEC`関数はコマンドの標準出力の内容を1行ずつの文字列のストリームとして返します。
+
+```
+$ echo a
+a
+$ fl9 'EXEC["echo"; "a"]'
+a
+```
+
+### 環境変数の上書き
+
+`EXEC`関数によって呼び出された子プロセスは、それ自体を処理しているnodeプロセスの環境変数を継承します。
+
+```
+$ FL9_VAR1=abc fl9 'EXEC["env"]' | grep FL9_VAR1
+```
+↓
+```
+FL9_VAR1=abc
+```
+
+環境変数は`options.env`オブジェクトによって設定できます。
+
+```
+$ FL9_VAR1=abc fl9 'EXEC["env"; ; {env = {FL9_VAR1 = "def"}}]' | grep FL9_VAR1
+```
+↓
+```
+FL9_VAR1=def
+```
+
+### 標準入力
+
+第4引数には標準入力の内容を指定します。
+
+```
+$ fl9 'EXEC["cat"; ; ; "abc"]'
+```
+↓
+```
+abc
+```
+
+### `EXECB[filenamt; args; options; input]`関数
+
+`EXEC`関数と同様ですが、標準出力の内容を文字列ではなくバイト配列のストリームとして返します。
+
 ## `JS[code]`関数
 
 `code`をJavaScriptとして実行します。

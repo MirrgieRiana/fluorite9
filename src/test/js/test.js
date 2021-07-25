@@ -563,6 +563,24 @@ function assertEqualsJson(expected, src) {
 // Console
 {
 
+  // EXEC
+  assertEquals("abc", '        &EXEC ["echo"; "abc"                                                      ]'); // 基本
+  assertEquals("abc def", '    &EXEC ["echo"; "abc", "def"                                               ]'); // 引数は複数指定できる
+  assertEquals("200 def", '    &EXEC ["echo";  200 , "def"                                               ]'); // 引数は部分的に数値型であってもよい
+  assertEquals("abc", '        &EXEC ["cat" ;                       ;                      ; "abc"       ]'); // 標準入力型
+  assertEquals("def", '        &EXEC ["grep"; "e"                   ;                      ; "abc", "def"]'); // 引数と標準入力同時
+  assertEquals("abc", '        &EXEC ["bash"; "-c" , %>echo "$var"<%; {env = {var = "abc"}};             ]'); // 環境変数
+  assertEquals("97,98,99,10", '&EXECB["echo"; "abc"                                                      ]'); // バイナリ出力コマンド
+  assertEquals("1\n2\n3", '    &EXEC ["fl9" ; "1 .. 3"                                                   ]'); // fl9の入れ子呼び出し
+  assertEquals("abc\nghi", `
+    &EXEC["fl9"; %A>
+      EXEC["bash"; "-c", %B>
+        echo "$var1"
+        echo "$var2"
+      <B%; {env = {var2 = "ghi"}}]
+    <A%; {env = {var1 = "abc"; var2 = "def"}}]
+  `); // fl9の入れ子呼び出し
+
   // JS
   assertEquals(3, '  JS[     "1 + 2"]  '); // JSコード呼び出し
   assertEquals(123, 'JS["({a: 123})"].a'); // JSコードは複雑な値も返せる

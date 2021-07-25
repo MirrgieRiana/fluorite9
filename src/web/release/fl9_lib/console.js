@@ -9,6 +9,7 @@
 }(this, function(_) {
   "use strict";
   const fs = require("fs");
+  const child_process = require("child_process");
 
   function createBufferReader(runtime, fd, size, doClose) {
     return new runtime.Fl9Stream(runtime, function*() {
@@ -94,6 +95,56 @@
       }
       throw new Error("Illegal argument");
     };
+
+    function execBase(name, encoding, filename, args, options, stdin) {
+      const usage = () => new Error('Usage: ' + name + '[filename : STRING; args : STRING... = (,); options : OBJECT = {env : OBJECT = {}}; stdin : (ARRAY<NUMBER> | ANY) = ""]');
+
+      if (filename === undefined) throw usage();
+      filename = runtime.toString(filename);
+
+      if (args === undefined) args = runtime.getEmpty();
+      args = runtime.toStream(args);
+      args = Array.from(args).map(item => runtime.toString(item));
+
+      if (options === undefined) options = {};
+      if (typeof options !== "object") throw usage();
+      if (options === null) throw usage();
+
+      let env = options.env;
+      if (env === undefined) env = {};
+      if (typeof env !== "object") throw usage();
+      if (env === null) throw usage();
+      env = {
+        ...process.env,
+        ...env
+      };
+
+      if (stdin === undefined) stdin = "";
+      if (stdin instanceof Array) {
+        stdin = Buffer.from(stdin);
+      } else {
+        stdin = runtime.toString(stdin);
+      }
+
+      return child_process.execFileSync(filename, args, {
+        input: stdin,
+        encoding: encoding,
+        maxBuffer: 64 * 1024 * 1024,
+        env: env
+      });
+    }
+    object.EXEC = function EXEC(filename, args, options, stdin) {
+      if (arguments.length > 4) throw usage();
+      const stringOut = execBase("EXEC", "utf8", filename, args, options, stdin);
+      const arrayOut = stringOut.split("\n");
+      if (arrayOut[arrayOut.length - 1] === "") arrayOut.pop();
+      return runtime.arrayToStream(arrayOut);
+    };
+    object.EXECB = function EXECB(filename, args, options, stdin) {
+      if (arguments.length > 4) throw usage();
+      return runtime.toStream(Array.from(execBase("EXECB", undefined, filename, args, options, stdin)));
+    };
+
     object.JS = function JS() {
       if (arguments.length == 1) {
         return eval(runtime.toString(arguments[0]))
