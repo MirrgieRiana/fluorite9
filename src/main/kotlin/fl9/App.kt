@@ -551,6 +551,8 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
             minus { getter(binaryOperatorGetter { left, right -> !"runtime.subtract(" + left + !", " + right + !")" }) }
             period_period { getter(binaryOperatorGetter { left, right -> !"runtime.rangeClosed(" + left + !", " + right + !")" }) }
             tilde { getter(binaryOperatorGetter { left, right -> !"runtime.rangeOpened(" + left + !", " + right + !")" }) }
+            atsign_atsign { getter(binaryOperatorGetter { left, right -> !"runtime.isContainedKey(" + left + !", " + right + !")" }) }
+            atsign { getter(binaryOperatorGetter { left, right -> !"runtime.isContained(" + left + !", " + right + !")" }) }
 
             comparison {
                 getter {

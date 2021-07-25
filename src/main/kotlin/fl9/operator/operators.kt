@@ -74,6 +74,9 @@ val minus = Operator<BinaryOperatorArgument>("minus")
 val period_period = Operator<BinaryOperatorArgument>("period_period")
 val tilde = Operator<BinaryOperatorArgument>("tilde")
 
+val atsign_atsign = Operator<BinaryOperatorArgument>("atsign_atsign")
+val atsign = Operator<BinaryOperatorArgument>("atsign")
+
 val comparison = Operator<ComparisonArgument>("comparison")
 val equal_equal_equal = Operator<Unit>("equal_equal_equal")
 val exclamation_equal_equal = Operator<Unit>("exclamation_equal_equal")

@@ -355,6 +355,21 @@ function assertEqualsJson(expected, src) {
   assertEquals(0, "10 % 2"); // 基本
 }
 
+// 包含
+{
+
+  // オブジェクトのキー
+  assertEquals(true, ' "a" @@ {a = "A"; b = "B"}'); // キーに含まれる場合にはTRUE
+  assertEquals(false, '"c" @@ {a = "A"; b = "B"}'); // キーに含まれない場合にはFALSE
+  assertEquals(false, '"A" @@ {a = "A"; b = "B"}'); // 値には反応しない
+
+  // オブジェクトの値
+  assertEquals(true, ' "A" @ {a = "A"; b = "B"}'); // 値に含まれる場合にはTRUE
+  assertEquals(false, '"C" @ {a = "A"; b = "B"}'); // 値に含まれない場合にはFALSE
+  assertEquals(false, '"a" @ {a = "A"; b = "B"}'); // キーには反応しない
+
+}
+
 // 条件
 {
 

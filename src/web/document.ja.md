@@ -1120,6 +1120,22 @@ array : [1, 2, 3]
 2
 ```
 
+## 包含演算子 `key @@ container` `value @ container`
+
+`@@`は`key`が`container`のキーとして含まれるか否かを返します。
+`@`は`value`が`container`の値として含まれるか否かを返します。
+
+```
+"b" @@ {
+  a = "A"
+  b = "B"
+}
+```
+↓
+```
+TRUE
+```
+
 ## 等号演算子 `actual == expected` `actual === expected` `actual != notExpected` `actual !== notExpected`
 
 `==`は抽象的な等号演算子で、左辺の値が右辺に等しいか否かを判定します。
