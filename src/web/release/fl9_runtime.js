@@ -121,7 +121,7 @@
 
       if (typeof value === "object") {
         if (value[symbolToString] !== undefined) return this.toString(value[symbolToString]());
-        if (value instanceof Array) return value.map(item => this.toString(item)).join(",");
+        if (value instanceof Array) return Array.from({length: value.length}).map((v, i) => this.toString(value[i])).join(",");
         return Object.getOwnPropertyNames(value).map(name => `${name}:${this.toString(value[name])};`).join("");
       }
 
