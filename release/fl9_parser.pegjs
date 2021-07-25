@@ -184,8 +184,14 @@ Range
   / "~"  { return (location => (left, right) => node("tilde"        , {left, right}, location))(location()); }
   ) __ Add)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
-Compare
+Contained
   = head:Range tail:(_ (
+    "@@" { return (location => (left, right) => node("atsign_atsign" , {left, right}, location))(location()); }
+  / "@"  { return (location => (left, right) => node("atsign"        , {left, right}, location))(location()); }
+  ) __ Range)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+
+Compare
+  = head:Contained tail:(_ (
     "===" { return ["equal_equal_equal"      , location()]; }
   / "!==" { return ["exclamation_equal_equal", location()]; }
   / "=="  { return ["equal_equal"            , location()]; }
@@ -194,12 +200,12 @@ Compare
   / "<="  { return ["less_equal"             , location()]; }
   / ">"   { return ["greater"                , location()]; }
   / "<"   { return ["less"                   , location()]; }
-  ) __ Range)+ { return node("comparison", {
+  ) __ Contained)+ { return node("comparison", {
     types: [...tail.map(right => right[1][0])],
     locations: [...tail.map(right => loc(right[1][1]))],
     nodes: [head, ...tail.map(right => right[3])],
   }, tail[0][1][1]); }
-  / Range
+  / Contained
 
 And
   = head:Compare tail:(_ (

@@ -257,6 +257,28 @@
       });
     }
 
+    isContainedKey(value, container) {
+      if (typeof container === "object" && container !== null) {
+        if (typeof value === "string") {
+          return Object.getOwnPropertyDescriptor(container, value) !== undefined;
+        } else if (typeof value === "symbol") {
+          return Object.getOwnPropertyDescriptor(container, value) !== undefined;
+        } else {
+          return Object.getOwnPropertyDescriptor(container, runtime.toString(value)) !== undefined;
+        }
+      }
+      throw new Error("Illegal Action: isContainedKey(" + typeof value + ", " + typeof container + ")");
+    }
+    isContained(value, container) {
+      if (typeof container === "object" && container !== null) {
+        for (let name of Object.getOwnPropertyNames(container)) {
+          if (value == container[name]) return true;
+        }
+        return false;
+      }
+      throw new Error("Illegal Action: isContained(" + typeof value + ", " + typeof container + ")");
+    }
+
   }
   Runtime.prototype.symbolToNumber = symbolToNumber;
   Runtime.prototype.symbolToString = symbolToString;

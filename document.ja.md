@@ -57,6 +57,7 @@
   - [範囲演算子 `start .. end` `start ~ endExcluded`](#%E7%AF%84%E5%9B%B2%E6%BC%94%E7%AE%97%E5%AD%90-start--end-start--endexcluded)
     - [ストリーム生成](#%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E7%94%9F%E6%88%90)
     - [閉区間と半開区間](#%E9%96%89%E5%8C%BA%E9%96%93%E3%81%A8%E5%8D%8A%E9%96%8B%E5%8C%BA%E9%96%93)
+  - [包含演算子 `key @@ container` `value @ container`](#%E5%8C%85%E5%90%AB%E6%BC%94%E7%AE%97%E5%AD%90-key--container-value--container)
   - [等号演算子 `actual == expected` `actual === expected` `actual != notExpected` `actual !== notExpected`](#%E7%AD%89%E5%8F%B7%E6%BC%94%E7%AE%97%E5%AD%90-actual--expected-actual--expected-actual--notexpected-actual--notexpected)
     - [暗黙の型変換](#%E6%9A%97%E9%BB%99%E3%81%AE%E5%9E%8B%E5%A4%89%E6%8F%9B)
     - [配列・オブジェクトの扱い【未実装の項目】](#%E9%85%8D%E5%88%97%E3%83%BB%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E6%89%B1%E3%81%84%E6%9C%AA%E5%AE%9F%E8%A3%85%E3%81%AE%E9%A0%85%E7%9B%AE)
@@ -1118,6 +1119,22 @@ array : [1, 2, 3]
 0
 1
 2
+```
+
+## 包含演算子 `key @@ container` `value @ container`
+
+`@@`は`key`が`container`のキーとして含まれるか否かを返します。
+`@`は`value`が`container`の値として含まれるか否かを返します。
+
+```
+"b" @@ {
+  a = "A"
+  b = "B"
+}
+```
+↓
+```
+TRUE
 ```
 
 ## 等号演算子 `actual == expected` `actual === expected` `actual != notExpected` `actual !== notExpected`
