@@ -121,7 +121,7 @@
 
       if (typeof value === "object") {
         if (value[symbolToString] !== undefined) return this.toString(value[symbolToString]());
-        if (value instanceof Array) return value.map(item => this.toString(item)).join(",");
+        if (value instanceof Array) return Array.from({length: value.length}).map((v, i) => this.toString(value[i])).join(",");
         return Object.getOwnPropertyNames(value).map(name => `${name}:${this.toString(value[name])};`).join("");
       }
 
@@ -208,6 +208,25 @@
         }
       } else {
         throw new Error(`Illegal Argument: ${value.constructor.name}[${args.constructor.name}]`);
+      }
+    }
+    setValue(object, key, value) {
+      if (object instanceof Array) {
+        if (typeof key === "number") {
+          object[key] = value;
+        } else {
+          object[this.toNumber(key)] = value;
+        }
+      } else if (typeof object === "object" && object !== null) {
+        if (typeof key === "string") {
+          object[key] = value;
+        } else if (typeof key === "symbol") {
+          object[key] = value;
+        } else {
+          object[this.toString(key)] = value;
+        }
+      } else {
+       throw new Error("Illegal Action: setValue(" + typeof object + ", " + typeof key + ", " + typeof value + ")");
       }
     }
     createDelegate(object, key) {
