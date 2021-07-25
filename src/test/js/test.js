@@ -521,6 +521,12 @@ function assertEqualsJson(expected, src) {
 
 }
 
+// 代入
+{
+  assertEquals(123, 'object : {}; object["a"] = 123; object.a'); // オブジェクト要素への代入
+  assertEquals(123, 'array  : []; array [ 2 ] = 123; array[2]'); // 配列要素への代入
+}
+
 // ラムダ式
 {
 

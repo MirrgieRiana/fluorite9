@@ -210,6 +210,25 @@
         throw new Error(`Illegal Argument: ${value.constructor.name}[${args.constructor.name}]`);
       }
     }
+    setValue(object, key, value) {
+      if (object instanceof Array) {
+        if (typeof key === "number") {
+          object[key] = value;
+        } else {
+          object[this.toNumber(key)] = value;
+        }
+      } else if (typeof object === "object" && object !== null) {
+        if (typeof key === "string") {
+          object[key] = value;
+        } else if (typeof key === "symbol") {
+          object[key] = value;
+        } else {
+          object[this.toString(key)] = value;
+        }
+      } else {
+       throw new Error("Illegal Action: setValue(" + typeof object + ", " + typeof key + ", " + typeof value + ")");
+      }
+    }
     createDelegate(object, key) {
       const symbol = Symbol("<DELEGATE>")
       return {[symbol]: function() {

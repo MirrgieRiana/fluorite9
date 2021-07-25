@@ -321,6 +321,19 @@ var applyStandardOperatorPlugin = { compiler: Compiler ->
                         line(!"const v$id = runtime.apply(" + codeFunction.body + !", [" + codeArguments.bodies.reduceOrZero { left, right -> left + !", " + right } + !"]);")
                     }, !"v$id")
                 }
+                setter {
+                    val codeFunction = channelContext.value.left.compile(compiler, getter)
+                    val codeArguments = channelContext.value.main.compile(compiler, getter)
+
+                    SetterCode { code ->
+                        RunnerCode(code {
+                            line(codeFunction.head)
+                            line(codeArguments.head)
+                            line(code.head)
+                            line(!"runtime.setValue(" + codeFunction.body + !", " + codeArguments.body + !", " + code.body + !");")
+                        })
+                    }
+                }
             }
             right_empty_round {
                 getter {
