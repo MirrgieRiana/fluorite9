@@ -562,10 +562,14 @@ function assertEqualsJson(expected, src) {
 
 // Console
 {
+
+  // JS
   assertEquals(3, '  JS[     "1 + 2"]  '); // JSコード呼び出し
   assertEquals(123, 'JS["({a: 123})"].a'); // JSコードは複雑な値も返せる
 
+  // REQUIRE
   assertEquals("/abc", 'REQUIRE["path"].resolve["/abc/def"; ".."]'); // REQUIRE
+
 }
 
 console.log("test.js OK");
