@@ -51,7 +51,7 @@ tasks {
         into(file("${buildDir.path}/web/release"))
     }
 
-    register<Exec>("installNpms") {
+    register<Exec>("makeNpms") {
         dependsOn("copyWeb")
         workingDir = file("${buildDir.path}/web/release")
         executable = "bash"
@@ -61,7 +61,7 @@ tasks {
     register<Task>("buildWeb") {
         dependsOn("copyWeb")
         dependsOn("copyMinifiedFiles")
-        dependsOn("installNpms")
+        dependsOn("makeNpms")
     }
 
     register<Exec>("testWeb") {

@@ -13,6 +13,4 @@ export NODE_PATH
 node "$dir"/src/test/js/test.js || exit
 
 # console interface
-chmod +x "$dir"/build/web/release/fl9
-chmod +x "$dir"/build/web/release/fl9e
 bash "$dir"/src/test/sh/test.sh || exit
