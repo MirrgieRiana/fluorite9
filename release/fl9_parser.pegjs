@@ -54,6 +54,9 @@ EmbedString
   / DollarFactor
   )* "\"" { return node("join", main, location()); }
 
+Delimiter
+  = [a-zA-Z_0-9]+ { return text(); }
+
 EmbeddedFluorite
   = "%>" main:(
       main:(
@@ -62,6 +65,13 @@ EmbeddedFluorite
       )+ { return node("string", main.join(""), location()); }
     / "<%=" __ main:Expression __ "%>" { return main; }
     )* "<%" !("=" / "%") { return node("join", main, location()); }
+  / "%" de:Delimiter ">" main:(
+      main:(
+        !("<" (de2:Delimiter & { return de === de2 }) "%") main:. { return main; }
+      / "<" (de2:Delimiter & { return de === de2 }) "%%" { return "<" + de + "%"; }
+      )+ { return node("string", main.join(""), location()); }
+    / "<" (de2:Delimiter & { return de === de2 }) "%=" __ main:Expression __ "%" (de2:Delimiter & { return de === de2 }) ">" { return main; }
+    )* "<" (de2:Delimiter & { return de === de2 }) "%" !("=" / "%") { return node("join", main, location()); }
 
 EmbeddedFluoriteRoot
   = ("#!" [^\r\n]* ("\r\n" / "\r" / "\n"))? main:(

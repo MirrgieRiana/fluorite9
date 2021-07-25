@@ -26,6 +26,7 @@
   - [EFL `%>string<%`](#efl-string)
     - [原理](#%E5%8E%9F%E7%90%86)
     - [`<%`自身の埋め込み `<%%`](#%E8%87%AA%E8%BA%AB%E3%81%AE%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF-)
+    - [デリミタ付きEFL `%delimiter>string<delimiter%`](#%E3%83%87%E3%83%AA%E3%83%9F%E3%82%BF%E4%BB%98%E3%81%8Defl-limiterstringdelimiter)
   - [識別子 `identifier`](#%E8%AD%98%E5%88%A5%E5%AD%90-identifier)
   - [空括弧 `()`](#%E7%A9%BA%E6%8B%AC%E5%BC%A7-)
   - [括弧 `(formula)`](#%E6%8B%AC%E5%BC%A7-formula)
@@ -89,6 +90,10 @@
   - [`IN`定数](#in%E5%AE%9A%E6%95%B0)
   - [`OUT[string]`関数](#outstring%E9%96%A2%E6%95%B0)
   - [`READ[file]`関数](#readfile%E9%96%A2%E6%95%B0)
+  - [`EXEC[filename; [args]; [options]; [input]]`関数](#execfilename-args-options-input%E9%96%A2%E6%95%B0)
+    - [環境変数の上書き](#%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0%E3%81%AE%E4%B8%8A%E6%9B%B8%E3%81%8D)
+    - [標準入力](#%E6%A8%99%E6%BA%96%E5%85%A5%E5%8A%9B)
+    - [`EXECB[filenamt; args; options; input]`関数](#execbfilenamt-args-options-input%E9%96%A2%E6%95%B0)
   - [`JS[code]`関数](#jscode%E9%96%A2%E6%95%B0)
   - [`REQUIRE[name]`関数](#requirename%E9%96%A2%E6%95%B0)
 - [コンソール](#%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB)
@@ -404,7 +409,7 @@ string : %>abcde<%
 
 ### `<%`自身の埋め込み `<%%`
 
-`<%%`と書くと`<%`を埋め込むことができます。
+`<%%`と書くと`<%`（EFLデリミタ）を埋め込むことができます。
 
 ```
 %>===== <%% =====<%
@@ -412,6 +417,29 @@ string : %>abcde<%
 ↓
 ```
 ===== <% =====
+```
+
+### デリミタ付きEFL `%delimiter>string<delimiter%`
+
+`delimiter`には任意の英数字列を指定できます。
+`%delimiter>`と`<delimiter%`に囲まれた部分では、通常のEFLデリミタである`<%`や`delimiter`の異なるEFLデリミタに反応しません。
+
+この機能はfl9の中でfl9コードを入れ子状に記述するのに便利です。
+
+```
+$ fl9 '
+  EXEC["fl9"; %A>
+    EXEC["bash"; "-c", %B>
+      echo "$var1"
+      echo "$var2"
+    <B%; {env = {var2 = "ghi"}}]
+  <A%; {env = {var1 = "abc"; var2 = "def"}}]
+'
+```
+↓
+```
+abc
+ghi
 ```
 
 ## 識別子 `identifier`
@@ -1721,6 +1749,57 @@ $ echo -en "abc\ndef\n" | fl9 'IN | "[$_]"'
 
 `file`を開き、内容を1行ずつ返すストリームを生成する関数です。
 詳細な挙動は`IN`定数に準じます。
+
+## `EXEC[filename; [args]; [options]; [input]]`関数
+
+Linuxのコマンドを実行します。
+`filename`には呼び出すコマンド名を、`args`には引数列をストリームで指定します。
+`EXEC`関数はコマンドの標準出力の内容を1行ずつの文字列のストリームとして返します。
+
+```
+$ echo a
+a
+$ fl9 'EXEC["echo"; "a"]'
+a
+```
+
+### 環境変数の上書き
+
+`EXEC`関数によって呼び出された子プロセスは、それ自体を処理しているnodeプロセスの環境変数を継承します。
+
+```
+$ FL9_VAR1=abc fl9 'EXEC["env"]' | grep FL9_VAR1
+```
+↓
+```
+FL9_VAR1=abc
+```
+
+環境変数は`options.env`オブジェクトによって設定できます。
+
+```
+$ FL9_VAR1=abc fl9 'EXEC["env"; ; {env = {FL9_VAR1 = "def"}}]' | grep FL9_VAR1
+```
+↓
+```
+FL9_VAR1=def
+```
+
+### 標準入力
+
+第4引数には標準入力の内容を指定します。
+
+```
+$ fl9 'EXEC["cat"; ; ; "abc"]'
+```
+↓
+```
+abc
+```
+
+### `EXECB[filenamt; args; options; input]`関数
+
+`EXEC`関数と同様ですが、標準出力の内容を文字列ではなくバイト配列のストリームとして返します。
 
 ## `JS[code]`関数
 
