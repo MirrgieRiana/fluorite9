@@ -193,6 +193,11 @@ function assertEqualsJson(expected, src) {
   assertEquals(true, "            %><%= TRUE %><% === 'TRUE'   "); // 要素が埋め込みしかなくても文字列化は行う
   assertEquals("aaa1bbb2ccc", "   %>aaa<%= 1 %>bbb<%= 2 %>ccc<%"); // 複数の埋め込みを含むEFL
   assertEquals("[\"]['][\\][$]", "%>[\"]['][\\][$]<%           "); // EFLの中では通常のエスケープは無効
+  assertEquals("<%", "            %><%%<%                      "); // EFLデリミタ自体を埋め込む
+  assertEquals("%A><A%", "        %>%A><A%<%                   "); // 通常のEFLの中でデリミタ付きEFLを書いても無効
+  assertEquals("%><%", "          %A>%><%<A%                   "); // デリミタ付きEFLの中で通常のEFLを書いても無効
+  assertEquals("%AA><AA%", "      %A>%AA><AA%<A%               "); // 異なるデリミタのEFL同士は干渉しない
+  assertEquals("<A%", "           %A><A%%<A%                   "); // デリミタ付きEFLデリミタ自体を埋め込む
 }
 
 // 配列初期化子

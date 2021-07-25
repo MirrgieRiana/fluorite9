@@ -400,7 +400,7 @@ string : %>abcde<%
 
 ### `<%`自身の埋め込み `<%%`
 
-`<%%`と書くと`<%`を埋め込むことができます。
+`<%%`と書くと`<%`（EFLデリミタ）を埋め込むことができます。
 
 ```
 %>===== <%% =====<%
@@ -408,6 +408,29 @@ string : %>abcde<%
 ↓
 ```
 ===== <% =====
+```
+
+### デリミタ付きEFL `%delimiter>string<delimiter%`
+
+`delimiter`には任意の英数字列を指定できます。
+`%delimiter>`と`<delimiter%`に囲まれた部分では、通常のEFLデリミタである`<%`や`delimiter`の異なるEFLデリミタに反応しません。
+
+この機能はfl9の中でfl9コードを入れ子状に記述するのに便利です。
+
+```
+$ fl9 '
+  EXEC["fl9"; %A>
+    EXEC["bash"; "-c", %B>
+      echo "$var1"
+      echo "$var2"
+    <B%; {env = {var2 = "ghi"}}]
+  <A%; {env = {var1 = "abc"; var2 = "def"}}]
+'
+```
+↓
+```
+abc
+ghi
 ```
 
 ## 識別子 `identifier`
