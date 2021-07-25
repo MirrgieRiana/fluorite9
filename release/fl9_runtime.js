@@ -283,7 +283,7 @@
         } else if (typeof value === "symbol") {
           return Object.getOwnPropertyDescriptor(container, value) !== undefined;
         } else {
-          return Object.getOwnPropertyDescriptor(container, runtime.toString(value)) !== undefined;
+          return Object.getOwnPropertyDescriptor(container, this.toString(value)) !== undefined;
         }
       }
       throw new Error("Illegal Action: isContainedKey(" + typeof value + ", " + typeof container + ")");
