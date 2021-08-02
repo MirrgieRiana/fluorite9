@@ -1677,7 +1677,7 @@ function peg$parse(input, options) {
         if (s4 !== peg$FAILED) {
           s5 = peg$parse__();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parseSemicolon();
+            s6 = peg$parsePipe();
             if (s6 !== peg$FAILED) {
               s7 = peg$parse__();
               if (s7 !== peg$FAILED) {
@@ -1845,7 +1845,7 @@ function peg$parse(input, options) {
           if (s4 !== peg$FAILED) {
             s5 = peg$parse__();
             if (s5 !== peg$FAILED) {
-              s6 = peg$parseSemicolon();
+              s6 = peg$parsePipe();
               if (s6 !== peg$FAILED) {
                 s7 = peg$parse__();
                 if (s7 !== peg$FAILED) {
@@ -2291,7 +2291,7 @@ function peg$parse(input, options) {
                   if (s8 !== peg$FAILED) {
                     s9 = peg$parse__();
                     if (s9 !== peg$FAILED) {
-                      s10 = peg$parseSemicolon();
+                      s10 = peg$parsePipe();
                       if (s10 !== peg$FAILED) {
                         s11 = peg$parse__();
                         if (s11 !== peg$FAILED) {
@@ -2709,7 +2709,7 @@ function peg$parse(input, options) {
                     if (s8 !== peg$FAILED) {
                       s9 = peg$parse__();
                       if (s9 !== peg$FAILED) {
-                        s10 = peg$parseSemicolon();
+                        s10 = peg$parsePipe();
                         if (s10 !== peg$FAILED) {
                           s11 = peg$parse__();
                           if (s11 !== peg$FAILED) {
@@ -3115,7 +3115,7 @@ function peg$parse(input, options) {
         if (s4 !== peg$FAILED) {
           s5 = peg$parse__();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parseSemicolon();
+            s6 = peg$parsePipe();
             if (s6 !== peg$FAILED) {
               s7 = peg$parse__();
               if (s7 !== peg$FAILED) {
@@ -3283,7 +3283,7 @@ function peg$parse(input, options) {
           if (s4 !== peg$FAILED) {
             s5 = peg$parse__();
             if (s5 !== peg$FAILED) {
-              s6 = peg$parseSemicolon();
+              s6 = peg$parsePipe();
               if (s6 !== peg$FAILED) {
                 s7 = peg$parse__();
                 if (s7 !== peg$FAILED) {

@@ -63,14 +63,14 @@ EmbeddedFluorite
         !"<%" main:. { return main; }
       / "<%%" { return "<%"; }
       )+ { return node("string", main.join(""), location()); }
-    / "<%=" __ main:Expression __ "%>" { return main; }
+    / "<%=" __ main:Pipe __ "%>" { return main; }
     )* "<%" !("=" / "%") { return node("join", main, location()); }
   / "%" de:Delimiter ">" main:(
       main:(
         !("<" (de2:Delimiter & { return de === de2 }) "%") main:. { return main; }
       / "<" (de2:Delimiter & { return de === de2 }) "%%" { return "<" + de + "%"; }
       )+ { return node("string", main.join(""), location()); }
-    / "<" (de2:Delimiter & { return de === de2 }) "%=" __ main:Expression __ "%" (de2:Delimiter & { return de === de2 }) ">" { return main; }
+    / "<" (de2:Delimiter & { return de === de2 }) "%=" __ main:Pipe __ "%" (de2:Delimiter & { return de === de2 }) ">" { return main; }
     )* "<" (de2:Delimiter & { return de === de2 }) "%" !("=" / "%") { return node("join", main, location()); }
 
 EmbeddedFluoriteRoot
@@ -79,7 +79,7 @@ EmbeddedFluoriteRoot
         !"<%" main:. { return main; }
       / "<%%" { return "<%"; }
       )+ { return node("string", main.join(""), location()); }
-    / "<%=" __ main:Expression __ "%>" { return main; }
+    / "<%=" __ main:Pipe __ "%>" { return main; }
     )* { return node("join", main, location()); }
 
 Identifier
