@@ -198,6 +198,13 @@ function assertEqualsJson(expected, src) {
   assertEquals("%><%", "          %A>%><%<A%                   "); // デリミタ付きEFLの中で通常のEFLを書いても無効
   assertEquals("%AA><AA%", "      %A>%AA><AA%<A%               "); // 異なるデリミタのEFL同士は干渉しない
   assertEquals("<A%", "           %A><A%%<A%                   "); // デリミタ付きEFLデリミタ自体を埋め込む
+
+  // 中身のあとに改行をしても埋め込みデリミタがEFL開始トークンとみなされない
+  assertEquals("4", `
+    %><%=
+      4
+    %><%
+  `);
 }
 
 // 配列初期化子
