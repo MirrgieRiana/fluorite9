@@ -35,6 +35,14 @@ assertEqual 15 "$(  node -e '
   console.log(require("./tmp1.js").main(runtime))
 '  )"
 
+# fl9f
+{
+  echo '#!/usr/bin/env fl9f' > tmp1.fl9
+  echo '100 + 20 + 3' >> tmp1.fl9
+  chmod +x tmp1.fl9
+  assertEqual "123" "$(./tmp1.fl9)"
+}
+
 # EFL
 {
 
