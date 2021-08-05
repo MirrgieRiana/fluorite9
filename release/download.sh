@@ -34,5 +34,6 @@ make_command() {
 
 # 実行ファイルの生成
 make_command fl9
+make_command fl9f
 make_command fl9e
 make_command fl9u

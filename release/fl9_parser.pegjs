@@ -15,18 +15,54 @@
   }
 }
 
-Spaces
-  = [ \t]*
+Space "Space"     = [ \t]
+BrSpace "BrSpace" = [ \t\r\n]
 
-BrSpaces
-  = [ \t\r\n]*
+BackslashSpaces      "BackslashSpaces"       = BrSpace* ("\\" BrSpace*)+
+Spaces               "Spaces"                = Space+
+BrSpaces             "BrSpaces"              = BrSpace+
+NumberComment        "NumberComment"         = "#"  [^\r\n]*
+SlashSlashComment    "SlashSlashComment"     = "//" [^\r\n]*
+SlashAsteriskComment "SlashAsteriskComment"  = "/*" (!"*/" .)* "*/"
+
+SlashPlusComment1 = "/+"     !"+" (SlashPlusComment1 / (!    "+/" .))*     "+/"
+SlashPlusComment2 = "/++"    !"+" (SlashPlusComment2 / (!   "++/" .))*    "++/"
+SlashPlusComment3 = "/+++"   !"+" (SlashPlusComment3 / (!  "+++/" .))*   "+++/"
+SlashPlusComment4 = "/++++"  !"+" (SlashPlusComment4 / (! "++++/" .))*  "++++/"
+SlashPlusComment5 = "/+++++" !"+" (SlashPlusComment5 / (!"+++++/" .))* "+++++/"
+
+SlashPlusComment "SlashPlusComment"
+  = SlashPlusComment1
+  / SlashPlusComment2
+  / SlashPlusComment3
+  / SlashPlusComment4
+  / SlashPlusComment5
 
 _
-  = BrSpaces ("\\" BrSpaces)+
-  / Spaces
+  = ( BackslashSpaces
+    / Spaces
+    / NumberComment
+    / SlashSlashComment
+    / SlashAsteriskComment
+    / SlashPlusComment
+    )*
 
 __
-  = BrSpaces ("\\" BrSpaces)*
+  = ( BackslashSpaces
+    / BrSpaces
+    / NumberComment
+    / SlashSlashComment
+    / SlashAsteriskComment
+    / SlashPlusComment
+    )*
+
+__Regex
+  = ( BackslashSpaces
+    / BrSpaces
+    / NumberComment
+    / SlashAsteriskComment
+    / SlashPlusComment
+    )*
 
 Void
   = "" { return node("void", undefined, location()); }
@@ -190,8 +226,14 @@ Contained
   / "@"  { return (location => (left, right) => node("atsign"        , {left, right}, location))(location()); }
   ) __ Range)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
 
-Compare
+Match
   = head:Contained tail:(_ (
+    "=~" { return (location => (left, right) => node("equal_tilde" , {left, right}, location))(location()); }
+  / "!~" { return (location => (left, right) => node("exclamation_tilde" , {left, right}, location))(location()); }
+  ) __Regex Contained)* { return [head, ...tail].reduce((left, right) => right[1](left, right[3])); }
+
+Compare
+  = head:Match tail:(_ (
     "===" { return ["equal_equal_equal"      , location()]; }
   / "!==" { return ["exclamation_equal_equal", location()]; }
   / "=="  { return ["equal_equal"            , location()]; }
@@ -200,12 +242,12 @@ Compare
   / "<="  { return ["less_equal"             , location()]; }
   / ">"   { return ["greater"                , location()]; }
   / "<"   { return ["less"                   , location()]; }
-  ) __ Contained)+ { return node("comparison", {
+  ) __ Match)+ { return node("comparison", {
     types: [...tail.map(right => right[1][0])],
     locations: [...tail.map(right => loc(right[1][1]))],
     nodes: [head, ...tail.map(right => right[3])],
   }, tail[0][1][1]); }
-  / Contained
+  / Match
 
 And
   = head:Compare tail:(_ (
